@@ -69,7 +69,7 @@ sudo python3 hosts_guard.py install
 
 > 安装时浏览器会提示扩展需要访问所有网站的权限。这是把危险网站**重定向到警告页面**所必需的（[Chrome 的说明](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)）。这个扩展不会读取网页内容，也不会把浏览记录发送到任何地方，所有代码都在这个仓库里公开。
 
-Firefox 128 及以上版本：在 `about:debugging#/runtime/this-firefox` 里点“临时载入附加组件”，选择 `extension/manifest.json`。这种方式在浏览器重启后会失效。想一直使用的话，需要把扩展提交到 [addons.mozilla.org](https://addons.mozilla.org/) 签名。另外我目前只在 Chromium 上测试过。
+目前还不支持 Firefox（扩展使用的是 Chrome 方式的后台程序）。用 Firefox 的话，请用上面的[整台电脑拦截](#-整台电脑拦截所有浏览器和-app)。
 
 ## 🌐 网页版检查工具
 

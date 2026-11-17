@@ -69,7 +69,7 @@ sudo python3 hosts_guard.py install
 
 > The browser will say the extension can access all sites. This is required to **redirect dangerous sites to the warning page** ([Chrome documentation](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)). The extension does not read page contents and does not send your browsing history anywhere; all of its code is in this repository.
 
-Firefox 128+: open `about:debugging#/runtime/this-firefox`, click "Load Temporary Add-on…" and choose `extension/manifest.json`. This is removed when Firefox restarts; permanent use requires signing through [addons.mozilla.org](https://addons.mozilla.org/). So far it has only been tested on Chromium.
+Firefox is not supported yet (the extension uses a Chrome-style background service worker). On Firefox, use the [whole-computer blocking](#-whole-computer-blocking-every-browser-and-app) instead.
 
 ## 🌐 Web checker
 
