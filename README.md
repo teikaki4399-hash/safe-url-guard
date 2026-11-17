@@ -146,9 +146,9 @@ Custom lists live in `~/.cache/safe_url_guard/`: `allowlist.txt` and `denylist.t
 - The message check only knows common phrases. **Not being flagged does not mean it is safe.** If someone **asks for money or a verification code, or tells you not to tell anyone**, talk to someone you trust or the police first.
 - Keep your browser's own protection on too, e.g. [Google Safe Browsing](https://safebrowsing.google.com/) in Chrome / Firefox or Microsoft Defender SmartScreen in Edge.
 
-## A common pattern: the dating / hookup "credit score" scam
+## A common pattern: the "credit score" / refund scam
 
-1. A "platform receptionist" messages you on Telegram or similar, offering "local girls" and "pay when you meet"
+1. Someone calling themselves a "platform receptionist" messages you on Telegram or similar and introduces a dating platform
 2. You are told to download the "platform app" or pay a membership fee or deposit to "register"
 3. After you pay, they say you made an "operation error", your "credit score" dropped or your account is "locked", and you must pay to "restore your score" before you can get a refund or withdraw
 4. To win your trust they first take a small "verification deposit" (e.g. 300) and let a small amount actually reach you (e.g. 600). **This is bait for the much larger payments that follow.**

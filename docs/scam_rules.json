@@ -19,8 +19,8 @@
       "zh": "感情（网恋）诈骗"
     },
     "hookup": {
-      "en": "Dating / hookup scam",
-      "zh": "同城约会 / 约炮诈骗"
+      "en": "Dating-platform scam",
+      "zh": "交友平台诈骗"
     },
     "credit": {
       "en": "\"Credit score / unfreeze / refund\" scam",
@@ -147,8 +147,8 @@
       "category": "hookup",
       "weight": 3,
       "reason": {
-        "en": "A \"platform receptionist\" offering \"local girls\", \"outcalls\" or \"pay when you meet\". This is how dating/hookup scams start: the goal is to make you register and pay fees or deposits. Nobody will actually come.",
-        "zh": "自称“平台接待员”，推荐“同城妹妹”“上门服务”“见面支付”等。这是同城约会（约炮）诈骗的开头，对方的目的是让你注册平台、交会员费或押金，不会真的有人来见面。"
+        "en": "Someone calling themselves a \"platform receptionist\" offers to arrange a meeting. This is how dating-platform scams start: the goal is to make you register and pay fees or deposits. Nobody will actually come.",
+        "zh": "自称“平台接待员”，说可以帮你安排见面。这是交友平台诈骗的开头，对方的目的是让你注册平台、交会员费或押金，不会真的有人来见面。"
       },
       "pattern": "约炮|約炮|同城(约|約|交友|妹妹|美女|可约|可約|匹配)|附近(的)?(妹妹|少女|少妇|美女|人)|上门服务|上門服務|上门上酒店|见面支付|見面支付|(平台|服务)接待员|接待員|生活照|新会员.{0,10}(免费|免費)|查询.{0,6}(同城|附近)|hookup|local girls?|book a service|escort|出会い系|デリヘル|近くの女の子|パパ活|援(交|助交際)"
     },
@@ -157,8 +157,8 @@
       "category": "hookup",
       "weight": 3,
       "reason": {
-        "en": "Calls itself a \"dating / hookup platform\" and asks you to download an app or register with a \"receptionist\" or \"admin\". The platform itself is the scam; payment requests will follow.",
-        "zh": "自称“约会 / 约炮平台”，让你下载 App、找“接待员”“管理员”登记。这类平台本身就是骗局，后面一定会要你付钱。"
+        "en": "Calls itself a \"dating platform\" and asks you to download an app or register with a \"receptionist\" or \"admin\". The platform itself is the scam; payment requests will follow.",
+        "zh": "自称“交友平台”，让你下载 App、找“接待员”“管理员”登记。这类平台本身就是骗局，后面一定会要你付钱。"
       },
       "pattern": "(约炮|約炮|交友|约会|約會|同城|华人|華人)(平台|app|APP|软件|軟體)|平台(接待员|接待員|管理员|管理員)|我是您?的(管理员|管理員|接待员|接待員)|发送.{0,6}【安排】|matching system|hookup (platform|app)|出会い(系)?アプリ.{0,10}(登録|ポイント)"
     },
@@ -321,8 +321,8 @@
       ],
       "bonus": 3,
       "reason": {
-        "en": "Dating/hookup topic plus a request for money. Typical pattern: first a membership fee or deposit, then endless reasons to pay again.",
-        "zh": "约会 / 约炮话题加上要你付钱。这是同城约会诈骗的典型模式：先收会员费或押金，再用各种理由让你一次次付钱。"
+        "en": "Dating-platform topic plus a request for money. Typical pattern: first a membership fee or deposit, then endless reasons to pay again.",
+        "zh": "交友平台话题加上要你付钱。典型模式：先收会员费或押金，再用各种理由让你一次次付钱。"
       }
     },
     {
@@ -332,8 +332,8 @@
       ],
       "bonus": 3,
       "reason": {
-        "en": "Dating platform plus \"credit score / unfreeze / refund review\". This is the second half of the dating scam: the more you pay, the more reasons they invent.",
-        "zh": "约会平台加上“信誉分 / 解冻 / 返款审核”。这是同城约会诈骗的后半段，钱付得越多，对方编的理由就越多。"
+        "en": "Dating platform plus \"credit score / unfreeze / refund review\". The more you pay, the more reasons they invent.",
+        "zh": "交友平台加上“信誉分 / 解冻 / 返款审核”。钱付得越多，对方编的理由就越多。"
       }
     },
     {
