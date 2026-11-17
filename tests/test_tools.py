@@ -84,3 +84,40 @@ class TestQrCheck(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestHostsGuard(unittest.TestCase):
+    def test_install_update_uninstall_roundtrip(self):
+        import tempfile
+        from unittest import mock
+
+        import hosts_guard
+        import safe_url_guard
+        with tempfile.TemporaryDirectory() as d:
+            hosts = Path(d) / "hosts"
+            original = "127.0.0.1 localhost\n::1 localhost\n"
+            hosts.write_text(original, encoding="utf-8")
+            with mock.patch.object(safe_url_guard, "update_feeds", return_value=1), \
+                 mock.patch.object(safe_url_guard, "CACHE_DIR", Path(d) / "cache"), \
+                 mock.patch.object(hosts_guard, "flush_dns"):
+                self.assertEqual(hosts_guard.main(["install", "--hosts", str(hosts), "--no-schedule"]), 0)
+                text = hosts.read_text(encoding="utf-8")
+                self.assertIn("0.0.0.0 y7vv.top", text)
+                self.assertIn("0.0.0.0 www.y7vv.top", text)
+                self.assertTrue(text.startswith(original))
+                # 再次更新不会重复写入
+                hosts_guard.main(["update", "--hosts", str(hosts)])
+                self.assertEqual(hosts.read_text(encoding="utf-8").count(hosts_guard.BEGIN), 1)
+                self.assertTrue((Path(d) / "hosts.safe-url-guard.bak").exists())
+                hosts_guard.main(["uninstall", "--hosts", str(hosts), "--no-schedule"])
+                self.assertEqual(hosts.read_text(encoding="utf-8"), original)
+
+    def test_builtin_lists_in_sync(self):
+        a = (ROOT / "extension" / "builtin_blocklist.txt").read_text(encoding="utf-8")
+        b = (ROOT / "docs" / "builtin_blocklist.txt").read_text(encoding="utf-8")
+        self.assertEqual(a, b, "extension/ 和 docs/ 的内置黑名单必须一致")
+
+    def test_builtin_blocks_scam_site(self):
+        import safe_url_guard
+        db, _ = safe_url_guard.load_blocklist()
+        self.assertEqual(safe_url_guard.check_url("https://y7vv.top/#/login", db, set())[0], "DANGER")

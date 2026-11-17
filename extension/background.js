@@ -49,12 +49,23 @@ function parseList(text) {
   return out;
 }
 
+/* ---------- 内置黑名单（随扩展一起发布的、已确认的诈骗网站） ---------- */
+async function loadBuiltin() {
+  try {
+    const resp = await fetch(api.runtime.getURL("builtin_blocklist.txt"));
+    return parseList(await resp.text());
+  } catch (e) {
+    return new Set();
+  }
+}
+
 /* ---------- 规则 ---------- */
 async function applyRules() {
   const st = await api.storage.local.get(["feeds", "allowlist", "denylist"]);
   const feeds = st.feeds || {};
   const allow = parseList(st.allowlist);
   const block = new Set(parseList(st.denylist));
+  for (const h of await loadBuiltin()) block.add(h);
   for (const name of Object.keys(feeds)) for (const h of feeds[name].hosts || []) block.add(h);
   for (const h of allow) block.delete(h);
 

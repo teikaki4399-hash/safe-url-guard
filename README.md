@@ -6,11 +6,38 @@
 
 | 工具 | 适合谁 | 能做什么 |
 |---|---|---|
-| 🧩 [浏览器扩展](#-浏览器扩展推荐) | 所有人（推荐） | 浏览器启动后自动运行，**访问危险网站时直接拦截**，点链接也会被挡住 |
+| 🛡 [整台电脑拦截](#-整台电脑拦截所有浏览器和-app) | 电脑（推荐） | 修改系统 hosts，**所有浏览器、所有 App** 都打不开危险网站，每天自动更新 |
+| 🧩 [浏览器扩展](#-浏览器扩展推荐) | 电脑（推荐） | 浏览器启动后自动运行，**访问危险网站时直接拦截**，点链接也会被挡住 |
+| 📱 [手机](#-手机怎么用) | 手机 | 网页版检查 + 手机自带的防护设置 |
 | 🌐 [网页版检查工具](#-网页版检查工具) | 不会编程的人 | 打开网页，检查**可疑消息、网址、二维码** |
 | 🐍 [Python 命令行工具](#-python-命令行工具) | 会用终端的人 | 和上面相同的检查，可以写进脚本里 |
 
 ---
+
+## 🛡 整台电脑拦截（所有浏览器和 App）
+
+把黑名单写进系统的 hosts 文件。Chrome、Edge、Firefox、Safari 以及其他 App 都会连不上黑名单上的网站。开机时和每天各自动更新一次。
+
+**准备：** 先安装 Python 3（Windows 可以从 [python.org](https://www.python.org/downloads/) 下载，安装时勾选 “Add python.exe to PATH”）。然后下载这个仓库（**Code → Download ZIP**），解压。
+
+**Windows：** 在开始菜单搜索 “PowerShell”，右键选 **以管理员身份运行**，再执行：
+
+```powershell
+cd 解压后的文件夹路径\safe-url-guard-main
+python hosts_guard.py install
+```
+
+**macOS / Linux：**
+
+```sh
+cd 解压后的文件夹路径/safe-url-guard-main
+sudo python3 hosts_guard.py install
+```
+
+- 查看状态：`python hosts_guard.py status`
+- 卸载：`python hosts_guard.py uninstall`（Windows 用管理员身份运行，macOS / Linux 前面加 `sudo`）。第一次修改前的 hosts 会备份为 `hosts.safe-url-guard.bak`
+- 安装后**不要移动或删除这个文件夹**，自动更新要用到里面的文件
+- 如果浏览器开了“安全 DNS / DNS over HTTPS”，可能会绕过 hosts 文件。所以最好**同时安装下面的浏览器扩展**
 
 ## 🧩 浏览器扩展（推荐）
 
@@ -39,6 +66,22 @@ Firefox 128 及以上版本：在 `about:debugging#/runtime/this-firefox` 里点
 - **二维码检查**：读取二维码图片里的网址，检查之后再决定要不要打开
 
 消息和图片只在浏览器里检查，不会上传到服务器。
+
+## 📱 手机怎么用
+
+手机上没法像电脑那样装这个拦截程序（iPhone 的 Safari 扩展必须通过 App Store 发布）。可以组合使用下面几种方法：
+
+1. **把网页版加到主屏幕：** 用手机浏览器打开 https://teikaki4399-hash.github.io/safe-url-guard/
+   - iPhone（Safari）：点分享按钮 → **添加到主屏幕**
+   - Android（Chrome）：点右上角 ⋮ → **添加到主屏幕**
+
+   收到可疑的消息、链接或二维码时，先**复制粘贴到这里检查**。二维码可以先截图，再在“二维码检查”里选这张截图。
+2. **打开手机自带的防护：**
+   - iPhone：设置 → Safari → 打开 **“欺诈性网站警告”**（较新的 iOS 版本在 设置 → App → Safari 里）
+   - Android（Chrome）：⋮ → 设置 → 隐私和安全 → 安全浏览 → **增强型保护**
+3. **使用会拦截恶意网站的 DNS（整台手机都有效）：** 例如非营利组织 [Quad9](https://quad9.net/)，它会拦截已知的恶意域名。
+   - Android 9 及以上：设置 → 网络和互联网 → **私人 DNS** → 选“私人 DNS 提供商主机名”，输入 `dns.quad9.net`（不同手机的菜单名称可能略有不同）
+   - iPhone：需要安装配置描述文件，请按 Quad9 官网的说明操作
 
 ## 🐍 Python 命令行工具
 

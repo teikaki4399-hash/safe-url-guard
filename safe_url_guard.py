@@ -42,6 +42,8 @@ USER_AGENT = "safe-url-guard/1.0"
 # 本地白名单 / 自定义黑名单（每行一个域名，# 开头为注释）
 ALLOWLIST_FILE = CACHE_DIR / "allowlist.txt"
 DENYLIST_FILE = CACHE_DIR / "denylist.txt"
+# 仓库内置的黑名单（确认过的诈骗网站），和浏览器扩展共用
+BUILTIN_BLOCKLIST = Path(__file__).resolve().parent / "extension" / "builtin_blocklist.txt"
 
 
 # ---------------------------------------------------------------- 工具函数
@@ -128,6 +130,8 @@ def load_blocklist() -> tuple[dict[str, str], bool]:
             stale = True
         for h in data.get("hosts", []):
             db.setdefault(h, name)
+    for h in read_domain_file(BUILTIN_BLOCKLIST):
+        db[h] = "内置黑名单（已确认的诈骗网站）"
     for h in read_domain_file(DENYLIST_FILE):
         db[h] = "自定义黑名单"
     return db, stale

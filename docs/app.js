@@ -3,6 +3,15 @@
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
   var LEVEL = ["未发现明显的诈骗特征", "风险：低", "风险：中，请小心", "风险：高，很可能是诈骗"];
+  var builtin = {};
+  fetch("builtin_blocklist.txt").then(function (r) { return r.text(); }).then(function (t) {
+    t.split(/\r?\n/).forEach(function (l) { l = l.split("#")[0].trim().toLowerCase(); if (l) builtin[l] = true; });
+  }).catch(function () {});
+  function inBuiltin(host) {
+    var parts = host.split(".");
+    for (var i = 0; i < parts.length - 1; i++) if (builtin[parts.slice(i).join(".")]) return parts.slice(i).join(".");
+    return null;
+  }
   var rulesPromise = fetch("scam_rules.json").then(function (r) { return r.json(); }).then(ScamCore.compile);
 
   function esc(s) {
@@ -25,9 +34,11 @@
   /* ---------- 网址检查 ---------- */
   function urlBlock(raw, withRdap) {
     var h = ScamCore.urlHeuristics(raw);
-    var lv = h.warnings.length ? 2 : 0;
+    var hit = h.host ? inBuiltin(h.host) : null;
+    if (hit) h.warnings.unshift("⛔ " + hit + " 是已经确认的诈骗网站（在本工具的内置黑名单中），千万不要打开");
+    var lv = hit ? 3 : h.warnings.length ? 2 : 0;
     var id = "rdap-" + Math.random().toString(36).slice(2);
-    var html = '<div class="verdict lv' + lv + '">' + (lv ? "有可疑特征" : "没有发现明显的可疑特征") + "</div>" +
+    var html = '<div class="verdict lv' + lv + '">' + (lv === 3 ? "危险：已确认的诈骗网站" : lv ? "有可疑特征" : "没有发现明显的可疑特征") + "</div>" +
       "<p><code>" + esc(raw) + "</code></p><ul>" +
       h.warnings.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") +
       (withRdap && h.host ? '<li id="' + id + '">正在查询域名注册时间……</li>' : "") + "</ul>" +
