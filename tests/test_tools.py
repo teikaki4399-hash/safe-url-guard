@@ -72,7 +72,7 @@ class TestQrCheck(unittest.TestCase):
             import cv2  # noqa: F401
             import qrcode
         except ImportError:
-            self.skipTest("需要 opencv-python-headless 和 qrcode")
+            self.skipTest("needs opencv-python-headless and qrcode")
         import tempfile
 
         import qr_check
@@ -121,3 +121,56 @@ class TestHostsGuard(unittest.TestCase):
         import safe_url_guard
         db, _ = safe_url_guard.load_blocklist()
         self.assertEqual(safe_url_guard.check_url("https://y7vv.top/#/login", db, set())[0], "DANGER")
+
+
+class TestHostsGuardUpgrade(unittest.TestCase):
+    def test_old_chinese_marker_is_replaced(self):
+        import tempfile
+        from unittest import mock
+
+        import hosts_guard
+        import safe_url_guard
+        old = ("127.0.0.1 localhost\n\n" + hosts_guard.OLD_BEGINS[0] + "\n0.0.0.0 old.example\n"
+               + hosts_guard.END + "\n")
+        with tempfile.TemporaryDirectory() as d:
+            hosts = Path(d) / "hosts"
+            hosts.write_text(old, encoding="utf-8")
+            with mock.patch.object(safe_url_guard, "update_feeds", return_value=1), \
+                 mock.patch.object(safe_url_guard, "CACHE_DIR", Path(d) / "cache"), \
+                 mock.patch.object(hosts_guard, "flush_dns"):
+                hosts_guard.main(["update", "--hosts", str(hosts)])
+            text = hosts.read_text(encoding="utf-8")
+            self.assertNotIn("old.example", text)
+            self.assertNotIn(hosts_guard.OLD_BEGINS[0], text)
+            self.assertEqual(text.count(hosts_guard.BEGIN), 1)
+
+
+class TestI18n(unittest.TestCase):
+    def test_all_messages_have_both_languages(self):
+        import i18n
+        for k, v in i18n.MESSAGES.items():
+            self.assertEqual(set(v), {"en", "zh"}, k)
+
+    def test_rules_have_both_languages(self):
+        rules = scam_check.load_rules()
+        for r in rules["rules"]:
+            self.assertEqual(set(r["reason"]), {"en", "zh"}, r["id"])
+        for c in rules["combos"]:
+            self.assertEqual(set(c["reason"]), {"en", "zh"})
+        for v in rules["categories"].values():
+            self.assertEqual(set(v), {"en", "zh"})
+        self.assertEqual(set(rules["advice"]), {"en", "zh"})
+
+    def test_cli_output_in_both_languages(self):
+        import io
+        from contextlib import redirect_stdout
+        from unittest import mock
+
+        import i18n
+        msg = "亲爱的，这个平台稳赚不赔，先充值试试"
+        for lang, word in (("en", "Scam risk"), ("zh", "诈骗风险")):
+            with mock.patch.object(i18n, "LANG", lang):
+                buf = io.StringIO()
+                with redirect_stdout(buf):
+                    scam_check.main([msg])
+                self.assertIn(word, buf.getvalue())

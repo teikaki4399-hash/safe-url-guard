@@ -2,7 +2,7 @@
 "use strict";
 const api = typeof browser !== "undefined" ? browser : chrome;
 const $ = id => document.getElementById(id);
-const fmt = t => t ? new Date(t).toLocaleString() : "尚未更新";
+const fmt = t => t ? new Date(t).toLocaleString(I18N.lang === "zh" ? "zh-CN" : undefined) : I18N.t("popup_never");
 
 function send(msg) {
   return new Promise(resolve => api.runtime.sendMessage(msg, resolve));
@@ -10,30 +10,32 @@ function send(msg) {
 
 async function refresh() {
   const s = await send({ type: "status" });
-  if (!s || s.error) { $("last").textContent = "读取状态失败"; return; }
+  if (!s || s.error) { $("last").textContent = I18N.t("popup_status_fail"); return; }
   $("count").textContent = s.blockedCount.toLocaleString();
   $("feeds").innerHTML = "";
-  for (const f of Object.values(s.feeds)) {
+  for (const [name, f] of Object.entries(s.feeds)) {
     const li = document.createElement("li");
-    li.textContent = `${f.label}：${f.count.toLocaleString()} 个（${fmt(f.updated)}）`;
+    li.textContent = I18N.t("popup_feed", { label: I18N.t("feed_" + name), n: f.count.toLocaleString(), t: fmt(f.updated) });
     if (f.error) {
       const e = document.createElement("div");
       e.className = "err";
-      e.textContent = "上次更新失败：" + f.error;
+      e.textContent = I18N.t("popup_feed_err", { e: f.error });
       li.appendChild(e);
     }
     $("feeds").appendChild(li);
   }
-  $("last").textContent = "上次检查更新：" + fmt(s.lastAttempt) + "（每 24 小时自动更新）";
+  $("last").textContent = I18N.t("popup_last", { t: fmt(s.lastAttempt) });
 }
 
-$("update").addEventListener("click", async () => {
-  $("update").disabled = true;
-  $("update").textContent = "更新中…";
-  await send({ type: "updateNow" });
-  $("update").disabled = false;
-  $("update").textContent = "立即更新";
+I18N.init().then(() => {
+  $("update").addEventListener("click", async () => {
+    $("update").disabled = true;
+    $("update").textContent = I18N.t("popup_updating");
+    await send({ type: "updateNow" });
+    $("update").disabled = false;
+    $("update").textContent = I18N.t("popup_update");
+    refresh();
+  });
+  $("options").addEventListener("click", () => api.runtime.openOptionsPage());
   refresh();
 });
-$("options").addEventListener("click", () => api.runtime.openOptionsPage());
-refresh();

@@ -1,6 +1,7 @@
 /*
- * safe-url-guard 浏览器扩展 - 后台
- * 浏览器启动时自动运行，每 24 小时更新黑名单，并用 declarativeNetRequest 拦截黑名单上的网站。
+ * safe-url-guard browser extension - background
+ * Runs when the browser starts, updates the blocklists every 24 hours and blocks
+ * listed sites with declarativeNetRequest.
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 "use strict";
@@ -8,15 +9,15 @@
 const api = typeof browser !== "undefined" ? browser : chrome;
 
 const FEEDS = {
-  urlhaus: { url: "https://urlhaus.abuse.ch/downloads/hostfile/", kind: "hosts", label: "URLhaus（恶意软件）" },
-  openphish: { url: "https://openphish.com/feed.txt", kind: "urls", label: "OpenPhish（钓鱼网站）" }
+  urlhaus: { url: "https://urlhaus.abuse.ch/downloads/hostfile/", kind: "hosts" },
+  openphish: { url: "https://openphish.com/feed.txt", kind: "urls" }
 };
 const UPDATE_MINUTES = 24 * 60;
-const CHUNK = 1000;          // 每条规则包含的域名数
+const CHUNK = 1000;          // domains per rule
 const ALLOW_RULE_ID = 1;
 const FIRST_BLOCK_ID = 100;
 
-/* ---------- 黑名单解析 ---------- */
+/* ---------- blocklist parsing ---------- */
 function normalizeHost(h) {
   h = String(h || "").trim().toLowerCase().replace(/\.$/, "");
   return h.startsWith("www.") ? h.slice(4) : h;
@@ -49,7 +50,7 @@ function parseList(text) {
   return out;
 }
 
-/* ---------- 内置黑名单（随扩展一起发布的、已确认的诈骗网站） ---------- */
+/* ---------- built-in list (confirmed scam sites shipped with the extension) ---------- */
 async function loadBuiltin() {
   try {
     const resp = await fetch(api.runtime.getURL("builtin_blocklist.txt"));
@@ -59,7 +60,7 @@ async function loadBuiltin() {
   }
 }
 
-/* ---------- 规则 ---------- */
+/* ---------- rules ---------- */
 async function applyRules() {
   const st = await api.storage.local.get(["feeds", "allowlist", "denylist"]);
   const feeds = st.feeds || {};
@@ -98,7 +99,7 @@ async function applyRules() {
   return domains.length;
 }
 
-/* ---------- 更新 ---------- */
+/* ---------- updates ---------- */
 let updating = null;
 function updateFeeds() {
   if (updating) return updating;
@@ -111,10 +112,10 @@ function updateFeeds() {
         const resp = await fetch(f.url, { cache: "no-store" });
         if (!resp.ok) throw new Error("HTTP " + resp.status);
         const hosts = parseFeed(await resp.text(), f.kind);
-        if (hosts.size === 0) throw new Error("列表为空");
+        if (hosts.size === 0) throw new Error("empty list");
         feeds[name] = { hosts: [...hosts], updated: Date.now() };
       } catch (e) {
-        errors[name] = String(e.message || e);   // 失败时保留上一次的列表
+        errors[name] = String(e.message || e);   // keep the previous list on failure
       }
     }
     await api.storage.local.set({ feeds, lastAttempt: Date.now(), errors });
@@ -145,7 +146,7 @@ api.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       const feeds = {};
       for (const [name, f] of Object.entries(FEEDS)) {
         const d = (st.feeds || {})[name];
-        feeds[name] = { label: f.label, count: d ? d.hosts.length : 0, updated: d ? d.updated : null,
+        feeds[name] = { count: d ? d.hosts.length : 0, updated: d ? d.updated : null,
           error: (st.errors || {})[name] || null };
       }
       return { blockedCount: st.blockedCount || 0, lastAttempt: st.lastAttempt || null, feeds };

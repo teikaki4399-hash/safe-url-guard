@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "防诈骗网站拦截 safe-url-guard"
+  },
+  "extDesc": {
+    "message": "浏览器启动后自动运行，每天更新公开的恶意软件 / 钓鱼网站黑名单（URLhaus、OpenPhish），访问黑名单上的网站时直接拦截。"
+  }
+}

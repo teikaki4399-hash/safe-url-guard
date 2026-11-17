@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""scam_check - 检查短信、LINE、邮件、私信等消息是否含有常见的诈骗话术。
+"""scam_check - check SMS, LINE, e-mail, DMs etc. for common scam phrases.
 
-只使用 Python 标准库。规则文件为 docs/scam_rules.json（和网页版共用）。
+Python standard library only. Rules live in docs/scam_rules.json (shared with the web version).
 
-用法:
-    python3 scam_check.py "要检查的消息"
+Usage:
+    python3 scam_check.py "message to check"
     python3 scam_check.py -f message.txt
-    pbpaste | python3 scam_check.py          # 从标准输入读取
-    python3 scam_check.py --online "..."     # 同时在线查询消息中网址的注册时间
+    pbpaste | python3 scam_check.py          # read from stdin
+    python3 scam_check.py --online "..."     # also look up registration dates of URLs in the message
 
-退出码: 0=未发现 1=低 2=中 3=高
+Exit code: 0=nothing found 1=low 2=medium 3=high
 """
 
 from __future__ import annotations
@@ -21,10 +21,11 @@ import sys
 from pathlib import Path
 
 import safe_url_guard
+from i18n import pick, t
 
 RULES_PATH = Path(__file__).resolve().parent / "docs" / "scam_rules.json"
-URL_RE = re.compile(r"(?:https?://|www\.)[^\s<>\"'，。、）)」】]+", re.IGNORECASE)
-LEVEL_NAMES = {0: "未发现明显特征", 1: "低", 2: "中", 3: "高"}
+# stop at whitespace, quotes and CJK punctuation (，。、）」】)
+URL_RE = re.compile(r"(?:https?://|www\.)[^\s<>\"'\uff0c\u3002\u3001\uff09)\u300d\u3011]+", re.IGNORECASE)
 
 
 def load_rules(path: Path = RULES_PATH) -> dict:
@@ -35,7 +36,7 @@ def load_rules(path: Path = RULES_PATH) -> dict:
 
 
 def analyze(text: str, rules: dict) -> dict:
-    """返回 {score, level, hits:[{id,category,reason,matches}], combos:[...], urls:[...]}"""
+    """Return {score, level, hits:[{id,category,reason,matches}], combos:[...], urls:[...]}."""
     hits = []
     for r in rules["rules"]:
         found = sorted({m.group(0) for m in r["_re"].finditer(text)})
@@ -53,24 +54,24 @@ def analyze(text: str, rules: dict) -> dict:
 
 def print_report(res: dict, rules: dict, online: bool) -> None:
     names = rules["categories"]
-    print(f"诈骗风险: 【{LEVEL_NAMES[res['level']]}】 (分数 {res['score']})\n")
+    print(t("risk", level=t(f"lvl_{res['level']}"), score=res["score"]))
     if res["hits"]:
-        print("发现的特征:")
+        print(t("signs"))
         for h in res["hits"]:
-            print(f"  ● [{names[h['category']]}] {h['reason']}")
-            print(f"      命中: {'、'.join(h['matches'][:5])}")
+            print(f"  ● [{pick(names[h['category']])}] {pick(h['reason'])}")
+            print("      " + t("matched", m=" / ".join(h["matches"][:5])))
     if res["combos"]:
-        print("\n危险组合:")
+        print(t("combos"))
         for c in res["combos"]:
-            print(f"  ▲ {c['reason']}")
+            print(f"  ▲ {pick(c['reason'])}")
 
     if res["urls"]:
-        print("\n消息中的网址:")
+        print(t("urls_in_msg"))
         db, _stale = safe_url_guard.load_blocklist()
         allow = safe_url_guard.read_domain_file(safe_url_guard.ALLOWLIST_FILE)
         for u in res["urls"]:
             verdict, reasons = safe_url_guard.check_url(u, db, allow)
-            print(f"  [{safe_url_guard.LABEL[verdict]}] {u}")
+            print(f"  [{safe_url_guard.label(verdict)}] {u}")
             for r in reasons:
                 print(f"      - {r}")
             if online:
@@ -79,18 +80,18 @@ def print_report(res: dict, rules: dict, online: bool) -> None:
                 print(f"      - {domain_age.describe(info)}")
 
     if res["level"] >= 2:
-        print("\n建议:")
-        for a in rules["advice"]:
+        print(t("advice"))
+        for a in pick(rules["advice"]):
             print(f"  - {a}")
-    print("\n※ 本工具只根据常见话术判断，结果不代表一定是或一定不是诈骗。")
+    print(t("disclaimer"))
 
 
 def main(argv=None) -> int:
-    p = argparse.ArgumentParser(description="检查消息中是否含有常见的诈骗话术")
-    p.add_argument("text", nargs="*", help="要检查的消息（省略则从标准输入读取）")
-    p.add_argument("-f", "--file", help="从文件读取消息")
-    p.add_argument("--online", action="store_true", help="在线查询消息中网址的注册时间 (RDAP)")
-    p.add_argument("--json", action="store_true", help="以 JSON 格式输出")
+    p = argparse.ArgumentParser(description=t("sc_desc"))
+    p.add_argument("text", nargs="*", help=t("sc_text"))
+    p.add_argument("-f", "--file", help=t("sc_file"))
+    p.add_argument("--online", action="store_true", help=t("sc_online"))
+    p.add_argument("--json", action="store_true", help=t("sc_json"))
     a = p.parse_args(argv)
 
     if a.file:

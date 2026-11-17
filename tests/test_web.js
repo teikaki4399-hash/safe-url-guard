@@ -1,5 +1,5 @@
-// 网页版核心逻辑 (docs/scam_core.js) 的测试，并确认结果与 Python 版一致。
-// 运行: node tests/test_web.js
+// Tests for the web core logic (docs/scam_core.js), checking it gives the same scores as the Python version.
+// Run: node tests/test_web.js
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -15,18 +15,18 @@ try {
   const code = "import json,sys;sys.path.insert(0,'.');import scam_check as s;R=s.load_rules();" +
     "print(json.dumps([s.analyze(t,R)['score'] for t in json.load(sys.stdin)]))";
   pyScores = JSON.parse(execFileSync("python3", ["-c", code], { cwd: root, input: JSON.stringify(samples.map(s => s.text)) }));
-} catch (e) { console.log("（未找到 python3，跳过与 Python 版的对比）"); }
+} catch (e) { console.log("(python3 not found; skipping comparison with the Python version)"); }
 
 samples.forEach((s, i) => {
   const r = Core.analyze(s.text, rules);
-  assert(r.level >= s.min && r.level <= s.max, `等级不符: ${s.text} -> ${r.level}`);
-  if (pyScores) assert.strictEqual(r.score, pyScores[i], `与 Python 版分数不一致: ${s.text}`);
+  assert(r.level >= s.min && r.level <= s.max, `unexpected level: ${s.text} -> ${r.level}`);
+  if (pyScores) assert.strictEqual(r.score, pyScores[i], `score differs from the Python version: ${s.text}`);
 });
 
 const h = (u) => Core.urlHeuristics(u).warnings.length;
 assert.strictEqual(h("https://www.python.org/"), 0);
 assert(h("http://192.168.0.1/login") >= 2);
-assert(h("https://аpple.com") >= 1, "西里尔字母仿冒域名应被检测");
+assert(h("https://аpple.com") >= 1, "Cyrillic look-alike domain should be flagged");
 assert(h("https://google.com@bad.io") >= 1);
 assert.strictEqual(Core.urlHeuristics("https://www.Example.com/x").host, "example.com");
 
@@ -36,4 +36,4 @@ assert.deepStrictEqual(Core.candidates("a.example.com"), ["example.com", "a.exam
 assert.strictEqual(Core.verdictForDays(5), "DANGER");
 assert.strictEqual(Core.verdictForDays(100), "WARN");
 assert.strictEqual(Core.verdictForDays(1000), "OK");
-console.log(`OK (${samples.length} 条样本${pyScores ? "，与 Python 版一致" : ""})`);
+console.log(`OK (${samples.length} samples${pyScores ? ", identical to the Python version" : ""})`);

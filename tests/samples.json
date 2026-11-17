@@ -1,5 +1,5 @@
 {
-  "_comment": "测试用消息样本及期望的最低/最高风险等级 (0=未发现 1=低 2=中 3=高)。Python 和网页版都用它来测试。",
+  "_comment": "Test messages with the expected min/max risk level (0=none 1=low 2=medium 3=high). Used by both the Python and the web tests.",
   "samples": [
     {
       "text": "亲爱的，我叔叔是做数字货币的，有内部消息，这个平台稳赚不赔，你先充值一点试试，下载这个APP注册",

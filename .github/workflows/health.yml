@@ -1,0 +1,41 @@
+name: Weekly health check
+
+on:
+  schedule:
+    - cron: "23 3 * * 1"   # every Monday 03:23 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install optional test dependencies (QR code)
+        run: pip install opencv-python-headless "qrcode[pil]"
+      - name: Python tests
+        run: python -m unittest discover -s tests -v
+      - name: Web tests (and parity with Python)
+        run: node tests/test_web.js
+      - name: Built-in blocklists are in sync
+        run: diff extension/builtin_blocklist.txt docs/builtin_blocklist.txt
+
+  feeds:
+    # Detects blocklist sources that moved or shut down. Runs on the schedule and on demand.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download every feed
+        run: python tests/check_feeds.py

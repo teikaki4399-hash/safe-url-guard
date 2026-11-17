@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""qr_check - 读取二维码图片里的网址，先检查再决定要不要打开（防扫码诈骗）。
+"""qr_check - read the URL inside a QR-code image and check it before you open it.
 
-需要 OpenCV:  pip install opencv-python-headless
+Requires OpenCV:  pip install opencv-python-headless
 
-用法:
-    python3 qr_check.py 图片.png [图片2.jpg ...]
-    python3 qr_check.py --online 图片.png     # 同时查询网址的注册时间
+Usage:
+    python3 qr_check.py image.png [image2.jpg ...]
+    python3 qr_check.py --online image.png     # also look up the URL's registration date
 """
 
 from __future__ import annotations
@@ -14,54 +14,54 @@ import argparse
 import sys
 
 import safe_url_guard
+from i18n import t
 
 
 def decode(path: str) -> list[str]:
     try:
         import cv2
     except ImportError:
-        sys.exit("需要 OpenCV，请先运行: pip install opencv-python-headless")
+        sys.exit(t("qr_need_cv"))
     img = cv2.imread(path)
     if img is None:
-        raise ValueError(f"无法读取图片: {path}")
+        raise ValueError(t("qr_cant_read", p=path))
     det = cv2.QRCodeDetector()
     ok, texts, _pts, _ = det.detectAndDecodeMulti(img)
-    out = [t for t in (texts if ok else []) if t]
+    out = [x for x in (texts if ok else []) if x]
     if not out:
-        t, _pts, _ = det.detectAndDecode(img)
-        if t:
-            out = [t]
+        single, _pts, _ = det.detectAndDecode(img)
+        if single:
+            out = [single]
     return out
 
 
 def main(argv=None) -> int:
-    p = argparse.ArgumentParser(description="读取二维码并检查其中的网址")
+    p = argparse.ArgumentParser(description=t("qr_desc"))
     p.add_argument("images", nargs="+")
-    p.add_argument("--online", action="store_true", help="查询网址的注册时间 (RDAP)")
+    p.add_argument("--online", action="store_true", help=t("qr_online"))
     a = p.parse_args(argv)
 
     db, stale = safe_url_guard.load_blocklist()
     if stale:
-        print("※ 黑名单未下载或已过期，请先运行: python3 safe_url_guard.py update\n",
-              file=sys.stderr)
+        print(t("stale"), file=sys.stderr)
     allow = safe_url_guard.read_domain_file(safe_url_guard.ALLOWLIST_FILE)
     worst = 0
     for img in a.images:
         try:
             texts = decode(img)
         except ValueError as e:
-            print(f"[错误] {e}")
+            print(t("qr_error", e=e))
             continue
         if not texts:
-            print(f"{img}: 没有识别到二维码")
+            print(t("qr_none", img=img))
             continue
-        for t in texts:
-            print(f"{img}: 二维码内容 → {t}")
-            if "://" not in t and not t.lower().startswith("www."):
-                print("    （不是网址，未检查）")
+        for text in texts:
+            print(t("qr_content", img=img, t=text))
+            if "://" not in text and not text.lower().startswith("www."):
+                print(t("qr_not_url"))
                 continue
-            verdict, reasons = safe_url_guard.check_url(t, db, allow)
-            print(f"    [{safe_url_guard.LABEL[verdict]}]")
+            verdict, reasons = safe_url_guard.check_url(text, db, allow)
+            print(f"    [{safe_url_guard.label(verdict)}]")
             for r in reasons:
                 print(f"    - {r}")
             if a.online:

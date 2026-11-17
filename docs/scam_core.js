@@ -1,6 +1,6 @@
 /*
- * scam_core.js - 诈骗消息 / 网址检查的核心逻辑（浏览器和 Node.js 通用）。
- * 规则来自 scam_rules.json，和 Python 版 scam_check.py 共用。
+ * scam_core.js - core logic for checking scam messages and URLs (works in browsers and Node.js).
+ * Rules come from scam_rules.json, shared with the Python version (scam_check.py).
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 (function (root, factory) {
@@ -42,24 +42,26 @@
     return { score: score, level: level, hits: hits, combos: combos, urls: urls };
   }
 
-  /* 网址的可疑特征（与 safe_url_guard.py 的 heuristics 对应） */
-  function urlHeuristics(raw) {
+  /* Suspicious URL traits (mirrors heuristics() in safe_url_guard.py).
+     Returns message keys; `tr(key, vars)` turns them into text (defaults to the key). */
+  function urlHeuristics(raw, tr) {
+    tr = tr || function (k) { return k; };
     var warn = [];
     var u;
     try { u = new URL(/^[a-z][a-z0-9+.-]*:\/\//i.test(raw) ? raw : "http://" + raw); }
-    catch (e) { return { host: "", warnings: ["无法解析这个网址"] }; }
+    catch (e) { return { host: "", warnings: [tr("h_bad")] }; }
     var host = u.hostname.replace(/^\[|\]$/g, "").toLowerCase();
-    if (u.protocol === "http:") warn.push("未使用 HTTPS（通信未加密）");
-    if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host) || host.indexOf(":") >= 0) warn.push("直接使用 IP 地址而不是域名");
-    if (host.indexOf("xn--") >= 0) warn.push("域名含有特殊字符（punycode / xn--），可能是用相似字符仿冒的网站");
-    if (u.username || u.password) warn.push("网址中含有 '@'，真实目标可能与看起来的不同");
-    if ((host.match(/\./g) || []).length >= 4) warn.push("子域名层级过多");
-    if (raw.length > 200) warn.push("网址异常地长");
-    if (u.port && u.port !== "80" && u.port !== "443") warn.push("使用非标准端口 " + u.port);
+    if (u.protocol === "http:") warn.push(tr("h_http"));
+    if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host) || host.indexOf(":") >= 0) warn.push(tr("h_ip"));
+    if (host.indexOf("xn--") >= 0) warn.push(tr("h_idn"));
+    if (u.username || u.password) warn.push(tr("h_at"));
+    if ((host.match(/\./g) || []).length >= 4) warn.push(tr("h_sub"));
+    if (raw.length > 200) warn.push(tr("h_long"));
+    if (u.port && u.port !== "80" && u.port !== "443") warn.push(tr("h_port", { port: u.port }));
     return { host: host.replace(/^www\./, ""), warnings: warn };
   }
 
-  /* ---------- RDAP（域名注册时间） ---------- */
+  /* ---------- RDAP (domain registration date) ---------- */
   function rdapBase(domain, bootstrap) {
     var best = null, bestLen = -1;
     (bootstrap.services || []).forEach(function (svc) {
@@ -95,8 +97,13 @@
     return days < 30 ? "DANGER" : days < 180 ? "WARN" : "OK";
   }
 
+  /* pick the right language from {"en": ..., "zh": ...} */
+  function pick(v, lang) {
+    return v && typeof v === "object" && "en" in v ? (v[lang] || v.en) : v;
+  }
+
   return {
-    compile: compile, analyze: analyze, urlHeuristics: urlHeuristics,
+    pick: pick, compile: compile, analyze: analyze, urlHeuristics: urlHeuristics,
     rdapBase: rdapBase, candidates: candidates, registrationDate: registrationDate,
     verdictForDays: verdictForDays
   };

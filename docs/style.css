@@ -55,3 +55,7 @@ mark { background: #ffe08a; color: #000; border-radius: 2px; }
 footer { color: var(--muted); font-size: .85rem; padding-bottom: 30px; }
 a { color: var(--accent); }
 code { word-break: break-all; }
+.lang-switch { float: right; display: flex; gap: 4px; margin-top: 4px; }
+.lang-switch button { padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; font-size: .85rem; }
+.lang-switch button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+@media (prefers-color-scheme: dark) { .lang-switch button[aria-pressed="true"] { color: #10131a; } }

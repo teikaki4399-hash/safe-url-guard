@@ -1,33 +1,37 @@
 # safe-url-guard
 
-防止被**病毒网站、钓鱼网站和诈骗消息**骗到的一组免费工具。
+**English** | [简体中文](README.zh-CN.md)
 
-> 希望不再有人被骗。重点针对**同城约会（约炮）诈骗、投资诈骗、兼职刷单诈骗、感情（网恋）诈骗**。
+Free tools that protect you from **malware sites, phishing sites and scam messages**.
 
-| 工具 | 适合谁 | 能做什么 |
+> Built so that nobody else has to go through being scammed. Focused on **dating / hookup scams, investment scams, task / job scams and romance scams**.
+
+| Tool | For | What it does |
 |---|---|---|
-| 🛡 [整台电脑拦截](#-整台电脑拦截所有浏览器和-app) | 电脑（推荐） | 修改系统 hosts，**所有浏览器、所有 App** 都打不开危险网站，每天自动更新 |
-| 🧩 [浏览器扩展](#-浏览器扩展推荐) | 电脑（推荐） | 浏览器启动后自动运行，**访问危险网站时直接拦截**，点链接也会被挡住 |
-| 📱 [手机](#-手机怎么用) | 手机 | 网页版检查 + 手机自带的防护设置 |
-| 🌐 [网页版检查工具](#-网页版检查工具) | 不会编程的人 | 打开网页，检查**可疑消息、网址、二维码** |
-| 🐍 [Python 命令行工具](#-python-命令行工具) | 会用终端的人 | 和上面相同的检查，可以写进脚本里 |
+| 🛡 [Whole-computer blocking](#-whole-computer-blocking-every-browser-and-app) | Computers (recommended) | Edits the system hosts file so **every browser and every app** is blocked from dangerous sites; updates daily |
+| 🧩 [Browser extension](#-browser-extension-recommended) | Computers (recommended) | Runs when the browser starts and **blocks dangerous sites, even when you click a link** |
+| 📱 [Phones](#-on-your-phone) | Phones | Web checker + the phone's own protection settings |
+| 🌐 [Web checker](#-web-checker) | Everyone | Check **suspicious messages, links and QR codes** in your browser |
+| 🐍 [Python command-line tools](#-python-command-line-tools) | Terminal users | The same checks, scriptable |
+
+All tools are available in **English and Simplified Chinese (简体中文)**. See [Language](#language).
 
 ---
 
-## 🛡 整台电脑拦截（所有浏览器和 App）
+## 🛡 Whole-computer blocking (every browser and app)
 
-把黑名单写进系统的 hosts 文件。Chrome、Edge、Firefox、Safari 以及其他 App 都会连不上黑名单上的网站。开机时和每天各自动更新一次。
+Writes the blocklists into the system hosts file, so Chrome, Edge, Firefox, Safari and every other app cannot reach listed sites. Updated automatically at startup and once a day.
 
-**准备：** 先安装 Python 3（Windows 可以从 [python.org](https://www.python.org/downloads/) 下载，安装时勾选 “Add python.exe to PATH”）。然后下载这个仓库（**Code → Download ZIP**），解压。
+**Before you start:** install Python 3 (on Windows, from [python.org](https://www.python.org/downloads/); tick "Add python.exe to PATH"). Then download this repository (**Code → Download ZIP**) and unzip it.
 
-**Windows：** 在开始菜单搜索 “PowerShell”，右键选 **以管理员身份运行**，再执行：
+**Windows:** search for "PowerShell" in the Start menu, right-click it, choose **Run as administrator**, then run:
 
 ```powershell
-cd 解压后的文件夹路径\safe-url-guard-main
+cd path\to\safe-url-guard-main
 python hosts_guard.py install
 ```
 
-**macOS：** 先把解压后的文件夹移到 `/Users/Shared/`。macOS 会限制后台程序读取“下载”“桌面”“文稿”文件夹，放在那里会导致每日自动更新失败。
+**macOS:** first move the folder to `/Users/Shared/`. macOS stops background jobs from reading Downloads, Desktop and Documents, so daily updates would fail there.
 
 ```sh
 mv ~/Downloads/safe-url-guard-main /Users/Shared/safe-url-guard
@@ -35,137 +39,151 @@ cd /Users/Shared/safe-url-guard
 sudo python3 hosts_guard.py install
 ```
 
-如果 Python 是从 python.org 安装的，出现 `CERTIFICATE_VERIFY_FAILED` 时，请先双击“应用程序 → Python 3.x”文件夹里的 **Install Certificates.command**，然后再运行一次。
+If you installed Python from python.org and see `CERTIFICATE_VERIFY_FAILED`, double-click **Install Certificates.command** in "Applications → Python 3.x" and run the command again.
 
-**Linux：**
+**Linux:**
 
 ```sh
-cd 解压后的文件夹路径/safe-url-guard-main
+cd path/to/safe-url-guard-main
 sudo python3 hosts_guard.py install
 ```
 
-- 查看状态：`python hosts_guard.py status`
-- 卸载：`python hosts_guard.py uninstall`（Windows 用管理员身份运行，macOS / Linux 前面加 `sudo`）。第一次修改前的 hosts 会备份为 `hosts.safe-url-guard.bak`
-- 安装后**不要移动或删除这个文件夹**，自动更新要用到里面的文件
-- 如果浏览器开了“安全 DNS / DNS over HTTPS”，可能会绕过 hosts 文件。所以最好**同时安装下面的浏览器扩展**
+- Status: `python hosts_guard.py status`
+- Uninstall: `python hosts_guard.py uninstall` (as administrator on Windows, with `sudo` on macOS / Linux). The original hosts file is backed up as `hosts.safe-url-guard.bak` before the first change.
+- **Do not move or delete the folder after installing**: the daily update runs from it.
+- A browser with "secure DNS / DNS over HTTPS" turned on may bypass the hosts file, so **also install the browser extension below**.
 
-## 🧩 浏览器扩展（推荐）
+## 🧩 Browser extension (recommended)
 
-- 浏览器启动时自动运行，每 24 小时自动更新黑名单
-- 打开黑名单上的网站（包括它的子域名）时，会跳转到警告页面，**页面上没有“仍要访问”的按钮**
-- 可以自己添加要拦截的网站（自定义黑名单）；被误拦截时，可以在设置里加白名单
+- Runs automatically when the browser starts and updates the blocklists every 24 hours
+- Opening a listed site (or any of its subdomains) shows a warning page instead. **There is no "continue anyway" button.**
+- You can add your own sites to block; if a safe site is blocked by mistake, allow it in the settings
 
-### 安装方法（Chrome / Edge）
+### Install (Chrome / Edge)
 
-1. 下载这个仓库：点页面上方绿色的 **Code → Download ZIP**，然后解压
-2. 在地址栏输入 `chrome://extensions`（Edge 输入 `edge://extensions`）
-3. 打开右上角的 **开发者模式**（Developer mode）
-4. 点 **加载已解压的扩展程序**（Load unpacked），选择解压后的 `extension` 文件夹
-5. 点工具栏上的 🛡 图标，能看到“正在拦截 ○○ 个危险网站”就说明安装成功了
+1. Download this repository: **Code → Download ZIP**, then unzip it
+2. Open `chrome://extensions` (Edge: `edge://extensions`)
+3. Turn on **Developer mode** (top right)
+4. Click **Load unpacked** and choose the `extension` folder
+5. Click the 🛡 icon in the toolbar: if it says "Blocking … dangerous sites", it works
 
-> 安装时浏览器会提示扩展需要访问所有网站的权限。这是把危险网站**重定向到警告页面**所必需的（[Chrome 的说明](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)）。这个扩展不会读取网页内容，也不会把浏览记录发送到任何地方，所有代码都在这个仓库里公开。
+> The browser will say the extension can access all sites. This is required to **redirect dangerous sites to the warning page** ([Chrome documentation](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)). The extension does not read page contents and does not send your browsing history anywhere; all of its code is in this repository.
 
-Firefox 128 及以上版本：在 `about:debugging#/runtime/this-firefox` 里点“临时载入附加组件”，选择 `extension/manifest.json`。这种方式在浏览器重启后会失效。想一直使用的话，需要把扩展提交到 [addons.mozilla.org](https://addons.mozilla.org/) 签名。另外我目前只在 Chromium 上测试过。
+Firefox 128+: open `about:debugging#/runtime/this-firefox`, click "Load Temporary Add-on…" and choose `extension/manifest.json`. This is removed when Firefox restarts; permanent use requires signing through [addons.mozilla.org](https://addons.mozilla.org/). So far it has only been tested on Chromium.
 
-## 🌐 网页版检查工具
+## 🌐 Web checker
 
-网址：**https://teikaki4399-hash.github.io/safe-url-guard/**（启用 GitHub Pages 后可用）
+**https://teikaki4399-hash.github.io/safe-url-guard/**
 
-- **消息检查**：粘贴短信、LINE、邮件、私信内容，检查里面有没有常见的诈骗话术
-- **网址检查**：检查可疑特征（仿冒域名、IP 地址等），并查询域名注册了多久
-- **二维码检查**：读取二维码图片里的网址，检查之后再决定要不要打开
+- **Message:** paste an SMS, LINE message, e-mail or DM and check it for common scam phrases
+- **Link:** check for suspicious traits (look-alike domains, raw IP addresses, …) and how long ago the domain was registered
+- **QR code:** read the link inside a QR-code image and check it before opening
 
-消息和图片只在浏览器里检查，不会上传到服务器。
+Messages and images are checked only in your browser and are never uploaded.
 
-## 📱 手机怎么用
+## 📱 On your phone
 
-手机上没法像电脑那样装这个拦截程序（iPhone 的 Safari 扩展必须通过 App Store 发布）。可以组合使用下面几种方法：
+Phones cannot run this blocker the way computers can (Safari extensions on iPhone must be distributed through the App Store). Combine these instead:
 
-1. **把网页版加到主屏幕：** 用手机浏览器打开 https://teikaki4399-hash.github.io/safe-url-guard/
-   - iPhone（Safari）：点分享按钮 → **添加到主屏幕**
-   - Android（Chrome）：点右上角 ⋮ → **添加到主屏幕**
+1. **Add the web checker to your home screen:** open https://teikaki4399-hash.github.io/safe-url-guard/ on your phone
+   - iPhone (Safari): Share button → **Add to Home Screen**
+   - Android (Chrome): ⋮ → **Add to Home screen**
 
-   收到可疑的消息、链接或二维码时，先**复制粘贴到这里检查**。二维码可以先截图，再在“二维码检查”里选这张截图。
-2. **打开手机自带的防护：**
-   - iPhone：设置 → Safari → 打开 **“欺诈性网站警告”**（较新的 iOS 版本在 设置 → App → Safari 里）
-   - Android（Chrome）：⋮ → 设置 → 隐私和安全 → 安全浏览 → **增强型保护**
-3. **使用会拦截恶意网站的 DNS（整台手机都有效）：** 例如非营利组织 [Quad9](https://quad9.net/)，它会拦截已知的恶意域名。
-   - Android 9 及以上：设置 → 网络和互联网 → **私人 DNS** → 选“私人 DNS 提供商主机名”，输入 `dns.quad9.net`（不同手机的菜单名称可能略有不同）
-   - iPhone：需要安装配置描述文件，请按 Quad9 官网的说明操作
+   When you get a suspicious message, link or QR code, **paste it in and check it first**. For a QR code, take a screenshot and choose it in the "QR code" tab.
+2. **Turn on the phone's own protection:**
+   - iPhone: Settings → Safari → turn on **"Fraudulent Website Warning"** (on newer iOS: Settings → Apps → Safari)
+   - Android (Chrome): ⋮ → Settings → Privacy and security → Safe Browsing → **Enhanced protection**
+3. **Use a DNS service that blocks malicious domains (covers the whole phone):** for example the non-profit [Quad9](https://quad9.net/), which blocks known malicious domains.
+   - Android 9+: Settings → Network & internet → **Private DNS** → "Private DNS provider hostname" → `dns.quad9.net` (menu names vary by phone)
+   - iPhone: requires a configuration profile; follow the instructions on Quad9's website
 
-## 🐍 Python 命令行工具
+## 🐍 Python command-line tools
 
-需要 Python 3.8 以上版本，只用到标准库。二维码检查需要额外安装 OpenCV。
+Python 3.8+, standard library only. The QR-code checker also needs OpenCV.
 
 ```sh
 git clone https://github.com/teikaki4399-hash/safe-url-guard.git
 cd safe-url-guard
 
-# 网址检查（先下载黑名单，建议每天运行一次）
+# Link check (download the blocklists first; once a day is a good idea)
 python3 safe_url_guard.py update
 python3 safe_url_guard.py check https://example.com
-python3 safe_url_guard.py open https://example.com     # 危险的网站会被拦截，可疑的会先询问
-python3 safe_url_guard.py hosts > blocklist-hosts.txt  # 生成 hosts 文件格式的拦截列表
+python3 safe_url_guard.py open https://example.com     # blocks dangerous sites, asks before suspicious ones
+python3 safe_url_guard.py hosts > blocklist-hosts.txt  # blocklist in hosts-file format
 
-# 诈骗消息检查
-python3 scam_check.py "亲爱的，这个平台稳赚不赔，先充值试试"
-python3 scam_check.py -f message.txt --online           # --online：顺便查询消息中网址的注册时间
+# Scam-message check
+python3 scam_check.py "Darling, this platform is guaranteed profit, just top up a little first"
+python3 scam_check.py -f message.txt --online           # --online: also look up when linked domains were registered
 
-# 域名注册时间
+# Domain registration date
 python3 domain_age.py https://shop.example.com
 
-# 二维码检查
+# QR code
 pip install opencv-python-headless
 python3 qr_check.py qr.png
 ```
 
-自定义列表放在 `~/.cache/safe_url_guard/` 下：`allowlist.txt` 是白名单，`denylist.txt` 是黑名单，每行写一个域名。
+Custom lists live in `~/.cache/safe_url_guard/`: `allowlist.txt` and `denylist.txt`, one domain per line.
 
-## 判断依据
+## Language
 
-| 检查内容 | 依据 |
+| Tool | How to switch |
 |---|---|
-| 恶意软件网站 | [URLhaus](https://urlhaus.abuse.ch/)（abuse.ch）的公开黑名单 |
-| 钓鱼网站 | [OpenPhish](https://openphish.com/phishing_feeds.html) 的公开黑名单（Community Feed） |
-| 域名注册时间 | [RDAP](https://www.icann.org/rdap)（RFC 9082/9083），通过 [IANA bootstrap](https://data.iana.org/rdap/dns.json) 找到对应的查询服务器。注册不到 30 天判为“非常可疑”，不到 180 天判为“请小心” |
-| 诈骗话术 | [`docs/scam_rules.json`](docs/scam_rules.json) 里的规则，按特征打分，并对危险的组合额外加分，例如“感情 + 要钱”“兼职 + 先垫付” |
+| Python tools | `python3 safe_url_guard.py lang zh` (or `lang en`). Saved in a `.lang` file next to the scripts. You can also set `SAFE_URL_GUARD_LANG=zh`. A Chinese system locale selects Chinese automatically. |
+| Browser extension | Follows the browser's language; change it under the extension's **Settings → Language** |
+| Web checker | **English / 中文** buttons at the top right (remembered), or add `?lang=zh` to the URL |
 
-## 局限性（请一定读一下）
+## How it decides
 
-- 黑名单只能拦截**已经被报告过的**网站，刚出现的诈骗网站可能检测不到。
-- 诈骗话术检查只能根据常见的说法来判断，**没检测出来不代表安全**。只要对方**要钱、要验证码、叫你别告诉别人**，就请先找身边的人或警察商量。
-- 请同时开着浏览器自带的保护，例如 Chrome / Firefox 的 [Google Safe Browsing](https://safebrowsing.google.com/)、Edge 的 Microsoft Defender SmartScreen。
+| Check | Source |
+|---|---|
+| Malware sites | [URLhaus](https://urlhaus.abuse.ch/) (abuse.ch) public blocklist |
+| Phishing sites | [OpenPhish](https://openphish.com/phishing_feeds.html) public blocklist (Community Feed) |
+| Confirmed scam sites | [`extension/builtin_blocklist.txt`](extension/builtin_blocklist.txt), maintained in this repository |
+| Domain age | [RDAP](https://www.icann.org/rdap) (RFC 9082/9083); the server is found through the [IANA bootstrap file](https://data.iana.org/rdap/dns.json). Under 30 days is "very suspicious", under 180 days is "be careful" |
+| Scam phrases | Rules in [`docs/scam_rules.json`](docs/scam_rules.json) (Chinese, Japanese and English phrases). Each warning sign adds points, and dangerous combinations such as "romance + money" or "job + prepay" add extra points |
 
-## 常见手法：同城约会（约炮）诈骗
+## Limitations (please read)
 
-1. 在 Telegram 等软件上，有“平台接待员”主动发消息，推荐“同城妹妹”“支持见面支付”
-2. 让你下载“平台 App”，或者叫你交会员费、押金来“登记”
-3. 等你付了钱，就说你“操作失误”“信誉分下滑”“账户被锁定”，要你花钱“补信誉分”，还说补满了就能退款或提现
-4. 为了让你相信，对方会先让你付一小笔“验证金”（比如 300 元），再让一小笔钱真的到账（比如 600 元）。**这是诱饵，是为了骗你接下来付更大的金额。**
-5. 你想提现时，又会冒出“退款专员”“售后出款部门”，说要先付“验证金”、做“二次验证”，或者说金额太大要“分笔”提现
-6. 对方会拼命让你放心：“百分之 200 保证”“都是实名制账户”“骗人的平台能开这么久吗”“提不出来你可以报警”“这么大的平台不至于为了几千块砸招牌”
-7. 不管付多少，都会有新的理由让你继续付。**一旦对方要你“补信誉分”“解冻”“交审核费”才能退钱，就请马上停止付款，去报警。**
+- Blocklists only cover sites that **have already been reported**; brand-new scam sites may not be caught.
+- The message check only knows common phrases. **Not being flagged does not mean it is safe.** If someone **asks for money or a verification code, or tells you not to tell anyone**, talk to someone you trust or the police first.
+- Keep your browser's own protection on too, e.g. [Google Safe Browsing](https://safebrowsing.google.com/) in Chrome / Firefox or Microsoft Defender SmartScreen in Edge.
 
-## 觉得可能被骗了
+## A common pattern: the dating / hookup "credit score" scam
 
-- 先停止付款，保存好聊天记录和转账记录
-- 日本：警察相谈专线 **#9110**、消费者热线 **188**（[消费者厅](https://www.caa.go.jp/policies/policy/local_cooperation/local_consumer_administration/hotline/)）；紧急情况拨 **110**
-- 中国大陆：全国反诈专线 **96110**；紧急情况拨 **110**
-- 当心声称能帮你**“追回被骗的钱”**的人，这往往是第二次诈骗
-- 骗子发来的“身份证照片”很多是盗用别人的，不能证明对方是真人
+1. A "platform receptionist" messages you on Telegram or similar, offering "local girls" and "pay when you meet"
+2. You are told to download the "platform app" or pay a membership fee or deposit to "register"
+3. After you pay, they say you made an "operation error", your "credit score" dropped or your account is "locked", and you must pay to "restore your score" before you can get a refund or withdraw
+4. To win your trust they first take a small "verification deposit" (e.g. 300) and let a small amount actually reach you (e.g. 600). **This is bait for the much larger payments that follow.**
+5. When you try to withdraw, a "refund specialist" or "payout department" appears and asks for a "verification deposit", a "second verification", or says the amount must be "split"
+6. They reassure you constantly: "200% guaranteed", "all accounts are real-name verified", "would a scam platform run this long?", "call the police if you can't withdraw", "a platform this big wouldn't ruin its name over a few thousand"
+7. Whatever you pay, there is always another reason to pay again. **Once someone says you must pay to "restore your score", "unfreeze" or "pass review" before you get your money back, stop paying and go to the police.**
 
-## 一起改进
+## If you think you have been scammed
 
-如果发现没检测出来的诈骗话术，或者被误判的情况，欢迎提 Issue 或 Pull Request。
-提供诈骗消息作为例子时，请先删掉**名字、电话、账号等个人信息**。
+- Stop paying. Keep all chats and payment records.
+- Japan: police consultation **#9110**, consumer hotline **188** ([Consumer Affairs Agency](https://www.caa.go.jp/policies/policy/local_cooperation/local_consumer_administration/hotline/)); emergency **110**
+- Mainland China: anti-fraud hotline **96110**; emergency **110**
+- Elsewhere: contact your local police and your bank as soon as possible
+- Beware of anyone who offers to **"recover your lost money"**: that is often a second scam
+- "ID card photos" sent by scammers are often stolen from real people and prove nothing
 
-## 测试
+## Contributing
+
+Missed scam phrases or false alarms? Issues and pull requests are welcome.
+When sharing a scam message as an example, please remove **names, phone numbers, account numbers and other personal information** first.
+
+## Tests
 
 ```sh
 python3 -m unittest discover -s tests -v
 node tests/test_web.js
 ```
 
-## 许可证
+## License
 
-[GPL-3.0](LICENSE)。二维码识别使用了 [jsQR](https://github.com/cozmo/jsQR)（Apache-2.0，见 [`docs/vendor/jsQR-LICENSE.txt`](docs/vendor/jsQR-LICENSE.txt)）。
+[GPL-3.0](LICENSE). QR decoding uses [jsQR](https://github.com/cozmo/jsQR) (Apache-2.0, see [`docs/vendor/jsQR-LICENSE.txt`](docs/vendor/jsQR-LICENSE.txt)).
+
+## Maintenance
+
+A [weekly health check](.github/workflows/health.yml) runs all tests and downloads every blocklist feed, so a feed that moves or shuts down is noticed quickly. You can also run it by hand from the **Actions** tab.

@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "safe-url-guard: scam & malware site blocker"
+  },
+  "extDesc": {
+    "message": "Runs automatically when the browser starts, updates public malware / phishing blocklists (URLhaus, OpenPhish) daily and blocks listed sites."
+  }
+}

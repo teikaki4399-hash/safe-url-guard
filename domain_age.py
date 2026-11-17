@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""domain_age - 通过 RDAP 查询域名注册了多久。
+"""domain_age - look up how long ago a domain was registered, via RDAP.
 
-很多假购物网站、假投资网站刚注册不久就开始骗人，被举报后又换新域名。
-所以“注册不到几个月”是一个重要的警示信号（但老域名也不代表一定安全）。
+Many fake shops and fake investment sites start scamming right after the domain is
+registered, then switch to a new domain once reported. "Registered only a few months
+ago" is therefore an important warning sign (an old domain is not proof of safety).
 
-RDAP（Registration Data Access Protocol, RFC 9082/9083）是 WHOIS 的
-后继协议。查询哪个服务器，按 IANA 公布的 bootstrap 文件
-(https://data.iana.org/rdap/dns.json, RFC 9224) 决定。
+RDAP (Registration Data Access Protocol, RFC 9082/9083) is the successor of WHOIS.
+The server to query is taken from IANA's bootstrap file
+(https://data.iana.org/rdap/dns.json, RFC 9224).
 
-用法:
+Usage:
     python3 domain_age.py example.com https://shop.example.net/xxx
 """
 
@@ -22,6 +23,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 import safe_url_guard
+from i18n import t
 
 BOOTSTRAP_URL = "https://data.iana.org/rdap/dns.json"
 BOOTSTRAP_CACHE = safe_url_guard.CACHE_DIR / "rdap_dns.json"
@@ -46,7 +48,7 @@ def load_bootstrap() -> dict:
 
 
 def rdap_base(domain: str, bootstrap: dict) -> str | None:
-    """按最长匹配找出该域名后缀对应的 RDAP 服务器"""
+    """Find the RDAP server for the domain's ending (longest match)."""
     best, best_len = None, -1
     for tlds, urls in bootstrap.get("services", []):
         for tld in tlds:
@@ -57,7 +59,7 @@ def rdap_base(domain: str, bootstrap: dict) -> str | None:
 
 
 def candidates(host: str):
-    """a.b.example.co.jp -> example.co.jp?, co.jp ... 从短到长尝试（不依赖 Public Suffix List）"""
+    """a.b.example.co.jp -> co.jp, example.co.jp, ... shortest first (no Public Suffix List needed)."""
     parts = host.split(".")
     for n in range(2, len(parts) + 1):
         yield ".".join(parts[-n:])
@@ -76,17 +78,17 @@ def registration_date(rdap: dict) -> datetime | None:
 
 
 def check(host: str, bootstrap: dict | None = None, fetch=_get_json, now=None) -> dict:
-    """返回 {domain, registered(ISO或None), days, verdict(DANGER/WARN/OK/UNKNOWN), note}"""
+    """Return {domain, registered (ISO date), days, verdict (DANGER/WARN/OK/UNKNOWN), note}."""
     host = safe_url_guard.normalize_host(host)
     now = now or datetime.now(timezone.utc)
     try:
         bootstrap = bootstrap or load_bootstrap()
     except Exception as e:  # noqa: BLE001
-        return {"domain": host, "verdict": "UNKNOWN", "note": f"无法获取 RDAP 服务器列表: {e}"}
+        return {"domain": host, "verdict": "UNKNOWN", "note": t("da_no_bootstrap", e=e)}
     base = rdap_base(host, bootstrap)
     if not base:
         return {"domain": host, "verdict": "UNKNOWN",
-                "note": "IANA 的 RDAP 列表中没有这个域名后缀，请在 https://lookup.icann.org/ 或该后缀注册局的 WHOIS 上查询"}
+                "note": t("da_no_tld")}
     if not base.endswith("/"):
         base += "/"
     last_err = None
@@ -97,24 +99,24 @@ def check(host: str, bootstrap: dict | None = None, fetch=_get_json, now=None) -
             last_err = e
             continue
         except Exception as e:  # noqa: BLE001
-            return {"domain": host, "verdict": "UNKNOWN", "note": f"查询失败: {e}"}
+            return {"domain": host, "verdict": "UNKNOWN", "note": t("da_failed", e=e)}
         reg = registration_date(data)
         if not reg:
-            return {"domain": dom, "verdict": "UNKNOWN", "note": "RDAP 数据中没有注册日期"}
+            return {"domain": dom, "verdict": "UNKNOWN", "note": t("da_no_date")}
         days = (now - reg).days
         verdict = "DANGER" if days < DANGER_DAYS else "WARN" if days < WARN_DAYS else "OK"
         return {"domain": dom, "registered": reg.date().isoformat(), "days": days, "verdict": verdict}
-    return {"domain": host, "verdict": "UNKNOWN", "note": f"RDAP 中找不到该域名 ({last_err})"}
+    return {"domain": host, "verdict": "UNKNOWN", "note": t("da_not_found", e=last_err)}
 
 
 def describe(info: dict) -> str:
     if info["verdict"] == "UNKNOWN":
-        return f"注册时间: 未知（{info['note']}）"
-    msg = f"{info['domain']} 注册于 {info['registered']}（{info['days']} 天前）"
+        return t("da_unknown", note=info["note"])
+    msg = t("da_registered", d=info["domain"], date=info["registered"], days=info["days"])
     if info["verdict"] == "DANGER":
-        return msg + " ⚠ 注册不到 1 个月，非常可疑"
+        return msg + t("da_danger")
     if info["verdict"] == "WARN":
-        return msg + " ⚠ 注册不到半年，请小心"
+        return msg + t("da_warn")
     return msg
 
 

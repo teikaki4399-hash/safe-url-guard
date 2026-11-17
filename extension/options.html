@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head><meta charset="utf-8"><title>safe-url-guard 设置</title><link rel="stylesheet" href="pages.css"></head>
+<html lang="en">
+<head><meta charset="utf-8"><title>safe-url-guard settings</title><link rel="stylesheet" href="pages.css"></head>
 <body class="options">
-  <h1>safe-url-guard 设置</h1>
+  <h1 data-i18n="opt_title">safe-url-guard settings</h1>
 
   <section>
-    <h2>自定义黑名单</h2>
-    <p class="muted">想额外拦截的网站，每行一个域名（例：<code>bad-shop.example</code>），子域名也会一起拦截。可以把骗子用过的网站加进来。</p>
+    <h2 data-i18n="opt_lang">Language</h2>
+    <select id="lang">
+      <option value="en">English</option>
+      <option value="zh">中文（简体）</option>
+    </select>
+  </section>
+
+  <section>
+    <h2 data-i18n="opt_deny_h">Custom blocklist</h2>
+    <p class="muted" data-i18n="opt_deny_p"></p>
     <textarea id="denylist" spellcheck="false"></textarea>
   </section>
 
   <section>
-    <h2>白名单（例外）</h2>
-    <p class="muted">只有在<b>确定安全</b>的网站被误拦截时才使用，每行一个域名。拦截页面上没有“仍要访问”的按钮，要放行只能在这里设置。</p>
+    <h2 data-i18n="opt_allow_h">Allowlist (exceptions)</h2>
+    <p class="muted" data-i18n="opt_allow_p"></p>
     <textarea id="allowlist" spellcheck="false"></textarea>
   </section>
 
-  <button id="save">保存</button> <span id="msg" class="muted"></span>
+  <button id="save" data-i18n="opt_save">Save</button> <span id="msg" class="muted"></span>
+<script src="i18n.js"></script>
 <script src="options.js"></script>
 </body>
 </html>
