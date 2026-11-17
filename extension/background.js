@@ -9,7 +9,7 @@
 const api = typeof browser !== "undefined" ? browser : chrome;
 
 const FEEDS = {
-  urlhaus: { url: "https://urlhaus.abuse.ch/downloads/hostfile/", kind: "hosts" },
+  // URLhaus (abuse.ch) was removed in Nov 2026: its public downloads now return HTTP 410 Gone.
   openphish: { url: "https://openphish.com/feed.txt", kind: "urls" }
 };
 const UPDATE_MINUTES = 24 * 60;
@@ -67,7 +67,8 @@ async function applyRules() {
   const allow = parseList(st.allowlist);
   const block = new Set(parseList(st.denylist));
   for (const h of await loadBuiltin()) block.add(h);
-  for (const name of Object.keys(feeds)) for (const h of feeds[name].hosts || []) block.add(h);
+  // only sources that are still configured (drops data from removed feeds)
+  for (const name of Object.keys(FEEDS)) for (const h of (feeds[name] || {}).hosts || []) block.add(h);
   for (const h of allow) block.delete(h);
 
   const domains = [...block].sort();

@@ -137,7 +137,6 @@ python3 qr_check.py qr.png
 
 | 检查内容 | 依据 |
 |---|---|
-| 恶意软件网站 | [URLhaus](https://urlhaus.abuse.ch/)（abuse.ch）的公开黑名单 |
 | 钓鱼网站 | [OpenPhish](https://openphish.com/phishing_feeds.html) 的公开黑名单（Community Feed） |
 | 已确认的诈骗网站 | 本仓库维护的 [`extension/builtin_blocklist.txt`](extension/builtin_blocklist.txt) |
 | 域名注册时间 | [RDAP](https://www.icann.org/rdap)（RFC 9082/9083），通过 [IANA bootstrap](https://data.iana.org/rdap/dns.json) 找到对应的查询服务器。注册不到 30 天判为“非常可疑”，不到 180 天判为“请小心” |

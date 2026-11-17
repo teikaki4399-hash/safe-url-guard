@@ -3,6 +3,6 @@
     "message": "safe-url-guard: scam & malware site blocker"
   },
   "extDesc": {
-    "message": "Runs automatically when the browser starts, updates public malware / phishing blocklists (URLhaus, OpenPhish) daily and blocks listed sites."
+    "message": "Runs automatically when the browser starts, updates public phishing blocklists (OpenPhish) plus a list of confirmed scam sites daily and blocks listed sites."
   }
 }

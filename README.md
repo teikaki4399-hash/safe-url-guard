@@ -137,7 +137,6 @@ Custom lists live in `~/.cache/safe_url_guard/`: `allowlist.txt` and `denylist.t
 
 | Check | Source |
 |---|---|
-| Malware sites | [URLhaus](https://urlhaus.abuse.ch/) (abuse.ch) public blocklist |
 | Phishing sites | [OpenPhish](https://openphish.com/phishing_feeds.html) public blocklist (Community Feed) |
 | Confirmed scam sites | [`extension/builtin_blocklist.txt`](extension/builtin_blocklist.txt), maintained in this repository |
 | Domain age | [RDAP](https://www.icann.org/rdap) (RFC 9082/9083); the server is found through the [IANA bootstrap file](https://data.iana.org/rdap/dns.json). Under 30 days is "very suspicious", under 180 days is "be careful" |

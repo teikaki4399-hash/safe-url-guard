@@ -11,8 +11,8 @@ Usage:
     python3 safe_url_guard.py lang zh           # switch the language (en / zh)
 
 Blocklist sources (public, free):
-    - URLhaus (abuse.ch)  : malware distribution sites  https://urlhaus.abuse.ch/
     - OpenPhish Community : phishing sites              https://openphish.com/
+    - built-in list       : confirmed scam sites        extension/builtin_blocklist.txt
 """
 
 from __future__ import annotations
@@ -31,8 +31,8 @@ from urllib.parse import urlsplit
 from i18n import t
 
 FEEDS = {
-    # hosts format: "127.0.0.1\tdomain"
-    "urlhaus": ("https://urlhaus.abuse.ch/downloads/hostfile/", "hosts"),
+    # URLhaus (abuse.ch) was removed in Nov 2026: all of its public download URLs
+    # (hostfile, text_online, text_recent, csv_online, rpz) now return HTTP 410 Gone.
     # one URL per line
     "openphish": ("https://openphish.com/feed.txt", "urls"),
 }
