@@ -27,7 +27,17 @@ cd 解压后的文件夹路径\safe-url-guard-main
 python hosts_guard.py install
 ```
 
-**macOS / Linux：**
+**macOS：** 先把解压后的文件夹移到 `/Users/Shared/`。macOS 会限制后台程序读取“下载”“桌面”“文稿”文件夹，放在那里会导致每日自动更新失败。
+
+```sh
+mv ~/Downloads/safe-url-guard-main /Users/Shared/safe-url-guard
+cd /Users/Shared/safe-url-guard
+sudo python3 hosts_guard.py install
+```
+
+如果 Python 是从 python.org 安装的，出现 `CERTIFICATE_VERIFY_FAILED` 时，请先双击“应用程序 → Python 3.x”文件夹里的 **Install Certificates.command**，然后再运行一次。
+
+**Linux：**
 
 ```sh
 cd 解压后的文件夹路径/safe-url-guard-main
