@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>safe-url-guard 设置</title><link rel="stylesheet" href="pages.css"></head>
+<body class="options">
+  <h1>safe-url-guard 设置</h1>
+
+  <section>
+    <h2>自定义黑名单</h2>
+    <p class="muted">想额外拦截的网站，每行一个域名（例：<code>bad-shop.example</code>），子域名也会一起拦截。可以把骗子用过的网站加进来。</p>
+    <textarea id="denylist" spellcheck="false"></textarea>
+  </section>
+
+  <section>
+    <h2>白名单（例外）</h2>
+    <p class="muted">只有在<b>确定安全</b>的网站被误拦截时才使用，每行一个域名。拦截页面上没有“仍要访问”的按钮，要放行只能在这里设置。</p>
+    <textarea id="allowlist" spellcheck="false"></textarea>
+  </section>
+
+  <button id="save">保存</button> <span id="msg" class="muted"></span>
+<script src="options.js"></script>
+</body>
+</html>

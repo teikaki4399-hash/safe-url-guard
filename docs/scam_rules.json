@@ -1,0 +1,203 @@
+{
+  "_comment": "诈骗消息检测规则。Python 版 (scam_check.py) 和网页版 (docs/app.js) 共用。pattern 为 Python/JavaScript 通用的正则表达式，统一按不区分大小写匹配。",
+  "version": 1,
+  "thresholds": {
+    "high": 6,
+    "medium": 3
+  },
+  "categories": {
+    "investment": "投资诈骗",
+    "job": "兼职 / 刷单诈骗",
+    "romance": "感情（网恋）诈骗",
+    "impersonation": "冒充机构",
+    "payment": "要求付款",
+    "pressure": "制造紧迫感 / 要求保密",
+    "offplatform": "引导到其他聊天软件",
+    "credentials": "索要密码 / 验证码等",
+    "prize": "中奖 / 领奖"
+  },
+  "rules": [
+    {
+      "id": "inv_guarantee",
+      "category": "investment",
+      "weight": 3,
+      "reason": "承诺“稳赚”“保本”“高回报”。正规投资不会保证收益。",
+      "pattern": "稳赚|穩賺|保本|零风险|零風險|无风险|保证(收益|盈利|回报|赚)|保證(收益|獲利|回報)|高回报|高回報|高收益|日赚|日賺|月入[0-9一二三四五六七八九十百千万萬]+|收益翻倍|翻[一二三]?倍|元本保証|確実に(儲か|稼げ|増え)|必ず(儲か|稼げ|増え)|絶対(儲か|稼げ)|高利回り|利回り[0-9０-９]+[%％]|guaranteed (profit|return|income)|risk[- ]free|double your (money|investment)|[0-9]+% (daily|weekly) (return|profit)"
+    },
+    {
+      "id": "inv_mentor",
+      "category": "investment",
+      "weight": 2,
+      "reason": "“老师带单”“内幕消息”“投资群”是典型的投资诈骗手法。",
+      "pattern": "内幕|內幕|内部消息|内部消息|老师带|老師帶|带单|帶單|荐股|薦股|股票群|投资群|投資群|导师|導師|投資(の)?先生|株の先生|投資グループ|投資サークル|インサイダー|inside information|insider tip|trading mentor|signal group|investment group"
+    },
+    {
+      "id": "inv_withdraw_fee",
+      "category": "investment",
+      "weight": 6,
+      "reason": "提现前要你先交“手续费 / 税 / 保证金 / 解冻费”。这几乎可以确定是诈骗，交了也提不出来。",
+      "pattern": "(提现|提現|出金|取り出|引き出|withdraw).{0,20}(手续费|手續費|保证金|保證金|税|稅|解冻|解凍|激活|手数料|保証金|税金|fee|tax|deposit)|(手续费|保证金|解冻费|手数料|保証金|税金).{0,20}(提现|提現|出金|引き出)|账户.{0,6}冻结.{0,20}(缴|交|付)|unlock (your )?(account|funds|withdrawal)"
+    },
+    {
+      "id": "inv_crypto",
+      "category": "investment",
+      "weight": 1,
+      "reason": "提到虚拟货币。虚拟货币本身不违法，但很多投资诈骗都用它。",
+      "pattern": "USDT|泰达币|泰達幣|虚拟货币|虛擬貨幣|加密货币|加密貨幣|比特币|比特幣|数字货币|仮想通貨|暗号資産|ビットコイン|crypto|bitcoin|ethereum|binance"
+    },
+    {
+      "id": "inv_platform",
+      "category": "investment",
+      "weight": 1,
+      "reason": "要你下载指定的 App 或在指定平台注册。假投资平台常常这样做。",
+      "pattern": "(下载|下載|安装|安裝|注册|註冊).{0,10}(app|APP|平台|软件|軟體)|専用アプリ|(アプリ|サイト)(を|に)(インストール|登録)|download (our|the|this) app|register on (our|the|this) platform"
+    },
+    {
+      "id": "job_strong",
+      "category": "job",
+      "weight": 3,
+      "reason": "刷单、点赞赚钱、先垫付再返还、“闇バイト”等，都是典型的兼职诈骗或违法招募。",
+      "pattern": "刷单|刷單|刷信誉|刷信譽|点赞赚钱|點讚賺錢|点赞.{0,6}(佣金|返|赚)|垫付|墊付|先付.{0,6}再返|做任务.{0,10}(佣金|返|赚)|做任務|闇バイト|ホワイト案件|裏バイト|いいね(する|で).{0,10}(稼|報酬|円)|(like|follow) (videos|posts|pages).{0,20}(earn|paid|\\$)|prepay.{0,20}(task|order)"
+    },
+    {
+      "id": "job_easy",
+      "category": "job",
+      "weight": 2,
+      "reason": "“轻松赚钱”“在家用手机就能赚”的招聘信息，诈骗的可能性很高。",
+      "pattern": "轻松赚|輕鬆賺|在家.{0,4}(赚|賺)|动动手指|動動手指|日结|日結|兼职.{0,10}(日赚|日入|[0-9]+元)|簡単に稼|スマホ(だけ|一台)で.{0,10}(稼|円)|即日払い|高額報酬|1日[0-9０-９]+分で|easy money|earn \\$?[0-9,]+ (a|per) (day|hour) from home|work from home and earn"
+    },
+    {
+      "id": "romance_terms",
+      "category": "romance",
+      "weight": 1,
+      "reason": "亲密称呼或深情表白。和网上认识的人才聊不久就这样，要提高警惕。",
+      "pattern": "宝贝|寶貝|亲爱的|親愛的|老公|老婆|我爱你|我愛你|想你了|ハニー|ダーリン|愛してる|大好きだよ|運命の人|my love|darling|honey|sweetheart|i love you|soulmate"
+    },
+    {
+      "id": "romance_story",
+      "category": "romance",
+      "weight": 2,
+      "reason": "自称在海外、是军人或医生、说要结婚等，是感情诈骗（国际恋爱诈骗）的常见人设。",
+      "pattern": "维和|維和|海外(派遣|赴任|勤務)|国連.{0,6}(医師|軍)|軍(医|人)|石油(钻井|鑽井|プラットフォーム)|(在|來自).{0,4}(叙利亚|敘利亞|也门|也門)|(见面|見面|会いに行く).{0,10}(机票|機票|航空券|签证|簽證)|结婚|結婚しよう|(peacekeeping|deployed|oil rig|army doctor|un doctor)|marry you"
+    },
+    {
+      "id": "imp_org",
+      "category": "impersonation",
+      "weight": 1,
+      "reason": "提到公安、银行、快递、客服等机构。要核实是不是本人在冒充。",
+      "pattern": "公安|警察|检察|檢察|法院|海关|海關|客服|快递|快遞|银行|銀行|国税|税務署|検察|佐川|ヤマト|日本郵便|郵便局|アマゾン|amazon|楽天|police|customs|IRS|customer service"
+    },
+    {
+      "id": "imp_threat",
+      "category": "impersonation",
+      "weight": 3,
+      "reason": "说你涉嫌洗钱、账户会被冻结、要逮捕你，或要你把钱转到“安全账户”。这是冒充公检法的诈骗。",
+      "pattern": "安全账户|安全帳戶|资金核查|資金核查|洗钱|洗錢|涉嫌|逮捕|通缉|通緝|口座.{0,6}凍結|逮捕状|マネーロンダリング|arrest warrant|money laundering|your account (has been|will be) (suspended|locked|frozen)"
+    },
+    {
+      "id": "prize",
+      "category": "prize",
+      "weight": 2,
+      "reason": "说你“中奖了”“有奖励可领”。没参加过的抽奖不可能中奖，常被用来骗你点链接或先交手续费。",
+      "pattern": "中奖|中獎|领取(奖励|奖品|奖金|红包)|領取(獎勵|獎品|獎金|紅包)|当選(しました|されました|おめでとう)|賞金|you (have )?won|claim your (prize|reward)|congratulations.{0,20}(winner|selected)"
+    },
+    {
+      "id": "pay_request",
+      "category": "payment",
+      "weight": 1,
+      "reason": "要求转账、汇款或充值。",
+      "pattern": "转账|轉帳|汇款|匯款|打款|充值|入金|振り?込|送金|transfer|wire (money|the)|send (me )?money|top[- ]?up|deposit|转(到|入|进)|轉(到|入|進)"
+    },
+    {
+      "id": "pay_gift",
+      "category": "payment",
+      "weight": 3,
+      "reason": "要求用礼品卡、电子钱包或虚拟货币付款。正规机构不会这样收钱。",
+      "pattern": "礼品卡|禮品卡|购物卡|購物卡|iTunes ?卡|ギフトカード|電子マネー|プリペイドカード|gift ?card|steam card|google play card|apple card|(用|以).{0,4}(USDT|比特币|比特幣).{0,4}(付|支付|转|轉)"
+    },
+    {
+      "id": "press_urgent",
+      "category": "pressure",
+      "weight": 1,
+      "reason": "催你“马上”“今天之内”完成。诈骗分子会故意不给你考虑的时间。",
+      "pattern": "立即|马上|馬上|立刻|尽快|儘快|限时|限時|最后机会|最後機會|今日中|至急|今すぐ|期限|urgent|immediately|within 24 hours|last chance|act now|[0-9０-９一二三四五六七八九十]+(个)?小时内|[0-9０-９]+時間以内"
+    },
+    {
+      "id": "press_secret",
+      "category": "pressure",
+      "weight": 3,
+      "reason": "叫你“别告诉别人”。这是为了不让你找家人、朋友或警察商量，诈骗的危险信号很强。",
+      "pattern": "(不要|别|別|不能|不准)(告诉|告訴|跟|和|對|对)(你的)?(家人|父母|爸妈|爸媽|家里|家裡|朋友|任何人|银行|銀行|警察|老师|老師)|(要|請|请)保密|保密协议|保密協議|誰にも(言わ|話さ|相談し)|内緒にして|秘密にして|家族(に|には)(言わ|話さ|相談し)|don'?t tell (anyone|your (family|bank|parents|friends))|keep (this|it) (a )?secret"
+    },
+    {
+      "id": "off_platform",
+      "category": "offplatform",
+      "weight": 2,
+      "reason": "要你换到其他聊天软件联系。诈骗分子常把人引到平台监控不到的地方。",
+      "pattern": "加(我)?(微信|VX|vx|QQ|LINE|line|Telegram|TG|飞机|飛機|WhatsApp)|(微信|VX|LINE|Telegram|WhatsApp).{0,4}(号|號|ID)[:：]?|LINE(を)?(追加|交換)|LINEで(話|連絡)|テレグラム|カカオトーク|add me on (whatsapp|telegram|line|wechat)|text me on (whatsapp|telegram)"
+    },
+    {
+      "id": "cred_request",
+      "category": "credentials",
+      "weight": 3,
+      "reason": "要你提供验证码、密码、卡号或证件号码。正规机构不会这样问，这些信息绝对不能告诉别人。",
+      "pattern": "(发|發|告诉|告訴|提供|输入|輸入|报一下|報一下|念一下|给我|給我|截图|截圖).{0,8}(验证码|驗證碼|密码|密碼|银行卡号|銀行卡號|身份证|身份證)|(暗証番号|パスワード|認証コード|確認コード|マイナンバー|カード番号).{0,6}(を)?(教えて|送って|入力して|伝えて)|(send|tell|give|share|read) (me )?(the |your )?(verification code|password|pin|otp|one[- ]time (code|password)|social security)|(验证码|驗證碼|密码|密碼|银行卡号|銀行卡號|身份证号|身份證號).{0,4}(发给我|發給我|告诉我|告訴我|给我|給我|报给我|報給我)"
+    }
+  ],
+  "combos": [
+    {
+      "categories": [
+        "romance",
+        "payment"
+      ],
+      "bonus": 3,
+      "reason": "感情话题加上要钱。这是感情诈骗最典型的模式：网上认识的人，没见过面，就开口借钱或要钱。"
+    },
+    {
+      "categories": [
+        "romance",
+        "investment"
+      ],
+      "bonus": 3,
+      "reason": "感情话题加上推荐投资。这就是“杀猪盘”（ロマンス投資詐欺）的典型手法。"
+    },
+    {
+      "categories": [
+        "job",
+        "payment"
+      ],
+      "bonus": 3,
+      "reason": "兼职需要你先付钱或垫付。正规工作不会让你先交钱。"
+    },
+    {
+      "categories": [
+        "impersonation",
+        "payment"
+      ],
+      "bonus": 2,
+      "reason": "以机构名义要你付款。请自己查官方电话再核实，不要用消息里给的号码。"
+    },
+    {
+      "categories": [
+        "investment",
+        "offplatform"
+      ],
+      "bonus": 1,
+      "reason": "投资话题加上引你去 LINE 或 Telegram 之类的私聊群，这是投资诈骗的常见流程。"
+    },
+    {
+      "categories": [
+        "prize",
+        "payment"
+      ],
+      "bonus": 3,
+      "reason": "说你中奖，又要你先付手续费或税。真正的奖品不需要先付钱。"
+    }
+  ],
+  "advice": [
+    "先别付款，也别回复，找家人、朋友或警察商量。",
+    "对方给的电话号码和网址都可能是假的，请自己搜官方信息来核实。",
+    "日本：警察相谈专线 #9110、消费者热线 188；紧急情况拨 110。",
+    "中国大陆：全国反诈专线 96110；紧急情况拨 110。"
+  ]
+}

@@ -148,8 +148,8 @@ def heuristics(url: str) -> list[str]:
         warn.append("直接使用 IP 地址而不是域名")
     except ValueError:
         pass
-    if "xn--" in host:
-        warn.append("包含 punycode（xn--），可能是仿冒字符的域名")
+    if "xn--" in host or not host.isascii():
+        warn.append("域名含有特殊字符（punycode / xn--），可能是用相似字符仿冒的网站")
     if parts.username or "@" in parts.netloc:
         warn.append("URL 中含有 '@'，真实目标可能与看起来的不同")
     if host.count(".") >= 4:

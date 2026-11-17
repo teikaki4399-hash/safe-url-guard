@@ -1,0 +1,33 @@
+:root { --bg:#f6f7f9; --card:#fff; --text:#1d2330; --muted:#5d6576; --line:#dde1e8; --accent:#2456c7; --red:#c62828; --red-bg:#fdecea; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#14171c; --card:#1e232b; --text:#e6e9ef; --muted:#a0a8b8; --line:#343b47; --accent:#7aa2ff; --red:#ff8a80; --red-bg:#3a1f1f; }
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); line-height:1.65;
+  font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "PingFang SC", "Microsoft YaHei", sans-serif; }
+a { color: var(--accent); }
+button { padding:8px 18px; font-size:.95rem; border:none; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; font-weight:600; }
+button.sub { background:transparent; color:var(--accent); border:1px solid var(--line); }
+@media (prefers-color-scheme: dark) { button { color:#10131a; } button.sub { color: var(--accent); } }
+.muted { color: var(--muted); font-size:.88rem; }
+code { word-break: break-all; }
+
+/* 拦截页面 */
+.blocked { max-width:640px; margin:8vh auto; padding:0 16px; }
+.blocked .card { background:var(--card); border:1px solid var(--line); border-top:6px solid var(--red); border-radius:12px; padding:24px 28px; }
+.blocked h1 { color:var(--red); margin:0 0 8px; font-size:1.7rem; }
+.blocked .url { background:var(--red-bg); color:var(--red); padding:8px 12px; border-radius:6px; font-family:ui-monospace,monospace; word-break:break-all; }
+
+/* 弹出窗口 */
+.popup { width:320px; padding:14px 16px; }
+.popup h1 { font-size:1.05rem; margin:0 0 8px; }
+.popup .big { font-size:1.6rem; font-weight:700; }
+.popup ul { padding-left:1.1em; margin:6px 0; font-size:.88rem; }
+.popup .row { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.err { color: var(--red); }
+
+/* 设置页面 */
+.options { max-width:720px; margin:0 auto; padding:24px 16px; }
+.options textarea { width:100%; min-height:140px; padding:8px; font-family:ui-monospace,monospace; font-size:.9rem;
+  border:1px solid var(--line); border-radius:8px; background:var(--card); color:var(--text); }
+.options section { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:4px 16px 16px; margin-bottom:16px; }

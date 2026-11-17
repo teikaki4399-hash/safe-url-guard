@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>防诈骗检查工具 | safe-url-guard</title>
+<meta name="description" content="检查可疑消息、网址和二维码，防止投资诈骗、兼职刷单诈骗、感情诈骗和钓鱼网站。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>防诈骗检查工具</h1>
+  <p class="lead">把可疑的消息、网址或二维码放进来检查一下，再决定要不要回复、付款或打开。</p>
+</header>
+
+<main>
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="msg">消息检查</button>
+    <button role="tab" aria-selected="false" data-tab="url">网址检查</button>
+    <button role="tab" aria-selected="false" data-tab="qr">二维码检查</button>
+  </nav>
+
+  <section id="tab-msg" class="panel">
+    <label for="msg-input">粘贴收到的短信、LINE、邮件、私信内容：</label>
+    <textarea id="msg-input" rows="7" placeholder="例：亲爱的，我有个内部消息，这个平台稳赚不赔，你先充值试试……"></textarea>
+    <button id="msg-btn" class="primary">检查消息</button>
+    <div id="msg-result" class="result" aria-live="polite"></div>
+  </section>
+
+  <section id="tab-url" class="panel" hidden>
+    <label for="url-input">输入网址：</label>
+    <input id="url-input" type="text" inputmode="url" placeholder="例：https://example.com/login">
+    <label class="check"><input id="url-rdap" type="checkbox" checked> 查询域名注册时间（会把域名发给公开的 RDAP 服务器）</label>
+    <button id="url-btn" class="primary">检查网址</button>
+    <div id="url-result" class="result" aria-live="polite"></div>
+  </section>
+
+  <section id="tab-qr" class="panel" hidden>
+    <label for="qr-input">选择二维码图片（截图或照片）：</label>
+    <input id="qr-input" type="file" accept="image/*">
+    <p class="hint">也可以直接在这个页面按 Ctrl+V / ⌘+V 粘贴截图。</p>
+    <div id="qr-result" class="result" aria-live="polite"></div>
+  </section>
+
+  <aside class="box">
+    <h2>常见的诈骗危险信号</h2>
+    <ul>
+      <li><b>投资：</b>“稳赚不赔”“保本”“老师带单”“内部消息”，以及<b>提现前要先交税、手续费或保证金</b>（交了也提不出来）</li>
+      <li><b>兼职：</b>点赞、刷单赚钱，<b>先垫付再返佣</b>，“在家用手机轻松日赚”</li>
+      <li><b>感情：</b>网上认识、没见过面，却很快说爱你、说要结婚，然后<b>借钱或推荐投资</b>（“杀猪盘”）</li>
+      <li><b>共同点：</b>催你马上做决定，叫你<b>“不要告诉家人”</b>，把你引到 LINE、Telegram、WhatsApp 等私聊</li>
+    </ul>
+    <h2>觉得可能被骗了</h2>
+    <ul>
+      <li>先停止付款，保存好聊天记录和转账记录</li>
+      <li>日本：警察相谈专线 <b>#9110</b>、消费者热线 <b>188</b>；紧急情况拨 <b>110</b></li>
+      <li>中国大陆：全国反诈专线 <b>96110</b>；紧急情况拨 <b>110</b></li>
+      <li>当心声称能帮你<b>“追回被骗的钱”</b>的人，这往往是第二次诈骗</li>
+    </ul>
+  </aside>
+
+  <p class="privacy">消息和图片只在你的浏览器里检查，不会上传。只有勾选“查询域名注册时间”时，域名才会发送给公开的 RDAP 服务器。</p>
+  <p class="privacy">※ 本工具根据常见手法判断，结果不代表一定是或一定不是诈骗。觉得不对劲时，请先找身边的人或警察商量。</p>
+</main>
+
+<footer>
+  <a href="https://github.com/teikaki4399-hash/safe-url-guard">GitHub</a> · GPL-3.0 ·
+  二维码识别使用 <a href="https://github.com/cozmo/jsQR">jsQR</a> (Apache-2.0)
+</footer>
+
+<script src="vendor/jsQR.js"></script>
+<script src="scam_core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

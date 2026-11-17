@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>已拦截危险网站</title>
+<link rel="stylesheet" href="pages.css">
+</head>
+<body class="blocked">
+  <div class="card">
+    <h1>⛔ 已拦截危险网站</h1>
+    <p>这个网站在公开的<b>恶意软件 / 钓鱼（诈骗）网站黑名单</b>中，已为你阻止访问。</p>
+    <p class="url" id="url" hidden></p>
+    <ul>
+      <li>这类网站可能会让你下载病毒，或者骗走密码、银行卡信息和钱。</li>
+      <li>如果链接是别人发给你的（短信、LINE、邮件、私信等），对方很可能是骗子。<b>不要回复，也不要付款。</b></li>
+      <li>如果已经输入了密码或卡号，请马上在<b>官方 App 或官方网站</b>修改密码，并联系银行或发卡公司。</li>
+    </ul>
+    <p>咨询窗口　日本：警察相谈专线 <b>#9110</b>、消费者热线 <b>188</b>　｜　中国大陆：反诈专线 <b>96110</b>　｜　紧急情况：<b>110</b></p>
+    <p><button id="back">返回安全的页面</button></p>
+    <p class="muted">黑名单来源：<a href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener">URLhaus</a> / <a href="https://openphish.com/" target="_blank" rel="noopener">OpenPhish</a>，由 safe-url-guard 扩展拦截。</p>
+  </div>
+<script src="blocked.js"></script>
+</body>
+</html>

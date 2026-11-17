@@ -1,6 +1,11 @@
 import unittest
 
-import safe_url_guard as g
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+import safe_url_guard as g  # noqa: E402
 
 
 class TestGuard(unittest.TestCase):

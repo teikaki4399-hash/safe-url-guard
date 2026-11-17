@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "防诈骗网站拦截 safe-url-guard",
+  "short_name": "safe-url-guard",
+  "version": "1.0.0",
+  "description": "浏览器启动后自动运行，每天更新公开的恶意软件 / 钓鱼网站黑名单（URLhaus、OpenPhish），访问黑名单上的网站时直接拦截。",
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "permissions": ["declarativeNetRequest", "storage", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js", "scripts": ["background.js"] },
+  "action": { "default_popup": "popup.html", "default_title": "safe-url-guard" },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "web_accessible_resources": [{ "resources": ["blocked.html", "blocked.js", "pages.css"], "matches": ["<all_urls>"] }],
+  "browser_specific_settings": { "gecko": { "id": "safe-url-guard@safe-url-guard.local", "strict_min_version": "128.0" } }
+}
