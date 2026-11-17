@@ -4,8 +4,6 @@
 
 Free tools that protect you from **malware sites, phishing sites and scam messages**.
 
-> Built so that nobody else has to go through being scammed. Focused on **dating / hookup scams, investment scams, task / job scams and romance scams**.
-
 | Tool | For | What it does |
 |---|---|---|
 | 🛡 [Whole-computer blocking](#-whole-computer-blocking-every-browser-and-app) | Computers (recommended) | Edits the system hosts file so **every browser and every app** is blocked from dangerous sites; updates daily |
