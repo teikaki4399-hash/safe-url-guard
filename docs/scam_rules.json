@@ -221,6 +221,14 @@
     },
     {
       "categories": [
+        "credit",
+        "payment"
+      ],
+      "bonus": 3,
+      "reason": "说账户“冻结 / 需要验证 / 补信誉分”，又要你转账。为了拿回钱而再付钱，是这类诈骗的核心手法，付了也不会退。"
+    },
+    {
+      "categories": [
         "romance",
         "payment"
       ],
