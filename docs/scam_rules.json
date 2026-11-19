@@ -49,6 +49,18 @@
     "prize": {
       "en": "Prize / reward",
       "zh": "中奖 / 领奖"
+    },
+    "social_proof": {
+      "en": "Fake crowd (\"everyone is earning\")",
+      "zh": "制造从众（“群里人人都在赚”）"
+    },
+    "recovery": {
+      "en": "\"We can recover your money\"",
+      "zh": "“帮你追回损失”"
+    },
+    "remote": {
+      "en": "Unknown app / remote control",
+      "zh": "陌生 App / 远程控制"
     }
   },
   "rules": [
@@ -70,7 +82,7 @@
         "en": "\"Mentors\", \"insider information\" and \"investment groups\" are classic investment-scam tactics.",
         "zh": "“老师带单”“内幕消息”“投资群”是典型的投资诈骗手法。"
       },
-      "pattern": "内幕|內幕|内部消息|内部消息|老师带|老師帶|带单|帶單|荐股|薦股|股票群|投资群|投資群|导师|導師|投資(の)?先生|株の先生|投資グループ|投資サークル|インサイダー|inside information|insider tip|trading mentor|signal group|investment group"
+      "pattern": "内幕|內幕|内部消息|内部消息|老师带|老師帶|带单|帶單|跟单|跟單|喊单|喊單|荐股|薦股|股票群|投资群|投資群|导师|導師|投資(の)?先生|株の先生|投資グループ|投資サークル|インサイダー|inside information|insider tip|trading mentor|signal group|investment group"
     },
     {
       "id": "inv_withdraw_fee",
@@ -243,6 +255,56 @@
       "pattern": "中奖|中獎|领取(奖励|奖品|奖金|红包)|領取(獎勵|獎品|獎金|紅包)|当選(しました|されました|おめでとう)|賞金|you (have )?won|claim your (prize|reward)|congratulations.{0,20}(winner|selected)"
     },
     {
+      "id": "social_proof",
+      "category": "social_proof",
+      "weight": 2,
+      "reason": {
+        "en": "Shows that \"everyone in the group\" is making money (profit screenshots, \"I withdrew again today\"). In real cases police found that almost every member of such groups was part of the scam: in one case 53 of 54 members were scammers.",
+        "zh": "展示“群里大家都在赚钱”（晒收益截图、“今天又提现了”）。公安通报的案例里，这种群的成员几乎全是骗子安排的人，有一个 54 人的兼职群，其中 53 人是骗子。"
+      },
+      "pattern": "晒(单|收益|截图|盈利|收入)|群(里|内|友).{0,10}(都|又|已经).{0,6}(赚|盈利|提现|出金|回本)|(大家|学员|会员|群友)(都|已经).{0,6}(赚|盈利|提现|出金|翻倍)|今天又(赚|提现|出金)|已有\\s*[0-9]+\\s*(人|位).{0,8}(赚|提现|出金|加入)|(みんな|メンバー|参加者).{0,6}(稼|儲|利益|出金)|利益報告|(everyone|members|others) (in the group )?(is|are|has|have) (making|earning|withdrawn|profiting)|profit screenshot"
+    },
+    {
+      "id": "scarcity",
+      "category": "pressure",
+      "weight": 2,
+      "reason": {
+        "en": "\"Only a few spots left\", \"last chance\", \"first come, first served\". Invented scarcity makes you decide before you can think it through.",
+        "zh": "“名额有限”“只剩最后几个”“错过就没了”。故意制造稀缺，让你来不及想清楚就决定。"
+      },
+      "pattern": "名额有限|名額有限|仅剩|僅剩|只剩.{0,6}(名额|名額|个|個|位)|最后.{0,3}(名额|名額|一次机会|几个)|限量|先到先得|错过.{0,6}(就没|不再|再无)|今だけ|残り.{0,4}(名|枠|わずか)|限定.{0,3}名|先着|only [0-9]+ (spots|slots|places) left|limited (spots|slots|time offer)|first come,? first served"
+    },
+    {
+      "id": "recovery_offer",
+      "category": "recovery",
+      "weight": 5,
+      "reason": {
+        "en": "Offers to \"recover\" money you lost to a scam. This is one of the most common second scams: victims are asked for an up-front fee and then lose more. No one can promise to get your money back; go only to the police or your bank.",
+        "zh": "说能帮你“追回 / 挽回”被骗的钱。这是最常见的二次诈骗之一：先让你交手续费或保证金，结果又被骗一次。没有人能保证追回损失，请只找警察和银行。"
+      },
+      "pattern": "(帮你|帮您|可以|能|保证|包)(追回|挽回|找回|拿回|讨回)|追回(损失|資金|资金|被骗|款项)|挽回损失|追款|追损|(被骗|损失).{0,10}(追回|找回|挽回|退回)|(被害|損失|騙された).{0,10}(取り戻|回収|返金)|返金(代行|請求代行)|被害回復(サポート|代行|します)|(recover|get back|retrieve) (your )?(lost |stolen )?(funds|money|crypto)|fund recovery|asset recovery service"
+    },
+    {
+      "id": "remote_control",
+      "category": "remote",
+      "weight": 4,
+      "reason": {
+        "en": "Asks you to share your screen, allow remote control or accessibility access, or install an app from a link or file (e.g. a fake \"meeting\" or \"cleaner\" app). Police cases show this lets scammers move your money themselves. Only install apps from the official app store.",
+        "zh": "要你共享屏幕、开启远程控制或“无障碍”权限，或者通过链接、文件安装 App（比如假的“会议”“清理”App）。公安通报的案例里，骗子会借此直接转走你的钱。App 只从官方应用商店下载。"
+      },
+      "pattern": "屏幕共享|共享屏幕|开启共享|远程(控制|协助|操作|桌面)|遠程|无障碍(权限|服务|功能)|無障礙|(下载|下載|安装|安裝).{0,8}(会议|會議|安装包|安裝包|apk|APK)|\\.apk\\b|画面共有|遠隔操作|リモート(操作|サポート|アクセス)|アクセシビリティ.{0,6}(許可|オン)|screen ?shar(e|ing)|remote (access|control|desktop)|anydesk|teamviewer|install (this|the) apk"
+    },
+    {
+      "id": "hidden_code",
+      "category": "credit",
+      "weight": 3,
+      "reason": {
+        "en": "Demands a special \"code\" or note in the transfer (e.g. \"you forgot to include the unfreeze code\"). These instructions are often hidden in small or faint text so that they can later say you did it wrong and ask you to pay again.",
+        "zh": "要求转账时必须备注某个“代码”“暗号”，事后又说“你没备注代码”。这类要求常常用很小的字或不显眼的颜色写着，就是为了之后说你操作错了，让你再付一次。"
+      },
+      "pattern": "(备注|備註|附言|留言|转账说明|轉帳說明).{0,8}(代码|代碼|编码|編碼|暗号|暗號|口令)|(未|没有?|沒有?|忘记|忘記)(备注|備註|附言)|(振込|振り込み)(名義|人名|依頼人名).{0,10}(コード|番号|記号)|(include|add|enter) (the )?(code|reference) (in|with) (the )?(transfer|payment)"
+    },
+    {
       "id": "pay_request",
       "category": "payment",
       "weight": 1,
@@ -314,6 +376,72 @@
     }
   ],
   "combos": [
+    {
+      "categories": [
+        "social_proof",
+        "investment"
+      ],
+      "bonus": 3,
+      "reason": {
+        "en": "An investment group where \"everyone is making money\": the classic fake-crowd investment scam. The other members are usually part of the scam.",
+        "zh": "“人人都在赚钱”的投资群：典型的托儿式投资诈骗，群里的其他人基本都是骗子安排的。"
+      }
+    },
+    {
+      "categories": [
+        "social_proof",
+        "job"
+      ],
+      "bonus": 3,
+      "reason": {
+        "en": "A task/job group where everyone shows their earnings: the typical order-brushing scam flow.",
+        "zh": "人人晒收益的兼职任务群：典型的刷单诈骗流程。"
+      }
+    },
+    {
+      "categories": [
+        "social_proof",
+        "payment"
+      ],
+      "bonus": 2,
+      "reason": {
+        "en": "\"Everyone is earning\" plus a request to top up or transfer money: the fake crowd is there to make you pay.",
+        "zh": "“大家都在赚”加上要你充值或转账：那些“群友”就是为了让你掏钱而演的。"
+      }
+    },
+    {
+      "categories": [
+        "remote",
+        "investment"
+      ],
+      "bonus": 2,
+      "reason": {
+        "en": "An app installed from a link plus remote help: fake investment / refund apps are used to take over your phone or show fake balances.",
+        "zh": "通过链接装 App 再加上“远程协助”：假投资 / 假退款 App 会被用来控制你的手机，或者显示假的余额。"
+      }
+    },
+    {
+      "categories": [
+        "recovery",
+        "payment"
+      ],
+      "bonus": 3,
+      "reason": {
+        "en": "Promises to recover your losses but asks you to pay first. This is a second scam.",
+        "zh": "说能追回损失，却要你先付钱。这就是二次诈骗。"
+      }
+    },
+    {
+      "categories": [
+        "remote",
+        "payment"
+      ],
+      "bonus": 3,
+      "reason": {
+        "en": "Remote control or an unknown app combined with money: scammers can transfer your money themselves. Stop and hang up.",
+        "zh": "远程控制或陌生 App 加上钱的话题：骗子可以直接转走你的钱。请马上停止操作，挂断联系。"
+      }
+    },
     {
       "categories": [
         "hookup",

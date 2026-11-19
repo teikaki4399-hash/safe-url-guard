@@ -29,6 +29,10 @@
       var list = Object.keys(found).sort();
       if (list.length) hits.push({ id: r.id, category: r.category, weight: r.weight, reason: r.reason, matches: list });
     });
+    // most serious first; keep rule order for equal weights
+    hits = hits.map(function (h, i) { return [h, i]; })
+      .sort(function (a, b) { return b[0].weight - a[0].weight || a[1] - b[1]; })
+      .map(function (x) { return x[0]; });
     var cats = {};
     hits.forEach(function (h) { cats[h.category] = true; });
     var combos = rules.combos.filter(function (c) {

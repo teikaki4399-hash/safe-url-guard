@@ -156,6 +156,23 @@ Custom lists live in `~/.cache/safe_url_guard/`: `allowlist.txt` and `denylist.t
 6. They reassure you constantly: "200% guaranteed", "all accounts are real-name verified", "would a scam platform run this long?", "call the police if you can't withdraw", "a platform this big wouldn't ruin its name over a few thousand"
 7. Whatever you pay, there is always another reason to pay again. **Once someone says you must pay to "restore your score", "unfreeze" or "pass review" before you get your money back, stop paying and go to the police.**
 
+## Psychological tricks scammers use
+
+Scams are designed around how people think. Official warnings and police cases describe the same tricks again and again:
+
+| Trick | What it looks like |
+|---|---|
+| **Fear** | "Your account will be frozen", "you are suspected of a crime", "you made an error" |
+| **Greed / "just this once"** | A small first profit or a small withdrawal that really arrives, as bait for bigger payments |
+| **Fake crowd** | A group where everyone posts profit screenshots. In one case reported by Chinese police, 53 of the 54 members of a "part-time job" group were scammers ([gmw.cn](https://m.gmw.cn/2026-08/24/content_1304553152.htm)) |
+| **Scarcity / hurry** | "Only 3 spots left", "finish within 30 minutes", nonstop messages |
+| **"Win back what you lost"** | More fees to "unfreeze" or "withdraw"; later, "recovery" offers that ask for a fee (a second scam) |
+| **Small print** | The amount or a required "code" written in tiny or faint text, so they can later say you did it wrong |
+| **Their own app or chat** | An app installed from a link, or a chat window that pops up on a site. Fake apps can show fake balances or take over your phone |
+| **Isolation** | "Don't tell your family or the bank", moving you to Telegram or private groups |
+
+Sources: Japan's National Police Agency statistics on SNS investment and romance scams ([npa.go.jp](https://www.npa.go.jp/bureau/safetylife/sos47/new-topics/260420/01.html)), FBI IC3 warnings on cryptocurrency investment fraud ([ic3.gov](https://www.ic3.gov/PSA/2022/psa221003)), Chinese police reports on screen-sharing and fake-app scams ([news.cn](https://www.news.cn/legal/20250423/149dfe212a0b49efb6937d582e058bb8/c.html)).
+
 ## If you think you have been scammed
 
 - Stop paying. Keep all chats and payment records.

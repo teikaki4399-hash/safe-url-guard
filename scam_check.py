@@ -43,6 +43,7 @@ def analyze(text: str, rules: dict) -> dict:
         if found:
             hits.append({"id": r["id"], "category": r["category"], "weight": r["weight"],
                          "reason": r["reason"], "matches": found})
+    hits.sort(key=lambda h: -h["weight"])  # most serious first (stable for equal weights)
     cats = {h["category"] for h in hits}
     combos = [c for c in rules["combos"] if all(x in cats for x in c["categories"])]
     score = sum(h["weight"] for h in hits) + sum(c["bonus"] for c in combos)
