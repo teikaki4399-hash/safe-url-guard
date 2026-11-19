@@ -32,7 +32,27 @@
       opt_allow_p: "Only use this if a site you are <b>sure is safe</b> was blocked by mistake. One domain per line. The block page has no \"continue anyway\" button; this is the only way to allow a site.",
       opt_save: "Save",
       opt_saved: "Saved (blocking {n} sites)",
-      opt_save_fail: "Save failed: {e}"
+      opt_save_fail: "Save failed: {e}",
+      opt_transfer_h: "\"Stop and think before you transfer\" checklist",
+      opt_transfer_p: "When a page looks like an online-banking or payment transfer page, show a short checklist once per site and browser session. It never blocks the transfer.",
+      opt_on: "Turn on",
+      tc_title: "🛑 Stop and think before you transfer",
+      tc_lead: "This page looks like a money transfer page. Before you send money, please answer these questions honestly.",
+      tc_q1: "Is the person you are paying someone you <b>met online and have never met in person</b>?",
+      tc_q2: "Did they say you must <b>pay first</b> (a fee, tax, deposit or \"unfreeze\" charge) <b>before you can get a refund or withdraw</b>?",
+      tc_q3: "Did they tell you <b>not to tell</b> your family, friends or the bank?",
+      tc_q4: "Are they <b>hurrying</b> you (\"today only\", \"or it will be too late\")?",
+      tc_q5: "Do they say they are the <b>police, a prosecutor, a bank or a government office</b> and ask you to move money to a \"safe account\"?",
+      tc_q6: "Is this payment for an <b>investment, a task/part-time job, a prize</b> or to restore a \"credit score\"?",
+      tc_q7: "Is someone <b>guiding you step by step</b> by phone or chat right now, or asking you to share your screen or install an app?",
+      tc_yes: "Yes", tc_no: "No",
+      tc_danger: "<b>⚠ This is very likely a scam. Do not transfer the money.</b><br>Stop replying, hang up, and talk to your family or the police first. Japan: police consultation <b>#9110</b>, consumer hotline <b>188</b> | Mainland China: anti-fraud hotline <b>96110</b> | Emergency: <b>110</b>",
+      tc_ok: "No warning signs from these questions. If anything still feels wrong, stop and talk to someone before you send money.",
+      tc_stop: "Stop, do not transfer",
+      tc_continue: "Continue",
+      tc_wait: "Please wait {n}s…",
+      tc_continue_anyway: "I have checked with someone; continue",
+      tc_note: "safe-url-guard extension. This checklist only asks; it never blocks the transfer. It can be turned off in the extension's settings."
     },
     zh: {
       blocked_title: "已拦截危险网站",
@@ -61,7 +81,27 @@
       opt_allow_p: "只有在<b>确定安全</b>的网站被误拦截时才使用，每行一个域名。拦截页面上没有“仍要访问”的按钮，要放行只能在这里设置。",
       opt_save: "保存",
       opt_saved: "已保存（正在拦截 {n} 个网站）",
-      opt_save_fail: "保存失败：{e}"
+      opt_save_fail: "保存失败：{e}",
+      opt_transfer_h: "“转账前冷静一下”确认清单",
+      opt_transfer_p: "打开看起来像网上银行或支付转账的页面时，每个网站在每次浏览器会话中弹出一次确认清单。不会阻止转账。",
+      opt_on: "开启",
+      tc_title: "🛑 转账前冷静一下",
+      tc_lead: "这个页面看起来是转账页面。付钱之前，请如实回答下面几个问题。",
+      tc_q1: "收款人是<b>网上认识、没见过面</b>的人吗？",
+      tc_q2: "对方说过要<b>先付钱</b>（手续费、税、保证金、解冻费等），<b>才能退款或提现</b>吗？",
+      tc_q3: "对方叫你<b>别告诉</b>家人、朋友或银行吗？",
+      tc_q4: "对方在<b>催你</b>（“只有今天”“再不转就来不及了”）吗？",
+      tc_q5: "对方自称<b>警察、检察官、银行或政府机关</b>，要你把钱转到“安全账户”吗？",
+      tc_q6: "这笔钱是为了<b>投资、兼职任务、领奖</b>，或者“补信誉分”吗？",
+      tc_q7: "现在有人在电话或聊天里<b>一步步教你操作</b>，或者让你共享屏幕、安装 App 吗？",
+      tc_yes: "是", tc_no: "否",
+      tc_danger: "<b>⚠ 很可能是诈骗，请不要转账。</b><br>先停止回复、挂断电话，找家人或警察商量。日本：警察相谈专线 <b>#9110</b>、消费者热线 <b>188</b>　｜　中国大陆：反诈专线 <b>96110</b>　｜　紧急情况：<b>110</b>",
+      tc_ok: "这些问题里没有发现危险信号。只要还有一点不对劲，就先停下来找人商量，再付钱。",
+      tc_stop: "不转了，返回",
+      tc_continue: "继续",
+      tc_wait: "请等待 {n} 秒…",
+      tc_continue_anyway: "我已经找人确认过，继续",
+      tc_note: "safe-url-guard 扩展。这个清单只是提醒，不会阻止转账，可以在扩展的设置里关闭。"
     }
   };
 
@@ -72,12 +112,17 @@
       if (vars) s = s.replace(/\{(\w+)\}/g, (_, k) => (vars[k] != null ? vars[k] : ""));
       return s;
     },
-    /* load the saved language (if any) and translate every [data-i18n] element */
-    async init() {
+    /* load the saved language (if any); used by content scripts, which must not touch the page */
+    async load() {
       try {
         const { lang } = await api.storage.local.get("lang");
         if (lang === "en" || lang === "zh") I18N.lang = lang;
       } catch (e) { /* use the browser language */ }
+      return I18N.lang;
+    },
+    /* load the language and translate every [data-i18n] element of an extension page */
+    async init() {
+      await I18N.load();
       document.documentElement.lang = I18N.lang === "zh" ? "zh-CN" : "en";
       document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = I18N.t(el.dataset.i18n); });
       return I18N.lang;

@@ -8,9 +8,14 @@ I18N.init().then(lang => {
   $("lang").value = lang;
 });
 
-api.storage.local.get(["allowlist", "denylist"]).then(st => {
+api.storage.local.get(["allowlist", "denylist", "transferCheck"]).then(st => {
   $("allowlist").value = st.allowlist || "";
   $("denylist").value = st.denylist || "";
+  $("transferCheck").checked = st.transferCheck !== false;   // on by default
+});
+
+$("transferCheck").addEventListener("change", () => {
+  api.storage.local.set({ transferCheck: $("transferCheck").checked });
 });
 
 $("lang").addEventListener("change", async () => {
