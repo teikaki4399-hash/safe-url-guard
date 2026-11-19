@@ -200,6 +200,41 @@
       "text": "我保证明天之前把作业交给你。",
       "min": 0,
       "max": 0
+    },
+    {
+      "text": "您的账户已冻结，需要先交5000元解冻费才能提现",
+      "min": 3,
+      "max": 3
+    },
+    {
+      "text": "退款之前必须先补交信誉分保证金",
+      "min": 3,
+      "max": 3
+    },
+    {
+      "text": "返金を受けるには、先に手数料を振り込んでください",
+      "min": 3,
+      "max": 3
+    },
+    {
+      "text": "To get your money back you must first pay a release fee",
+      "min": 3,
+      "max": 3
+    },
+    {
+      "text": "You need to pay the tax before you can withdraw your profit",
+      "min": 3,
+      "max": 3
+    },
+    {
+      "text": "先付款后发货，货到后可以七天无理由退货",
+      "min": 0,
+      "max": 2
+    },
+    {
+      "text": "Please pay the invoice to release the shipment",
+      "min": 0,
+      "max": 1
     }
   ]
 }

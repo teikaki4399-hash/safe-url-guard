@@ -4,6 +4,8 @@
 
 Free tools that protect you from **malware sites, phishing sites and scam messages**.
 
+> **The most important rule: "You must pay first to get your money back" = 100% a scam.** Whatever they call it (fee, tax, deposit, unfreeze charge, "credit score"), if you must pay before you can get a refund, withdraw or get your money back, stop paying and talk to the police.
+
 | Tool | For | What it does |
 |---|---|---|
 | 🛡 [Whole-computer blocking](#-whole-computer-blocking-every-browser-and-app) | Computers (recommended) | Edits the system hosts file so **every browser and every app** is blocked from dangerous sites; updates daily |

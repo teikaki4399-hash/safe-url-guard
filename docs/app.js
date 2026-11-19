@@ -110,6 +110,8 @@
     rulesPromise.then(function (rules) {
       var r = ScamCore.analyze(text, rules);
       var html = '<div class="verdict lv' + r.level + '">' + T("level")[r.level] + "</div>";
+      // "pay first to get your money back" is always a scam: repeat the rule right under the verdict
+      if (r.hits.some(function (h) { return h.id === "pay_to_get_back"; })) html += '<p class="golden">' + T("golden") + "</p>";
       if (r.hits.length) {
         html += "<h2>" + T("found") + "</h2><ul>" + r.hits.map(function (h) {
           return '<li><span class="tag">' + esc(ScamCore.pick(rules.categories[h.category], L())) + "</span>" + esc(ScamCore.pick(h.reason, L())) +

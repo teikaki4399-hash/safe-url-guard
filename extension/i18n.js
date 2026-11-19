@@ -6,6 +6,7 @@
   const api = typeof browser !== "undefined" ? browser : chrome;
   const M = {
     en: {
+      golden: "<b>The most important rule:</b> <b>\"You must pay first to get your money back\" = 100% a scam.</b> Whatever they call it (fee, tax, deposit, unfreeze charge, \"credit score\"), if you must pay before you can get a refund, withdraw or get your money back, it is a scam.",
       blocked_title: "Dangerous site blocked",
       blocked_h1: "⛔ Dangerous site blocked",
       blocked_lead: "This site is on a public <b>malware / phishing (scam) blocklist</b>, so access was blocked.",
@@ -59,6 +60,7 @@
       tc_note: "safe-url-guard extension. This checklist only asks; it never blocks the transfer. It can be turned off in the extension's settings."
     },
     zh: {
+      golden: "<b>最重要的一条：</b><b>“要先付钱，才能拿回钱”＝ 100% 是诈骗。</b>不管对方说是手续费、税、保证金、解冻费还是“补信誉分”，只要是要你先付钱才能退款、提现或拿回钱，就是诈骗。",
       blocked_title: "已拦截危险网站",
       blocked_h1: "⛔ 已拦截危险网站",
       blocked_lead: "这个网站在公开的<b>恶意软件 / 钓鱼（诈骗）网站黑名单</b>中，已为你阻止访问。",
@@ -112,6 +114,7 @@
       tc_note: "safe-url-guard 扩展。这个清单只是提醒，不会阻止转账，可以在扩展的设置里关闭。"
     },
     ja: {
+      golden: "<b>いちばん大切なルール：</b><b>「お金を取り戻すには、先に払う必要がある」＝ 100% 詐欺です。</b>手数料・税金・保証金・凍結解除料・「信用スコア」など名目が何であっても、返金・出金・お金を取り戻す前に払わせるのは詐欺です。",
       blocked_title: "危険なサイトをブロックしました",
       blocked_h1: "⛔ 危険なサイトをブロックしました",
       blocked_lead: "このサイトは公開されている<b>マルウェア・フィッシング（詐欺）サイトのブロックリスト</b>に載っているため、アクセスをブロックしました。",

@@ -6,6 +6,7 @@
     en: {
       title: "Scam Checker | safe-url-guard",
       h1: "Scam Checker",
+      golden: "<b>The most important rule:</b> <b>\"You must pay first to get your money back\" = 100% a scam.</b> Whatever they call it (fee, tax, deposit, unfreeze charge, \"credit score\"), if you must pay before you can get a refund, withdraw or get your money back, it is a scam.",
       lead: "Paste a suspicious message, link or QR code here and check it before you reply, pay or open anything.",
       tab_msg: "Message", tab_url: "Link", tab_qr: "QR code",
       msg_label: "Paste the SMS, LINE, e-mail or DM you received:",
@@ -79,6 +80,7 @@
     zh: {
       title: "防诈骗检查工具 | safe-url-guard",
       h1: "防诈骗检查工具",
+      golden: "<b>最重要的一条：</b><b>“要先付钱，才能拿回钱”＝ 100% 是诈骗。</b>不管对方说是手续费、税、保证金、解冻费还是“补信誉分”，只要是要你先付钱才能退款、提现或拿回钱，就是诈骗。",
       lead: "把可疑的消息、网址或二维码放进来检查一下，再决定要不要回复、付款或打开。",
       tab_msg: "消息检查", tab_url: "网址检查", tab_qr: "二维码检查",
       msg_label: "粘贴收到的短信、LINE、邮件、私信内容：",
@@ -152,6 +154,7 @@
     ja: {
       title: "詐欺チェッカー | safe-url-guard",
       h1: "詐欺チェッカー",
+      golden: "<b>いちばん大切なルール：</b><b>「お金を取り戻すには、先に払う必要がある」＝ 100% 詐欺です。</b>手数料・税金・保証金・凍結解除料・「信用スコア」など名目が何であっても、返金・出金・お金を取り戻す前に払わせるのは詐欺です。",
       lead: "あやしいメッセージ・リンク・QRコードを、返信・支払い・アクセスする前にここでチェックしましょう。",
       tab_msg: "メッセージ", tab_url: "リンク", tab_qr: "QRコード",
       msg_label: "届いたSMS・LINE・メール・DMの文面を貼り付けてください：",

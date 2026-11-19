@@ -31,6 +31,11 @@
       "zh": "“信誉分 / 解冻 / 返款”诈骗",
       "ja": "「信用スコア・凍結解除・返金」詐欺"
     },
+    "pay_to_get_back": {
+      "en": "\"Pay first to get your money back\"",
+      "zh": "“先付钱才能拿回钱”",
+      "ja": "「先に払えばお金が戻る」"
+    },
     "impersonation": {
       "en": "Impersonation",
       "zh": "冒充机构",
@@ -78,6 +83,17 @@
     }
   },
   "rules": [
+    {
+      "id": "pay_to_get_back",
+      "category": "pay_to_get_back",
+      "weight": 6,
+      "reason": {
+        "en": "The most important rule: \"you must pay first to get your money back\" = 100% a scam. Whatever they call it (a fee, tax, deposit, unfreeze charge or \"credit score\"), if you have to pay before you can get a refund, withdraw or get your money back, it is a scam. Stop paying now.",
+        "zh": "最重要的一条：“要先付钱，才能拿回钱”＝ 100% 是诈骗。不管对方说是手续费、税、保证金、解冻费还是“补信誉分”，只要是要你先付钱才能退款、提现或拿回钱，就是诈骗。请马上停止付款。",
+        "ja": "いちばん大切なルール：「お金を取り戻すには、先に払う必要がある」＝ 100% 詐欺です。手数料・税金・保証金・凍結解除料・「信用スコア」など名目が何であっても、返金・出金・お金を取り戻す前に払わせるのは詐欺です。今すぐ支払いをやめてください。"
+      },
+      "pattern": "(先|需要|必须|必須|要|得)(交|付|缴|繳|支付|充值|转|轉|汇|匯|补|補).{0,20}(才能|才可以|才可|方可|才会|才會).{0,8}(提现|提現|退款|退还|退還|返还|返還|拿回|取回|解冻|解凍|出金|到账|到賬|返款|回款)|(提现|提現|退款|解冻|解凍|拿回|出金).{0,6}(之前|前).{0,6}(需要|必须|必須|要|得)(先)?(交|付|缴|繳|支付|补|補|充值)|(返金|出金|払い戻し|払戻し|引き出|取り戻|凍結解除).{0,15}(ため|前|には).{0,15}(手数料|税金|保証金|解除料|費用|お金).{0,10}(払|支払|振り?込|入金)|(先に|まず).{0,10}(払|支払|振り?込|入金).{0,20}(返金|出金|払い戻|払戻|取り戻)|(pay|send|deposit|transfer)\\b.{0,30}\\b(before|to) (you can )?(withdraw|get (your|the) (money|funds|refund|deposit) back|receive (your|the) (refund|money|funds|profits?|winnings)|unlock (your )?(account|funds|withdrawal))|to (get|receive) (your|the) (money|refund|funds)( back)?,? you (must|need to|have to) (first )?pay"
+    },
     {
       "id": "inv_guarantee",
       "category": "investment",
@@ -604,12 +620,14 @@
   ],
   "advice": {
     "en": [
+      "The most important rule: \"you must pay first to get your money back\" = 100% a scam.",
       "Do not pay or reply yet. Talk to family, friends or the police first.",
       "Phone numbers and links in the message may be fake. Look up official contact details yourself.",
       "If you have already paid: contact your bank and the police immediately, and keep all chats and receipts.",
       "Japan: police consultation #9110, consumer hotline 188; emergency 110. Mainland China: anti-fraud hotline 96110; emergency 110."
     ],
     "zh": [
+      "最重要的一条：“要先付钱，才能拿回钱”＝ 100% 是诈骗。",
       "先别付款，也别回复，找家人、朋友或警察商量。",
       "对方给的电话号码和网址都可能是假的，请自己搜官方信息来核实。",
       "如果已经付了钱：马上联系银行和警察，保存好聊天记录和转账记录。",
@@ -617,6 +635,7 @@
       "中国大陆：全国反诈专线 96110；紧急情况拨 110。"
     ],
     "ja": [
+      "いちばん大切なルール：「お金を取り戻すには、先に払う必要がある」＝ 100% 詐欺です。",
       "まだ支払わず、返信もしないでください。まず家族・友人・警察に相談してください。",
       "メッセージにある電話番号やリンクは偽物かもしれません。公式の連絡先は自分で調べてください。",
       "すでに支払ってしまった場合：すぐに銀行と警察に連絡し、やり取りと振込の記録をすべて残してください。",

@@ -125,6 +125,7 @@
     dlg.setAttribute("role", "dialog");
     dlg.setAttribute("aria-modal", "true");
     dlg.appendChild(el("h2", null, T("tc_title")));
+    dlg.appendChild(el("p", "rule", T("golden")));
     dlg.appendChild(el("p", null, T("tc_lead")));
     const ol = el("ol");
     const answers = {};

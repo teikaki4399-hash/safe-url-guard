@@ -18,6 +18,8 @@ code { word-break: break-all; }
 .blocked h1 { color:var(--red); margin:0 0 8px; font-size:1.7rem; }
 .blocked .url { background:var(--red-bg); color:var(--red); padding:8px 12px; border-radius:6px; font-family:ui-monospace,monospace; word-break:break-all; }
 
+.golden { background: var(--red-bg); color: var(--red); border-left: 5px solid var(--red); border-radius: 8px; padding: 8px 12px; font-size: .9rem; }
+
 /* popup */
 .popup { width:320px; padding:14px 16px; }
 .popup h1 { font-size:1.05rem; margin:0 0 8px; }
