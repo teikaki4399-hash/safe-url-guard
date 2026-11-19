@@ -153,13 +153,14 @@ class TestI18n(unittest.TestCase):
 
     def test_rules_have_both_languages(self):
         rules = scam_check.load_rules()
+        langs = {"en", "zh", "ja"}   # the web checker also has a Japanese UI
         for r in rules["rules"]:
-            self.assertEqual(set(r["reason"]), {"en", "zh"}, r["id"])
+            self.assertEqual(set(r["reason"]), langs, r["id"])
         for c in rules["combos"]:
-            self.assertEqual(set(c["reason"]), {"en", "zh"})
+            self.assertEqual(set(c["reason"]), langs)
         for v in rules["categories"].values():
-            self.assertEqual(set(v), {"en", "zh"})
-        self.assertEqual(set(rules["advice"]), {"en", "zh"})
+            self.assertEqual(set(v), langs)
+        self.assertEqual(set(rules["advice"]), langs)
 
     def test_cli_output_in_both_languages(self):
         import io

@@ -1,4 +1,4 @@
-/* safe-url-guard extension: UI text in English and Simplified Chinese.
+/* safe-url-guard extension: UI text in English, Simplified Chinese and Japanese.
  * The language follows the browser UI language unless changed on the options page.
  * SPDX-License-Identifier: GPL-3.0-or-later */
 "use strict";
@@ -110,11 +110,69 @@
       tc_wait: "请等待 {n} 秒…",
       tc_continue_anyway: "我已经找人确认过，继续",
       tc_note: "safe-url-guard 扩展。这个清单只是提醒，不会阻止转账，可以在扩展的设置里关闭。"
+    },
+    ja: {
+      blocked_title: "危険なサイトをブロックしました",
+      blocked_h1: "⛔ 危険なサイトをブロックしました",
+      blocked_lead: "このサイトは公開されている<b>マルウェア・フィッシング（詐欺）サイトのブロックリスト</b>に載っているため、アクセスをブロックしました。",
+      blocked_li1: "このようなサイトは、ウイルスを入れたり、パスワード・カード情報・お金をだまし取ったりするおそれがあります。",
+      blocked_li2: "誰かから送られてきたリンク（SMS、LINE、メール、DMなど）なら、相手は詐欺師の可能性が非常に高いです。<b>返信せず、支払わないでください。</b>",
+      blocked_li3: "すでにパスワードやカード番号を入力してしまった場合は、すぐに<b>公式アプリまたは公式サイト</b>でパスワードを変更し、銀行やカード会社に連絡してください。",
+      blocked_help: "相談窓口　日本：警察相談専用電話 <b>#9110</b>、消費者ホットライン <b>188</b>　｜　中国本土：詐欺対策ホットライン <b>96110</b>　｜　緊急時：<b>110</b>　｜　その他の地域：地元の警察",
+      blocked_back: "安全なページに戻る",
+      blocked_src: "ブロックリスト：<a href=\"https://openphish.com/\" target=\"_blank\" rel=\"noopener\">OpenPhish</a> / <a href=\"https://github.com/hagezi/dns-blocklists\" target=\"_blank\" rel=\"noopener\">HaGeZi Threat Intelligence Feeds</a> / 内蔵リスト。safe-url-guard 拡張機能がブロックしました。",
+      popup_blocking: "<span class=\"big\" id=\"count\">-</span> 件の危険なサイトをブロック中",
+      popup_update: "今すぐ更新", popup_updating: "更新中…", popup_options: "設定",
+      popup_web: "あやしいメッセージやQRコードは<a href=\"https://teikaki4399-hash.github.io/safe-url-guard/?lang=ja\" target=\"_blank\" rel=\"noopener\">ウェブ版チェッカー</a>でチェックできます。",
+      popup_status_fail: "状態を読み込めませんでした",
+      popup_never: "未更新",
+      popup_last: "前回の更新確認：{t}（24時間ごとに自動更新）",
+      popup_feed: "{label}：{n} 件（{t}）",
+      popup_feed_err: "前回の更新に失敗しました：{e}",
+      feed_openphish: "OpenPhish（フィッシング）", feed_hagezi_tif: "HaGeZi TIF（マルウェア・フィッシング・詐欺）",
+      opt_title: "safe-url-guard の設定",
+      opt_lang: "言語 / Language",
+      opt_deny_h: "独自のブロックリスト",
+      opt_deny_p: "追加でブロックしたいサイトを1行に1ドメインずつ入力します（例：<code>bad-shop.example</code>）。サブドメインもブロックされます。詐欺師が使ったサイトを追加できます。",
+      opt_allow_h: "許可リスト（例外）",
+      opt_allow_p: "<b>安全だと確実にわかっている</b>サイトが誤ってブロックされたときだけ使ってください。1行に1ドメイン。ブロック画面には「このまま進む」ボタンがないため、許可する方法はここだけです。",
+      opt_save: "保存",
+      opt_saved: "保存しました（{n} 件のサイトをブロック中）",
+      opt_save_fail: "保存に失敗しました：{e}",
+      opt_newdom_h: "新しいドメインの警告バー",
+      opt_newdom_p: "開いたサイトが登録から30日未満のとき、ページ上部に警告バーを表示します（ブロックはしません）。そのために、開いたサイトのドメイン名（完全なアドレスではありません）を、そのドメインの末尾を管理する公開RDAPサーバーに送信します。結果はキャッシュされるため、同じドメインの問い合わせは月に1回程度です。",
+      nd_bar: "⚠ <b>注意：できたばかりのサイトです。</b>{d} の登録日は {date}、まだ <b>{days} 日</b>しか経っていません。詐欺サイトの多くは登録から間もなく詐欺を始めます。ここでパスワードやカード情報を入力したり、支払ったりしないでください。",
+      nd_close: "閉じる",
+      opt_transfer_h: "「振り込む前にひと呼吸」チェックリスト",
+      opt_transfer_p: "ネットバンキングや決済の振込・送金ページらしいページを開いたとき、サイトごと・ブラウザのセッションごとに1回、確認のチェックリストを表示します。振込をブロックすることはありません。",
+      opt_on: "オンにする",
+      tc_title: "🛑 振り込む前にひと呼吸",
+      tc_lead: "このページは振込・送金のページのようです。お金を送る前に、次の質問に正直に答えてください。",
+      tc_q1: "振込先は、<b>ネットで知り合い、会ったことのない人</b>ですか？",
+      tc_q2: "<b>返金や出金の前に、先にお金（手数料・税金・保証金・凍結解除料など）を払う必要がある</b>と言われましたか？",
+      tc_q3: "家族・友人・銀行には<b>言わないで</b>と言われましたか？",
+      tc_q4: "「今日中に」「今すぐでないと間に合わない」と<b>急かされて</b>いますか？",
+      tc_q5: "<b>警察・検察・銀行・役所</b>を名乗る相手から、「安全な口座」にお金を移すよう言われましたか？",
+      tc_q6: "この振込は<b>投資・副業のタスク・賞金の受け取り</b>、または「信用スコアの回復」のためですか？",
+      tc_q7: "今、電話やチャットで誰かが<b>一つずつ操作を指示</b>していますか？ または画面共有やアプリのインストールを求められましたか？",
+      tc_yes: "はい", tc_no: "いいえ",
+      tc_danger: "<b>⚠ 詐欺の可能性が非常に高いです。振り込まないでください。</b><br>返信をやめ、電話を切って、まず家族か警察に相談してください。日本：警察相談専用電話 <b>#9110</b>、消費者ホットライン <b>188</b>　｜　中国本土：詐欺対策ホットライン <b>96110</b>　｜　緊急時：<b>110</b>",
+      tc_ok: "これらの質問では危険なサインは見つかりませんでした。それでも少しでもおかしいと感じたら、お金を送る前に止まって誰かに相談してください。",
+      tc_stop: "振り込まずに戻る",
+      tc_continue: "続ける",
+      tc_wait: "{n} 秒お待ちください…",
+      tc_continue_anyway: "誰かに相談して確認したので続ける",
+      tc_note: "safe-url-guard 拡張機能。このチェックリストは確認するだけで、振込をブロックすることはありません。拡張機能の設定でオフにできます。"
     }
   };
 
   const I18N = {
-    lang: /^zh/i.test(api.i18n && api.i18n.getUILanguage ? api.i18n.getUILanguage() : navigator.language) ? "zh" : "en",
+    lang: (function () {
+      const ui = api.i18n && api.i18n.getUILanguage ? api.i18n.getUILanguage() : navigator.language;
+      return /^zh/i.test(ui) ? "zh" : /^ja/i.test(ui) ? "ja" : "en";
+    })(),
+    messages: M,
+    locale() { return { zh: "zh-CN", ja: "ja", en: "en" }[I18N.lang] || "en"; },
     t(key, vars) {
       let s = (M[I18N.lang] && M[I18N.lang][key]) || M.en[key] || key;
       if (vars) s = s.replace(/\{(\w+)\}/g, (_, k) => (vars[k] != null ? vars[k] : ""));
@@ -124,14 +182,14 @@
     async load() {
       try {
         const { lang } = await api.storage.local.get("lang");
-        if (lang === "en" || lang === "zh") I18N.lang = lang;
+        if (M[lang]) I18N.lang = lang;
       } catch (e) { /* use the browser language */ }
       return I18N.lang;
     },
     /* load the language and translate every [data-i18n] element of an extension page */
     async init() {
       await I18N.load();
-      document.documentElement.lang = I18N.lang === "zh" ? "zh-CN" : "en";
+      document.documentElement.lang = I18N.locale();
       document.querySelectorAll("[data-i18n]").forEach(el => { el.innerHTML = I18N.t(el.dataset.i18n); });
       return I18N.lang;
     }

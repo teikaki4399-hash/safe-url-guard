@@ -1,6 +1,6 @@
 # safe-url-guard
 
-**English** | [简体中文](README.zh-CN.md)
+**English** | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
 
 Free tools that protect you from **malware sites, phishing sites and scam messages**.
 
@@ -12,7 +12,7 @@ Free tools that protect you from **malware sites, phishing sites and scam messag
 | 🌐 [Web checker](#-web-checker) | Everyone | Check **suspicious messages, links and QR codes** in your browser |
 | 🐍 [Python command-line tools](#-python-command-line-tools) | Terminal users | The same checks, scriptable |
 
-All tools are available in **English and Simplified Chinese (简体中文)**. See [Language](#language).
+All tools are available in **English and Simplified Chinese (简体中文)**; the web checker and the browser extension are also available in **Japanese (日本語)**. See [Language](#language).
 
 ---
 
@@ -130,8 +130,8 @@ Custom lists live in `~/.cache/safe_url_guard/`: `allowlist.txt` and `denylist.t
 | Tool | How to switch |
 |---|---|
 | Python tools | `python3 safe_url_guard.py lang zh` (or `lang en`). Saved in a `.lang` file next to the scripts. You can also set `SAFE_URL_GUARD_LANG=zh`. A Chinese system locale selects Chinese automatically. |
-| Browser extension | Follows the browser's language; change it under the extension's **Settings → Language** |
-| Web checker | **English / 中文** buttons at the top right (remembered), or add `?lang=zh` to the URL |
+| Browser extension | Follows the browser's language (English / 中文 / 日本語); change it under the extension's **Settings → Language** |
+| Web checker | **English / 中文 / 日本語** buttons at the top right (remembered), or add `?lang=zh` / `?lang=ja` to the URL |
 
 ## How it decides
 

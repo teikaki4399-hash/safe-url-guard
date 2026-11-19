@@ -1,5 +1,5 @@
 {
-  "_comment": "Scam-message rules shared by scam_check.py and docs/app.js. Patterns are regular expressions compatible with both Python and JavaScript and are matched case-insensitively. Text fields have \"en\" and \"zh\" versions.",
+  "_comment": "Scam-message rules shared by scam_check.py and docs/app.js. Patterns are regular expressions compatible with both Python and JavaScript and are matched case-insensitively. Text fields have \"en\", \"zh\" and \"ja\" versions.",
   "version": 1,
   "thresholds": {
     "high": 6,
@@ -8,59 +8,73 @@
   "categories": {
     "investment": {
       "en": "Investment scam",
-      "zh": "投资诈骗"
+      "zh": "投资诈骗",
+      "ja": "投資詐欺"
     },
     "job": {
       "en": "Job / task scam",
-      "zh": "兼职 / 刷单诈骗"
+      "zh": "兼职 / 刷单诈骗",
+      "ja": "副業・タスク詐欺"
     },
     "romance": {
       "en": "Romance scam",
-      "zh": "感情（网恋）诈骗"
+      "zh": "感情（网恋）诈骗",
+      "ja": "ロマンス詐欺"
     },
     "hookup": {
       "en": "Dating-platform scam",
-      "zh": "交友平台诈骗"
+      "zh": "交友平台诈骗",
+      "ja": "出会い系サイト詐欺"
     },
     "credit": {
       "en": "\"Credit score / unfreeze / refund\" scam",
-      "zh": "“信誉分 / 解冻 / 返款”诈骗"
+      "zh": "“信誉分 / 解冻 / 返款”诈骗",
+      "ja": "「信用スコア・凍結解除・返金」詐欺"
     },
     "impersonation": {
       "en": "Impersonation",
-      "zh": "冒充机构"
+      "zh": "冒充机构",
+      "ja": "なりすまし"
     },
     "payment": {
       "en": "Payment request",
-      "zh": "要求付款"
+      "zh": "要求付款",
+      "ja": "支払いの要求"
     },
     "pressure": {
       "en": "Pressure / secrecy",
-      "zh": "制造紧迫感 / 要求保密"
+      "zh": "制造紧迫感 / 要求保密",
+      "ja": "焦らせる・口止め"
     },
     "offplatform": {
       "en": "Moving you to another app",
-      "zh": "引导到其他聊天软件"
+      "zh": "引导到其他聊天软件",
+      "ja": "別のアプリへの誘導"
     },
     "credentials": {
       "en": "Asking for passwords / codes",
-      "zh": "索要密码 / 验证码等"
+      "zh": "索要密码 / 验证码等",
+      "ja": "パスワード・認証コードの要求"
     },
     "prize": {
       "en": "Prize / reward",
-      "zh": "中奖 / 领奖"
+      "zh": "中奖 / 领奖",
+      "ja": "当選・賞金"
     },
     "social_proof": {
       "en": "Fake crowd (\"everyone is earning\")",
-      "zh": "制造从众（“群里人人都在赚”）"
+      "zh": "制造从众（“群里人人都在赚”）",
+      "ja": "サクラ（「みんな儲かっている」）"
     },
     "recovery": {
       "en": "\"We can recover your money\"",
-      "zh": "“帮你追回损失”"
+      "zh": "“帮你追回损失”",
+      "ja": "「被害金を取り戻します」"
     },
     "remote": {
       "en": "Unknown app / remote control",
-      "zh": "陌生 App / 远程控制"
+      "zh": "陌生 App / 远程控制",
+      "ja": "見知らぬアプリ・遠隔操作"
     }
   },
   "rules": [
@@ -70,7 +84,8 @@
       "weight": 3,
       "reason": {
         "en": "Promises of \"guaranteed\", \"risk-free\" or \"high\" returns. Real investments never guarantee profits.",
-        "zh": "承诺“稳赚”“保本”“高回报”。正规投资不会保证收益。"
+        "zh": "承诺“稳赚”“保本”“高回报”。正规投资不会保证收益。",
+        "ja": "「元本保証」「リスクなし」「高利回り」をうたっています。本物の投資は利益を保証しません。"
       },
       "pattern": "稳赚|穩賺|保本|零风险|零風險|无风险|保证(收益|盈利|回报|赚)|保證(收益|獲利|回報)|高回报|高回報|高收益|日赚|日賺|月入[0-9一二三四五六七八九十百千万萬]+|收益翻倍|翻[一二三]?倍|元本保証|確実に(儲か|稼げ|増え)|必ず(儲か|稼げ|増え)|絶対(儲か|稼げ)|高利回り|利回り[0-9０-９]+[%％]|guaranteed (profit|return|income)|risk[- ]free|double your (money|investment)|[0-9]+% (daily|weekly) (return|profit)"
     },
@@ -80,7 +95,8 @@
       "weight": 2,
       "reason": {
         "en": "\"Mentors\", \"insider information\" and \"investment groups\" are classic investment-scam tactics.",
-        "zh": "“老师带单”“内幕消息”“投资群”是典型的投资诈骗手法。"
+        "zh": "“老师带单”“内幕消息”“投资群”是典型的投资诈骗手法。",
+        "ja": "「先生」「内部情報」「投資グループ」は投資詐欺の典型的な手口です。"
       },
       "pattern": "内幕|內幕|内部消息|内部消息|老师带|老師帶|带单|帶單|跟单|跟單|喊单|喊單|荐股|薦股|股票群|投资群|投資群|导师|導師|投資(の)?先生|株の先生|投資グループ|投資サークル|インサイダー|inside information|insider tip|trading mentor|signal group|investment group"
     },
@@ -90,7 +106,8 @@
       "weight": 6,
       "reason": {
         "en": "You must pay a \"fee / tax / deposit / unfreeze charge\" before you can withdraw. This is almost certainly a scam: even if you pay, you will not get your money out.",
-        "zh": "提现前要你先交“手续费 / 税 / 保证金 / 解冻费”。这几乎可以确定是诈骗，交了也提不出来。"
+        "zh": "提现前要你先交“手续费 / 税 / 保证金 / 解冻费”。这几乎可以确定是诈骗，交了也提不出来。",
+        "ja": "出金する前に「手数料・税金・保証金・凍結解除料」を払う必要があると言っています。ほぼ確実に詐欺です。払っても出金できません。"
       },
       "pattern": "(提现|提現|出金|取り出|引き出|withdraw).{0,20}(手续费|手續費|保证金|保證金|税|稅|解冻|解凍|激活|手数料|保証金|税金|fee|tax|deposit)|(手续费|保证金|解冻费|手数料|保証金|税金).{0,20}(提现|提現|出金|引き出)|账户.{0,6}冻结.{0,20}(缴|交|付)|unlock (your )?(account|funds|withdrawal)"
     },
@@ -100,7 +117,8 @@
       "weight": 1,
       "reason": {
         "en": "Mentions cryptocurrency. Crypto itself is legal, but many investment scams use it.",
-        "zh": "提到虚拟货币。虚拟货币本身不违法，但很多投资诈骗都用它。"
+        "zh": "提到虚拟货币。虚拟货币本身不违法，但很多投资诈骗都用它。",
+        "ja": "暗号資産（仮想通貨）の話が出ています。暗号資産そのものは合法ですが、多くの投資詐欺に使われています。"
       },
       "pattern": "USDT|泰达币|泰達幣|虚拟货币|虛擬貨幣|加密货币|加密貨幣|比特币|比特幣|数字货币|仮想通貨|暗号資産|ビットコイン|crypto|bitcoin|ethereum|binance"
     },
@@ -110,7 +128,8 @@
       "weight": 1,
       "reason": {
         "en": "Asks you to download a specific app or register on a specific platform. Fake investment platforms often do this.",
-        "zh": "要你下载指定的 App 或在指定平台注册。假投资平台常常这样做。"
+        "zh": "要你下载指定的 App 或在指定平台注册。假投资平台常常这样做。",
+        "ja": "特定のアプリのダウンロードや特定のプラットフォームへの登録を求めています。偽の投資プラットフォームがよく使う手口です。"
       },
       "pattern": "(下载|下載|安装|安裝|注册|註冊).{0,10}(app|APP|平台|软件|軟體)|専用アプリ|(アプリ|サイト)(を|に)(インストール|登録)|download (our|the|this) app|register on (our|the|this) platform"
     },
@@ -120,7 +139,8 @@
       "weight": 3,
       "reason": {
         "en": "Paid \"likes\", order brushing, \"pay first and get refunded with commission\", or illegal \"yami-baito\" recruitment are classic job scams.",
-        "zh": "刷单、点赞赚钱、先垫付再返还、“闇バイト”等，都是典型的兼职诈骗或违法招募。"
+        "zh": "刷单、点赞赚钱、先垫付再返还、“闇バイト”等，都是典型的兼职诈骗或违法招募。",
+        "ja": "「いいね」で報酬、注文代行（刷単）、「先に立て替えれば手数料付きで返金」、闇バイトの勧誘は典型的な副業詐欺です。"
       },
       "pattern": "刷单|刷單|刷信誉|刷信譽|点赞赚钱|點讚賺錢|点赞.{0,6}(佣金|返|赚)|垫付|墊付|先付.{0,6}再返|做任务.{0,10}(佣金|返|赚)|做任務|闇バイト|ホワイト案件|裏バイト|いいね(する|で).{0,10}(稼|報酬|円)|(like|follow) (videos|posts|pages).{0,20}(earn|paid|\\$)|prepay.{0,20}(task|order)"
     },
@@ -130,7 +150,8 @@
       "weight": 2,
       "reason": {
         "en": "\"Easy money\" or \"earn from home with just your phone\" job offers are very likely scams.",
-        "zh": "“轻松赚钱”“在家用手机就能赚”的招聘信息，诈骗的可能性很高。"
+        "zh": "“轻松赚钱”“在家用手机就能赚”的招聘信息，诈骗的可能性很高。",
+        "ja": "「簡単に稼げる」「スマホだけで在宅で稼げる」という仕事の誘いは、詐欺の可能性が非常に高いです。"
       },
       "pattern": "轻松赚|輕鬆賺|在家.{0,4}(赚|賺)|动动手指|動動手指|日结|日結|兼职.{0,10}(日赚|日入|[0-9]+元)|簡単に稼|スマホ(だけ|一台)で.{0,10}(稼|円)|即日払い|高額報酬|1日[0-9０-９]+分で|easy money|earn \\$?[0-9,]+ (a|per) (day|hour) from home|work from home and earn"
     },
@@ -140,7 +161,8 @@
       "weight": 1,
       "reason": {
         "en": "Pet names or strong declarations of love. Be careful if someone you met online talks like this very quickly.",
-        "zh": "亲密称呼或深情表白。和网上认识的人才聊不久就这样，要提高警惕。"
+        "zh": "亲密称呼或深情表白。和网上认识的人才聊不久就这样，要提高警惕。",
+        "ja": "愛称や強い愛情表現が使われています。ネットで知り合った相手が急にこう言ってきたら注意してください。"
       },
       "pattern": "宝贝|寶貝|亲爱的|親愛的|老公|老婆|我爱你|我愛你|想你了|ハニー|ダーリン|愛してる|大好きだよ|運命の人|my love|darling|honey|sweetheart|i love you|soulmate"
     },
@@ -150,7 +172,8 @@
       "weight": 2,
       "reason": {
         "en": "Claims to be overseas, a soldier or doctor, or talks about marriage. These are common romance-scam personas.",
-        "zh": "自称在海外、是军人或医生、说要结婚等，是感情诈骗（国际恋爱诈骗）的常见人设。"
+        "zh": "自称在海外、是军人或医生、说要结婚等，是感情诈骗（国际恋爱诈骗）的常见人设。",
+        "ja": "海外にいる、軍人や医師だと名乗る、結婚の話をする。どれもロマンス詐欺でよく使われる人物設定です。"
       },
       "pattern": "维和|維和|海外(派遣|赴任|勤務)|国連.{0,6}(医師|軍)|軍(医|人)|石油(钻井|鑽井|プラットフォーム)|(在|來自).{0,4}(叙利亚|敘利亞|也门|也門)|(见面|見面|会いに行く).{0,10}(机票|機票|航空券|签证|簽證)|结婚|結婚しよう|(peacekeeping|deployed|oil rig|army doctor|un doctor)|marry you"
     },
@@ -160,7 +183,8 @@
       "weight": 3,
       "reason": {
         "en": "Someone calling themselves a \"platform receptionist\" offers to arrange a meeting. This is how dating-platform scams start: the goal is to make you register and pay fees or deposits. Nobody will actually come.",
-        "zh": "自称“平台接待员”，说可以帮你安排见面。这是交友平台诈骗的开头，对方的目的是让你注册平台、交会员费或押金，不会真的有人来见面。"
+        "zh": "自称“平台接待员”，说可以帮你安排见面。这是交友平台诈骗的开头，对方的目的是让你注册平台、交会员费或押金，不会真的有人来见面。",
+        "ja": "「プラットフォームの受付」を名乗る人が会う約束を取り持とうとしています。出会い系サイト詐欺の始まり方で、目的は登録させて会費や保証金を払わせることです。実際には誰も来ません。"
       },
       "pattern": "约炮|約炮|同城(约|約|交友|妹妹|美女|可约|可約|匹配)|附近(的)?(妹妹|少女|少妇|美女|人)|上门服务|上門服務|上门上酒店|见面支付|見面支付|(平台|服务)接待员|接待員|生活照|新会员.{0,10}(免费|免費)|查询.{0,6}(同城|附近)|hookup|local girls?|book a service|escort|出会い系|デリヘル|近くの女の子|パパ活|援(交|助交際)"
     },
@@ -170,7 +194,8 @@
       "weight": 3,
       "reason": {
         "en": "Calls itself a \"dating platform\" and asks you to download an app or register with a \"receptionist\" or \"admin\". The platform itself is the scam; payment requests will follow.",
-        "zh": "自称“交友平台”，让你下载 App、找“接待员”“管理员”登记。这类平台本身就是骗局，后面一定会要你付钱。"
+        "zh": "自称“交友平台”，让你下载 App、找“接待员”“管理员”登记。这类平台本身就是骗局，后面一定会要你付钱。",
+        "ja": "「出会いのプラットフォーム」を名乗り、アプリのダウンロードや「受付」「管理人」経由の登録を求めています。プラットフォーム自体が詐欺で、このあと支払いを求められます。"
       },
       "pattern": "(约炮|約炮|交友|约会|約會|同城|华人|華人)(平台|app|APP|软件|軟體)|平台(接待员|接待員|管理员|管理員)|我是您?的(管理员|管理員|接待员|接待員)|发送.{0,6}【安排】|matching system|hookup (platform|app)|出会い(系)?アプリ.{0,10}(登録|ポイント)"
     },
@@ -180,7 +205,8 @@
       "weight": 2,
       "reason": {
         "en": "You must pay a \"deposit / membership fee / booking fee\" before you can meet or contact someone. Legitimate dating services do not do this.",
-        "zh": "要你先交“押金 / 保证金 / 会员费 / 预约金”才能见面或联系对方。正规的约会服务不会这样要求。"
+        "zh": "要你先交“押金 / 保证金 / 会员费 / 预约金”才能见面或联系对方。正规的约会服务不会这样要求。",
+        "ja": "会ったり連絡したりする前に「保証金・会費・予約料」を払う必要があると言っています。まともな出会いサービスはこういうことをしません。"
       },
       "pattern": "押金|保证金|保證金|会员费|會員費|入会费|入會費|预约金|預約金|定金|开通会员|開通會員|会员账号|會員帳號|保証金|入会金|登録料|ポイント(購入|を買)|membership fee|security deposit"
     },
@@ -190,7 +216,8 @@
       "weight": 6,
       "reason": {
         "en": "Says you made an \"operation error\", your \"credit score\" is too low or your account is locked, and you must pay to \"restore your score\" or \"unfreeze\" before a refund or withdrawal. This is the final stage of the scam: no matter how much you pay, nothing will be returned. Stop paying now.",
-        "zh": "说你“操作失误”“信誉分不足”“账户被锁定”，要你花钱“补信誉分”“解冻”后才能退款或提现。这是在诈骗的最后阶段继续骗钱，补多少都不会退，请马上停止付款。"
+        "zh": "说你“操作失误”“信誉分不足”“账户被锁定”，要你花钱“补信誉分”“解冻”后才能退款或提现。这是在诈骗的最后阶段继续骗钱，补多少都不会退，请马上停止付款。",
+        "ja": "「操作ミス」「信用スコア不足」「アカウント凍結」と言い、返金や出金の前に「スコア回復」「凍結解除」のための支払いを求めています。これは詐欺の最終段階です。いくら払っても何も戻りません。今すぐ支払いをやめてください。"
       },
       "pattern": "信誉分|信譽分|信誉积分|信譽積分|信用分.{0,10}(补|補|不足|下降|下滑)|(补足|補足|补齐|補齊|购买|購買).{0,6}(信誉|信譽|积分|積分)|操作失误|操作失誤|返款|(出款|提现|提現|银行|銀行|商家)审核|(出款|提現|銀行|商家)審核|最后数据金额|最後數據金額|任务单|任務單|订单(超时|异常)|信用スコア|操作ミス|凍結解除|返金.{0,10}(手数料|保証金|手続き)|credit score.{0,30}(pay|top|buy|restore)|unfreeze"
     },
@@ -200,7 +227,8 @@
       "weight": 2,
       "reason": {
         "en": "Says your account is \"locked / frozen / abnormal\". If they also ask you to pay to unlock it, it is almost certainly a scam.",
-        "zh": "说你的账户“被锁定 / 冻结 / 异常”。如果对方同时要你付钱来解锁，几乎可以确定是诈骗。"
+        "zh": "说你的账户“被锁定 / 冻结 / 异常”。如果对方同时要你付钱来解锁，几乎可以确定是诈骗。",
+        "ja": "アカウントが「ロック・凍結・異常」だと言っています。解除のために支払いも求められたら、ほぼ確実に詐欺です。"
       },
       "pattern": "(账户|帳戶|账号|帳號|积分|積分).{0,6}(锁定|鎖定|冻结|凍結|异常|異常)|状态[:：]?\\s*[（(]?锁定|アカウント.{0,6}(凍結|ロック)|account (is |has been )?(locked|frozen)"
     },
@@ -210,7 +238,8 @@
       "weight": 6,
       "reason": {
         "en": "Says you cannot withdraw or get a refund without a \"verification\". Real withdrawals never require you to pay again or \"verify\". This is almost certainly a scam.",
-        "zh": "说不做“验证”就不能提现或退款。真正的提现不需要你再付钱或做什么“验证”，这几乎可以确定是诈骗。"
+        "zh": "说不做“验证”就不能提现或退款。真正的提现不需要你再付钱或做什么“验证”，这几乎可以确定是诈骗。",
+        "ja": "「認証」をしないと出金や返金ができないと言っています。本物の出金で再度の支払いや「認証」が必要になることはありません。ほぼ確実に詐欺です。"
       },
       "pattern": "(提现|提現|出款|退款|返款).{0,30}(二次验证|二次驗證|验证金|驗證金|再次验证|再次驗證)|(二次验证|二次驗證|验证金|驗證金|不验证|不驗證).{0,20}(无法|無法|不能|才能|才可以).{0,8}(提现|提現|出款|退款|返款)|(垫付|墊付|支付|先付)\\s*[0-9０-９]*.{0,10}(认证|認證|验证|驗證)(通过|通過)?(后|後).{0,8}(提现|提現)|(验证|驗證|认证|認證)(资金|資金).{0,30}(提现|提現|出款)"
     },
@@ -220,7 +249,8 @@
       "weight": 4,
       "reason": {
         "en": "Asks for a \"verification deposit\", a \"second verification\", or says the amount is too large and must be \"split\". \"Refund specialists\" or a \"payout department\" may appear. All of this is invented to keep you paying; there will always be another reason.",
-        "zh": "说要先付“验证金”、做“二次验证”，或者提现金额太大要“分笔”。还会冒出“退款专员”“出款部门”之类的人。这些都是为了让你继续付钱编出来的，付完还会有下一个理由。"
+        "zh": "说要先付“验证金”、做“二次验证”，或者提现金额太大要“分笔”。还会冒出“退款专员”“出款部门”之类的人。这些都是为了让你继续付钱编出来的，付完还会有下一个理由。",
+        "ja": "「認証用の保証金」「二次認証」を求めたり、金額が大きすぎるので「分割」が必要だと言ったりしています。「返金担当」や「出金部門」が出てくることもあります。どれも支払いを続けさせるための作り話で、理由はいつまでも続きます。"
       },
       "pattern": "验证金|驗證金|(单笔|單筆|大额|大額).{0,6}(提现|提現|出款)|出款(部门|部門|失败|失敗)|退款专员|退款專員|售后出款|售後出款|分笔兑换|分筆兌換|积分的一半|積分的一半|走流水|激活.{0,4}(卡|账户|帳戶)|出金(できない|手続き).{0,10}(認証|手数料)|verification (fee|deposit)|风控部门|風控部門|验证资金|驗證資金|(新的?|更换了?新的?)(卡号|卡號|银行卡|銀行卡).{0,15}(验证|驗證)|第二步验证|第二步驗證|出款异常|出款異常|通道冻结|通道凍結|解冻代码|解凍代碼|提现通道.{0,10}冻结|提現通道.{0,10}凍結|(重新)?(购入|購入|选择|選擇)(出款)?数据|(購入|购入).{0,10}数据|资金入账就算解冻|資金入賬就算解凍|帮你(人工)?报备|幫你(人工)?報備|打码|投票.{0,6}(入口|数据|打码)|(按照|按)我发的.{0,6}(数据|投票)|严禁私自投票|嚴禁私自投票|取消.{0,4}退款资格|取消.{0,4}退款資格|解冻方案|解凍方案|一次性提款通道|充值.{0,6}积分.{0,10}(才能|才可以)提现|格式化(异常|異常)?数据|格式化(異常)?數據|分[四4]笔提现|分[四4]筆提現|(提现|提現)通道冻结|(提现|提現)通道凍結|获取退款名额|獲取退款名額|退款名额|退款名額|测试兑换|測試兌換|工本费|工本費|强制退款|強制退款|替代处理方案|替代處理方案|账户格式化|帳戶格式化"
     },
@@ -230,7 +260,8 @@
       "weight": 1,
       "reason": {
         "en": "Mentions police, a bank, a delivery company or customer service. Check whether someone is impersonating them.",
-        "zh": "提到公安、银行、快递、客服等机构。要核实是不是本人在冒充。"
+        "zh": "提到公安、银行、快递、客服等机构。要核实是不是本人在冒充。",
+        "ja": "警察・銀行・配送業者・カスタマーサポートの名前が出ています。なりすましでないか確認してください。"
       },
       "pattern": "公安|警察|检察|檢察|法院|海关|海關|客服|快递|快遞|银行|銀行|国税|税務署|検察|佐川|ヤマト|日本郵便|郵便局|アマゾン|amazon|楽天|police|customs|IRS|customer service"
     },
@@ -240,7 +271,8 @@
       "weight": 3,
       "reason": {
         "en": "Says you are suspected of money laundering, your account will be frozen, you will be arrested, or you must move money to a \"safe account\". This is an impersonation scam.",
-        "zh": "说你涉嫌洗钱、账户会被冻结、要逮捕你，或要你把钱转到“安全账户”。这是冒充公检法的诈骗。"
+        "zh": "说你涉嫌洗钱、账户会被冻结、要逮捕你，或要你把钱转到“安全账户”。这是冒充公检法的诈骗。",
+        "ja": "マネーロンダリングの疑い、口座凍結、逮捕、「安全な口座」への送金などと言っています。なりすまし詐欺です。"
       },
       "pattern": "安全账户|安全帳戶|资金核查|資金核查|洗钱|洗錢|涉嫌|逮捕|通缉|通緝|口座.{0,6}凍結|逮捕状|マネーロンダリング|arrest warrant|money laundering|your account (has been|will be) (suspended|locked|frozen)"
     },
@@ -250,7 +282,8 @@
       "weight": 2,
       "reason": {
         "en": "Says you \"won a prize\" or have a \"reward\" to claim. You cannot win a lottery you never entered; this is used to make you click links or pay fees.",
-        "zh": "说你“中奖了”“有奖励可领”。没参加过的抽奖不可能中奖，常被用来骗你点链接或先交手续费。"
+        "zh": "说你“中奖了”“有奖励可领”。没参加过的抽奖不可能中奖，常被用来骗你点链接或先交手续费。",
+        "ja": "「当選しました」「報酬を受け取れます」と言っています。応募していない抽選に当たることはありません。リンクを開かせたり手数料を払わせたりするための手口です。"
       },
       "pattern": "中奖|中獎|领取(奖励|奖品|奖金|红包)|領取(獎勵|獎品|獎金|紅包)|当選(しました|されました|おめでとう)|賞金|you (have )?won|claim your (prize|reward)|congratulations.{0,20}(winner|selected)"
     },
@@ -260,7 +293,8 @@
       "weight": 2,
       "reason": {
         "en": "Shows that \"everyone in the group\" is making money (profit screenshots, \"I withdrew again today\"). In real cases police found that almost every member of such groups was part of the scam: in one case 53 of 54 members were scammers.",
-        "zh": "展示“群里大家都在赚钱”（晒收益截图、“今天又提现了”）。公安通报的案例里，这种群的成员几乎全是骗子安排的人，有一个 54 人的兼职群，其中 53 人是骗子。"
+        "zh": "展示“群里大家都在赚钱”（晒收益截图、“今天又提现了”）。公安通报的案例里，这种群的成员几乎全是骗子安排的人，有一个 54 人的兼职群，其中 53 人是骗子。",
+        "ja": "「グループの全員」が儲かっていると見せています（利益のスクショ、「今日も出金できた」）。実際の事件では、こうしたグループのほぼ全員が詐欺の仲間でした。ある事例では54人中53人が詐欺グループのメンバーでした。"
       },
       "pattern": "晒(单|收益|截图|盈利|收入)|群(里|内|友).{0,10}(都|又|已经).{0,6}(赚|盈利|提现|出金|回本)|(大家|学员|会员|群友)(都|已经).{0,6}(赚|盈利|提现|出金|翻倍)|今天又(赚|提现|出金)|已有\\s*[0-9]+\\s*(人|位).{0,8}(赚|提现|出金|加入)|(みんな|メンバー|参加者).{0,6}(稼|儲|利益|出金)|利益報告|(everyone|members|others) (in the group )?(is|are|has|have) (making|earning|withdrawn|profiting)|profit screenshot"
     },
@@ -270,7 +304,8 @@
       "weight": 2,
       "reason": {
         "en": "\"Only a few spots left\", \"last chance\", \"first come, first served\". Invented scarcity makes you decide before you can think it through.",
-        "zh": "“名额有限”“只剩最后几个”“错过就没了”。故意制造稀缺，让你来不及想清楚就决定。"
+        "zh": "“名额有限”“只剩最后几个”“错过就没了”。故意制造稀缺，让你来不及想清楚就决定。",
+        "ja": "「残りわずか」「ラストチャンス」「先着順」。作られた希少性で、よく考える前に決めさせようとしています。"
       },
       "pattern": "名额有限|名額有限|仅剩|僅剩|只剩.{0,6}(名额|名額|个|個|位)|最后.{0,3}(名额|名額|一次机会|几个)|限量|先到先得|错过.{0,6}(就没|不再|再无)|今だけ|残り.{0,4}(名|枠|わずか)|限定.{0,3}名|先着|only [0-9]+ (spots|slots|places) left|limited (spots|slots|time offer)|first come,? first served"
     },
@@ -280,7 +315,8 @@
       "weight": 5,
       "reason": {
         "en": "Offers to \"recover\" money you lost to a scam. This is one of the most common second scams: victims are asked for an up-front fee and then lose more. No one can promise to get your money back; go only to the police or your bank.",
-        "zh": "说能帮你“追回 / 挽回”被骗的钱。这是最常见的二次诈骗之一：先让你交手续费或保证金，结果又被骗一次。没有人能保证追回损失，请只找警察和银行。"
+        "zh": "说能帮你“追回 / 挽回”被骗的钱。这是最常见的二次诈骗之一：先让你交手续费或保证金，结果又被骗一次。没有人能保证追回损失，请只找警察和银行。",
+        "ja": "詐欺で失ったお金を「取り戻せる」と持ちかけています。最も多い二次被害の詐欺の一つで、先に手数料を求められ、さらにお金を失います。被害金の回収を約束できる人はいません。警察か銀行にだけ相談してください。"
       },
       "pattern": "(帮你|帮您|可以|能|保证|包)(追回|挽回|找回|拿回|讨回)|追回(损失|資金|资金|被骗|款项)|挽回损失|追款|追损|(被骗|损失).{0,10}(追回|找回|挽回|退回)|(被害|損失|騙された).{0,10}(取り戻|回収|返金)|返金(代行|請求代行)|被害回復(サポート|代行|します)|(recover|get back|retrieve) (your )?(lost |stolen )?(funds|money|crypto)|fund recovery|asset recovery service"
     },
@@ -290,7 +326,8 @@
       "weight": 4,
       "reason": {
         "en": "Asks you to share your screen, allow remote control or accessibility access, or install an app from a link or file (e.g. a fake \"meeting\" or \"cleaner\" app). Police cases show this lets scammers move your money themselves. Only install apps from the official app store.",
-        "zh": "要你共享屏幕、开启远程控制或“无障碍”权限，或者通过链接、文件安装 App（比如假的“会议”“清理”App）。公安通报的案例里，骗子会借此直接转走你的钱。App 只从官方应用商店下载。"
+        "zh": "要你共享屏幕、开启远程控制或“无障碍”权限，或者通过链接、文件安装 App（比如假的“会议”“清理”App）。公安通报的案例里，骗子会借此直接转走你的钱。App 只从官方应用商店下载。",
+        "ja": "画面共有、遠隔操作やユーザー補助（アクセシビリティ）の許可、リンクやファイルからのアプリのインストール（偽の「会議」「クリーナー」アプリなど）を求めています。警察が公表した事例では、これで詐欺師が自分でお金を動かしていました。アプリは公式ストアからだけ入れてください。"
       },
       "pattern": "屏幕共享|共享屏幕|开启共享|远程(控制|协助|操作|桌面)|遠程|无障碍(权限|服务|功能)|無障礙|(下载|下載|安装|安裝).{0,8}(会议|會議|安装包|安裝包|apk|APK)|\\.apk\\b|画面共有|遠隔操作|リモート(操作|サポート|アクセス)|アクセシビリティ.{0,6}(許可|オン)|screen ?shar(e|ing)|remote (access|control|desktop)|anydesk|teamviewer|install (this|the) apk"
     },
@@ -300,7 +337,8 @@
       "weight": 3,
       "reason": {
         "en": "Demands a special \"code\" or note in the transfer (e.g. \"you forgot to include the unfreeze code\"). These instructions are often hidden in small or faint text so that they can later say you did it wrong and ask you to pay again.",
-        "zh": "要求转账时必须备注某个“代码”“暗号”，事后又说“你没备注代码”。这类要求常常用很小的字或不显眼的颜色写着，就是为了之后说你操作错了，让你再付一次。"
+        "zh": "要求转账时必须备注某个“代码”“暗号”，事后又说“你没备注代码”。这类要求常常用很小的字或不显眼的颜色写着，就是为了之后说你操作错了，让你再付一次。",
+        "ja": "振込時に特別な「コード」やメモを入れるよう求めています（例：「凍結解除コードを入れ忘れた」）。こうした指示は小さな文字や薄い色で書かれていることが多く、後で「やり方が間違っていた」と言って再度払わせるためのものです。"
       },
       "pattern": "(备注|備註|附言|留言|转账说明|轉帳說明).{0,8}(代码|代碼|编码|編碼|暗号|暗號|口令)|(未|没有?|沒有?|忘记|忘記)(备注|備註|附言)|(振込|振り込み)(名義|人名|依頼人名).{0,10}(コード|番号|記号)|(include|add|enter) (the )?(code|reference) (in|with) (the )?(transfer|payment)"
     },
@@ -310,7 +348,8 @@
       "weight": 1,
       "reason": {
         "en": "Asks you to transfer, send or top up money.",
-        "zh": "要求转账、汇款或充值。"
+        "zh": "要求转账、汇款或充值。",
+        "ja": "振込・送金・入金（チャージ）を求めています。"
       },
       "pattern": "转账|轉帳|汇款|匯款|打款|充值|入金|振り?込|送金|transfer|wire (money|the)|send (me )?money|top[- ]?up|deposit|转(到|入|进)|轉(到|入|進)|PayPay"
     },
@@ -320,7 +359,8 @@
       "weight": 3,
       "reason": {
         "en": "Asks for payment in gift cards, e-money or cryptocurrency. Legitimate organisations do not take payments this way.",
-        "zh": "要求用礼品卡、电子钱包或虚拟货币付款。正规机构不会这样收钱。"
+        "zh": "要求用礼品卡、电子钱包或虚拟货币付款。正规机构不会这样收钱。",
+        "ja": "ギフトカード、電子マネー、暗号資産での支払いを求めています。まともな組織はこの方法でお金を受け取りません。"
       },
       "pattern": "礼品卡|禮品卡|购物卡|購物卡|iTunes ?卡|ギフトカード|電子マネー|プリペイドカード|gift ?card|steam card|google play card|apple card|(用|以).{0,4}(USDT|比特币|比特幣).{0,4}(付|支付|转|轉)"
     },
@@ -330,7 +370,8 @@
       "weight": 1,
       "reason": {
         "en": "Pushes you to act \"now\" or \"today\". Scammers deliberately give you no time to think.",
-        "zh": "催你“马上”“今天之内”完成。诈骗分子会故意不给你考虑的时间。"
+        "zh": "催你“马上”“今天之内”完成。诈骗分子会故意不给你考虑的时间。",
+        "ja": "「今すぐ」「今日中に」と急かしています。詐欺師はわざと考える時間を与えません。"
       },
       "pattern": "立即|马上|馬上|立刻|尽快|儘快|限时|限時|最后机会|最後機會|今日中|至急|今すぐ|期限|urgent|immediately|within 24 hours|last chance|act now|[0-9０-９一二三四五六七八九十]+(个)?小时内|[0-9０-９]+時間以内"
     },
@@ -340,7 +381,8 @@
       "weight": 3,
       "reason": {
         "en": "Tries hard to reassure you: \"100% (even 200%) guaranteed\", \"all accounts are real-name verified\", \"would a scam platform run this long?\", \"you can call the police if you can't withdraw\". Legitimate businesses do not need to convince you like this; scammers do.",
-        "zh": "拼命让你放心：“百分之百（甚至 200%）保证”“都是实名制账户”“骗人的平台能开这么久吗”“提不出来你可以报警”。正规机构不需要这样说服你，这正是诈骗分子常用的话术。"
+        "zh": "拼命让你放心：“百分之百（甚至 200%）保证”“都是实名制账户”“骗人的平台能开这么久吗”“提不出来你可以报警”。正规机构不需要这样说服你，这正是诈骗分子常用的话术。",
+        "ja": "「100%（200%）保証」「すべて実名認証済みの口座」「詐欺のプラットフォームがこんなに長く続くと思う？」「出金できなければ警察に通報していい」と、必死に安心させようとしています。まともな事業者はこんな説得をする必要がありません。詐欺師はします。"
       },
       "pattern": "(骗人|騙人|骗子|騙子)的?平台.{0,10}(运营|運營|开|開)(这么|這麼)久|实名制的?(卡|账户|帳戶|公司)|實名制的?(卡|帳戶|公司)|法制社会|法制社會|(不能|提不出|拿不到).{0,10}(可以|就|都可以)(去)?报警|百分之(百|二百|200)|[12]00%.{0,4}(保证|保證|放心)|绝对(安全|没问题|能提)|絶対(に)?(大丈夫|安全|出金)|100%(安全|保証)|guaranteed safe|(这么|這麼)大的?平台|砸.{0,6}招牌|没有必要骗你|沒有必要騙你|回头客|回頭客|运营.{0,4}([0-9]+|[一二三四五六七八九十]+)周年|運營.{0,4}([0-9]+|[一二三四五六七八九十]+)週年|靠的是诚信|靠的是誠信"
     },
@@ -350,7 +392,8 @@
       "weight": 3,
       "reason": {
         "en": "Tells you \"don't tell anyone\". This stops you from asking family, friends or the police. A strong warning sign.",
-        "zh": "叫你“别告诉别人”。这是为了不让你找家人、朋友或警察商量，诈骗的危险信号很强。"
+        "zh": "叫你“别告诉别人”。这是为了不让你找家人、朋友或警察商量，诈骗的危险信号很强。",
+        "ja": "「誰にも言わないで」と言っています。家族・友人・警察に相談させないためです。強い危険のサインです。"
       },
       "pattern": "(不要|别|別|不能|不准)(告诉|告訴|跟|和|對|对)(你的)?(家人|父母|爸妈|爸媽|家里|家裡|朋友|任何人|银行|銀行|警察|老师|老師)|(要|請|请)保密|保密协议|保密協議|誰にも(言わ|話さ|相談し)|内緒にして|秘密にして|家族(に|には)(言わ|話さ|相談し)|don'?t tell (anyone|your (family|bank|parents|friends))|keep (this|it) (a )?secret"
     },
@@ -360,7 +403,8 @@
       "weight": 2,
       "reason": {
         "en": "Asks you to move to another messaging app. Scammers move victims to places the original platform cannot monitor.",
-        "zh": "要你换到其他聊天软件联系。诈骗分子常把人引到平台监控不到的地方。"
+        "zh": "要你换到其他聊天软件联系。诈骗分子常把人引到平台监控不到的地方。",
+        "ja": "別のメッセージアプリに移るよう求めています。詐欺師は、元のサービスが監視できない場所に被害者を移します。"
       },
       "pattern": "加(我)?(微信|VX|vx|QQ|LINE|line|Telegram|TG|飞机|飛機|WhatsApp)|(微信|VX|LINE|Telegram|WhatsApp).{0,4}(号|號|ID)[:：]?|LINE(を)?(追加|交換)|LINEで(話|連絡)|テレグラム|カカオトーク|add me on (whatsapp|telegram|line|wechat)|text me on (whatsapp|telegram)"
     },
@@ -370,7 +414,8 @@
       "weight": 3,
       "reason": {
         "en": "Asks for a verification code, password, card number or ID number. Legitimate organisations never ask for these; never share them.",
-        "zh": "要你提供验证码、密码、卡号或证件号码。正规机构不会这样问，这些信息绝对不能告诉别人。"
+        "zh": "要你提供验证码、密码、卡号或证件号码。正规机构不会这样问，这些信息绝对不能告诉别人。",
+        "ja": "認証コード・パスワード・カード番号・身分証番号を求めています。まともな組織がこれらを聞くことは絶対にありません。誰にも教えないでください。"
       },
       "pattern": "(发|發|告诉|告訴|提供|输入|輸入|报一下|報一下|念一下|给我|給我|截图|截圖).{0,8}(验证码|驗證碼|密码|密碼|银行卡号|銀行卡號|身份证|身份證)|(暗証番号|パスワード|認証コード|確認コード|マイナンバー|カード番号).{0,6}(を)?(教えて|送って|入力して|伝えて)|(send|tell|give|share|read) (me )?(the |your )?(verification code|password|pin|otp|one[- ]time (code|password)|social security)|(验证码|驗證碼|密码|密碼|银行卡号|銀行卡號|身份证号|身份證號).{0,4}(发给我|發給我|告诉我|告訴我|给我|給我|报给我|報給我)"
     }
@@ -384,7 +429,8 @@
       "bonus": 3,
       "reason": {
         "en": "An investment group where \"everyone is making money\": the classic fake-crowd investment scam. The other members are usually part of the scam.",
-        "zh": "“人人都在赚钱”的投资群：典型的托儿式投资诈骗，群里的其他人基本都是骗子安排的。"
+        "zh": "“人人都在赚钱”的投资群：典型的托儿式投资诈骗，群里的其他人基本都是骗子安排的。",
+        "ja": "「みんな儲かっている」投資グループ：サクラを使った典型的な投資詐欺です。ほかのメンバーはたいてい詐欺の仲間です。"
       }
     },
     {
@@ -395,7 +441,8 @@
       "bonus": 3,
       "reason": {
         "en": "A task/job group where everyone shows their earnings: the typical order-brushing scam flow.",
-        "zh": "人人晒收益的兼职任务群：典型的刷单诈骗流程。"
+        "zh": "人人晒收益的兼职任务群：典型的刷单诈骗流程。",
+        "ja": "全員が報酬を見せ合うタスク・副業グループ：典型的な注文代行（刷単）詐欺の流れです。"
       }
     },
     {
@@ -406,7 +453,8 @@
       "bonus": 2,
       "reason": {
         "en": "\"Everyone is earning\" plus a request to top up or transfer money: the fake crowd is there to make you pay.",
-        "zh": "“大家都在赚”加上要你充值或转账：那些“群友”就是为了让你掏钱而演的。"
+        "zh": "“大家都在赚”加上要你充值或转账：那些“群友”就是为了让你掏钱而演的。",
+        "ja": "「みんな稼いでいる」に加えて入金や送金の要求：サクラはあなたに払わせるためにいます。"
       }
     },
     {
@@ -417,7 +465,8 @@
       "bonus": 2,
       "reason": {
         "en": "An app installed from a link plus remote help: fake investment / refund apps are used to take over your phone or show fake balances.",
-        "zh": "通过链接装 App 再加上“远程协助”：假投资 / 假退款 App 会被用来控制你的手机，或者显示假的余额。"
+        "zh": "通过链接装 App 再加上“远程协助”：假投资 / 假退款 App 会被用来控制你的手机，或者显示假的余额。",
+        "ja": "リンクから入れたアプリに加えて遠隔サポート：偽の投資・返金アプリは、スマホの乗っ取りや偽の残高表示に使われます。"
       }
     },
     {
@@ -428,7 +477,8 @@
       "bonus": 3,
       "reason": {
         "en": "Promises to recover your losses but asks you to pay first. This is a second scam.",
-        "zh": "说能追回损失，却要你先付钱。这就是二次诈骗。"
+        "zh": "说能追回损失，却要你先付钱。这就是二次诈骗。",
+        "ja": "被害金の回収を約束しつつ、先に支払いを求めています。これは二次被害の詐欺です。"
       }
     },
     {
@@ -439,7 +489,8 @@
       "bonus": 3,
       "reason": {
         "en": "Remote control or an unknown app combined with money: scammers can transfer your money themselves. Stop and hang up.",
-        "zh": "远程控制或陌生 App 加上钱的话题：骗子可以直接转走你的钱。请马上停止操作，挂断联系。"
+        "zh": "远程控制或陌生 App 加上钱的话题：骗子可以直接转走你的钱。请马上停止操作，挂断联系。",
+        "ja": "遠隔操作や見知らぬアプリとお金の話の組み合わせ：詐欺師が自分であなたのお金を動かせます。操作をやめて、電話を切ってください。"
       }
     },
     {
@@ -450,7 +501,8 @@
       "bonus": 3,
       "reason": {
         "en": "Dating-platform topic plus a request for money. Typical pattern: first a membership fee or deposit, then endless reasons to pay again.",
-        "zh": "交友平台话题加上要你付钱。典型模式：先收会员费或押金，再用各种理由让你一次次付钱。"
+        "zh": "交友平台话题加上要你付钱。典型模式：先收会员费或押金，再用各种理由让你一次次付钱。",
+        "ja": "出会い系サイトの話とお金の要求。典型的なパターン：最初に会費や保証金、そのあと延々と払う理由が作られます。"
       }
     },
     {
@@ -461,7 +513,8 @@
       "bonus": 3,
       "reason": {
         "en": "Dating platform plus \"credit score / unfreeze / refund review\". The more you pay, the more reasons they invent.",
-        "zh": "交友平台加上“信誉分 / 解冻 / 返款审核”。钱付得越多，对方编的理由就越多。"
+        "zh": "交友平台加上“信誉分 / 解冻 / 返款审核”。钱付得越多，对方编的理由就越多。",
+        "ja": "出会い系サイトに加えて「信用スコア・凍結解除・返金審査」。払えば払うほど、新しい理由が作られます。"
       }
     },
     {
@@ -472,7 +525,8 @@
       "bonus": 3,
       "reason": {
         "en": "Says your account is \"frozen / needs verification / needs credit points\" and asks for a transfer. Paying to get your money back is the core of this scam; nothing will be returned.",
-        "zh": "说账户“冻结 / 需要验证 / 补信誉分”，又要你转账。为了拿回钱而再付钱，是这类诈骗的核心手法，付了也不会退。"
+        "zh": "说账户“冻结 / 需要验证 / 补信誉分”，又要你转账。为了拿回钱而再付钱，是这类诈骗的核心手法，付了也不会退。",
+        "ja": "アカウントが「凍結・認証が必要・信用スコアが必要」と言って振込を求めています。お金を取り戻すためにお金を払わせるのがこの詐欺の核心です。何も戻ってきません。"
       }
     },
     {
@@ -483,7 +537,8 @@
       "bonus": 3,
       "reason": {
         "en": "Romance plus a request for money. The most typical romance scam: someone you met online and never met in person asks to borrow or receive money.",
-        "zh": "感情话题加上要钱。这是感情诈骗最典型的模式：网上认识的人，没见过面，就开口借钱或要钱。"
+        "zh": "感情话题加上要钱。这是感情诈骗最典型的模式：网上认识的人，没见过面，就开口借钱或要钱。",
+        "ja": "恋愛の話とお金の要求。最も典型的なロマンス詐欺です：ネットで知り合い、会ったこともない相手がお金を借りたい・送ってほしいと言います。"
       }
     },
     {
@@ -494,7 +549,8 @@
       "bonus": 3,
       "reason": {
         "en": "Romance plus an investment tip. This is the classic \"pig butchering\" (romance investment) scam.",
-        "zh": "感情话题加上推荐投资。这就是“杀猪盘”（ロマンス投資詐欺）的典型手法。"
+        "zh": "感情话题加上推荐投资。这就是“杀猪盘”（ロマンス投資詐欺）的典型手法。",
+        "ja": "恋愛の話と投資の勧め。典型的な「ロマンス投資詐欺」（豚の屠殺／杀猪盘）です。"
       }
     },
     {
@@ -505,7 +561,8 @@
       "bonus": 3,
       "reason": {
         "en": "A job that requires you to pay or prepay first. Real jobs never ask you to pay.",
-        "zh": "兼职需要你先付钱或垫付。正规工作不会让你先交钱。"
+        "zh": "兼职需要你先付钱或垫付。正规工作不会让你先交钱。",
+        "ja": "先に支払いや立て替えが必要な仕事。本物の仕事でお金を払わされることはありません。"
       }
     },
     {
@@ -516,7 +573,8 @@
       "bonus": 2,
       "reason": {
         "en": "Requests payment in the name of an organisation. Look up the official phone number yourself; do not use the one in the message.",
-        "zh": "以机构名义要你付款。请自己查官方电话再核实，不要用消息里给的号码。"
+        "zh": "以机构名义要你付款。请自己查官方电话再核实，不要用消息里给的号码。",
+        "ja": "組織の名前で支払いを求めています。メッセージにある番号ではなく、公式の電話番号を自分で調べて確認してください。"
       }
     },
     {
@@ -527,7 +585,8 @@
       "bonus": 1,
       "reason": {
         "en": "Investment topic plus moving you to a private LINE / Telegram group: a common investment-scam flow.",
-        "zh": "投资话题加上引你去 LINE 或 Telegram 之类的私聊群，这是投资诈骗的常见流程。"
+        "zh": "投资话题加上引你去 LINE 或 Telegram 之类的私聊群，这是投资诈骗的常见流程。",
+        "ja": "投資の話に加えて非公開の LINE・Telegram グループへの誘導：投資詐欺のよくある流れです。"
       }
     },
     {
@@ -538,7 +597,8 @@
       "bonus": 3,
       "reason": {
         "en": "Says you won a prize and must first pay a fee or tax. Real prizes never require payment first.",
-        "zh": "说你中奖，又要你先付手续费或税。真正的奖品不需要先付钱。"
+        "zh": "说你中奖，又要你先付手续费或税。真正的奖品不需要先付钱。",
+        "ja": "当選したと言い、先に手数料や税金を払うよう求めています。本物の賞品で先に支払いが必要になることはありません。"
       }
     }
   ],
@@ -555,6 +615,12 @@
       "如果已经付了钱：马上联系银行和警察，保存好聊天记录和转账记录。",
       "日本：警察相谈专线 #9110、消费者热线 188；紧急情况拨 110。",
       "中国大陆：全国反诈专线 96110；紧急情况拨 110。"
+    ],
+    "ja": [
+      "まだ支払わず、返信もしないでください。まず家族・友人・警察に相談してください。",
+      "メッセージにある電話番号やリンクは偽物かもしれません。公式の連絡先は自分で調べてください。",
+      "すでに支払ってしまった場合：すぐに銀行と警察に連絡し、やり取りと振込の記録をすべて残してください。",
+      "日本：警察相談専用電話 #9110、消費者ホットライン 188、緊急時は 110。中国本土：詐欺対策ホットライン 96110、緊急時は 110。"
     ]
   }
 }

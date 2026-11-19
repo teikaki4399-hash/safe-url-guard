@@ -56,4 +56,30 @@ assert(!Rdap.lookupable("192.168.0.1") && !Rdap.lookupable("localhost") && Rdap.
   assert.strictEqual((await Rdap.lookup("nope.com", bs, fake)).reason, "not_found");
 })().catch(e => { console.error(e); process.exit(1); });
 
+// every UI language has exactly the same message keys as English (web checker and extension)
+function loadI18N(file, globals) {
+  const src = fs.readFileSync(path.join(root, file), "utf8").replace(/\}\)\(this\);\s*$/, "})(root);");
+  const names = Object.keys(globals);
+  const r = {};
+  new Function("root", ...names, src)(r, ...names.map(n => globals[n]));
+  return r.I18N;
+}
+const dom = { documentElement: {}, querySelectorAll: () => [] };
+const i18nFiles = {
+  "docs/i18n.js": loadI18N("docs/i18n.js", { document: dom, location: { search: "" }, localStorage: { getItem: () => null }, navigator: { language: "ja-JP" } }),
+  "extension/i18n.js": loadI18N("extension/i18n.js", { chrome: { i18n: { getUILanguage: () => "ja" } }, navigator: {} })
+};
+for (const [file, I] of Object.entries(i18nFiles)) {
+  assert.strictEqual(I.lang, "ja", `${file}: a Japanese browser should get the Japanese UI`);
+  const en = Object.keys(I.messages.en).sort();
+  for (const lang of ["zh", "ja"]) assert.deepStrictEqual(Object.keys(I.messages[lang]).sort(), en, `${file}: ${lang} keys differ from en`);
+}
+// rule texts exist in all three languages
+const LANGS = ["en", "ja", "zh"];
+const keysOf = v => Object.keys(v).sort();
+Object.values(rules.categories).forEach(v => assert.deepStrictEqual(keysOf(v), LANGS));
+rules.rules.forEach(r => assert.deepStrictEqual(keysOf(r.reason), LANGS, r.id));
+rules.combos.forEach(c => assert.deepStrictEqual(keysOf(c.reason), LANGS));
+assert.deepStrictEqual(keysOf(rules.advice), LANGS);
+
 console.log(`OK (${samples.length} samples${pyScores ? ", identical to the Python version" : ""})`);

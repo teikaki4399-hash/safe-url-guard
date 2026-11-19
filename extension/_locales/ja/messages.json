@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "詐欺・危険サイトブロッカー safe-url-guard"
+  },
+  "extDesc": {
+    "message": "ブラウザの起動時に自動で動き、公開されているマルウェア・フィッシングのブロックリスト（OpenPhish、HaGeZi Threat Intelligence Feeds）と確認済みの詐欺サイトのリストを毎日更新して、リストに載っているサイトをブロックします。"
+  }
+}

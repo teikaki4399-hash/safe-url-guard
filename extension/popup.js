@@ -2,7 +2,7 @@
 "use strict";
 const api = typeof browser !== "undefined" ? browser : chrome;
 const $ = id => document.getElementById(id);
-const fmt = t => t ? new Date(t).toLocaleString(I18N.lang === "zh" ? "zh-CN" : undefined) : I18N.t("popup_never");
+const fmt = t => t ? new Date(t).toLocaleString(I18N.lang === "en" ? undefined : I18N.locale()) : I18N.t("popup_never");
 
 function send(msg) {
   return new Promise(resolve => api.runtime.sendMessage(msg, resolve));
