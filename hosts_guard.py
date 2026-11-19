@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """hosts_guard - block dangerous sites on the whole computer (every browser and every app).
 
-How it works: the blocklists (OpenPhish / built-in list) are written into the
+How it works: the blocklists (OpenPhish / HaGeZi TIF / built-in list) are written into the
 system hosts file so those domains point to 0.0.0.0 and cannot be reached.
 The lists are updated automatically every day.
 

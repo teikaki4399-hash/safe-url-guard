@@ -11,7 +11,9 @@ importScripts("rdap.js");
 
 const FEEDS = {
   // URLhaus (abuse.ch) was removed in Nov 2026: its public downloads now return HTTP 410 Gone.
-  openphish: { url: "https://openphish.com/feed.txt", kind: "urls" }
+  openphish: { url: "https://openphish.com/feed.txt", kind: "urls" },
+  // HaGeZi Threat Intelligence Feeds, mini version: malware / phishing / scam domains (GPL-3.0)
+  hagezi_tif: { url: "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.mini-onlydomains.txt", kind: "domains" }
 };
 const UPDATE_MINUTES = 24 * 60;
 const CHUNK = 1000;          // domains per rule

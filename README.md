@@ -138,6 +138,7 @@ Custom lists live in `~/.cache/safe_url_guard/`: `allowlist.txt` and `denylist.t
 | Check | Source |
 |---|---|
 | Phishing sites | [OpenPhish](https://openphish.com/phishing_feeds.html) public blocklist (Community Feed) |
+| Malware, phishing and scam sites | [HaGeZi Threat Intelligence Feeds](https://github.com/hagezi/dns-blocklists#tif), **mini** version ([GPL-3.0](https://github.com/hagezi/dns-blocklists/blob/main/LICENSE), the list header says it expires after 8 hours; about 180,000 domains in Nov 2026). Replaces URLhaus, whose public downloads were shut down in Nov 2026 (HTTP 410) |
 | Confirmed scam sites | [`extension/builtin_blocklist.txt`](extension/builtin_blocklist.txt), maintained in this repository |
 | Domain age | [RDAP](https://www.icann.org/rdap) (RFC 9082/9083); the server is found through the [IANA bootstrap file](https://data.iana.org/rdap/dns.json). Under 30 days is "very suspicious", under 180 days is "be careful" |
 | Scam phrases | Rules in [`docs/scam_rules.json`](docs/scam_rules.json) (Chinese, Japanese and English phrases). Each warning sign adds points, and dangerous combinations such as "romance + money" or "job + prepay" add extra points |

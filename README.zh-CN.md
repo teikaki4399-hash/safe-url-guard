@@ -138,6 +138,7 @@ python3 qr_check.py qr.png
 | 检查内容 | 依据 |
 |---|---|
 | 钓鱼网站 | [OpenPhish](https://openphish.com/phishing_feeds.html) 的公开黑名单（Community Feed） |
+| 恶意软件、钓鱼和诈骗网站 | [HaGeZi Threat Intelligence Feeds](https://github.com/hagezi/dns-blocklists#tif) 的 **mini** 版（[GPL-3.0](https://github.com/hagezi/dns-blocklists/blob/main/LICENSE)，列表头部注明 8 小时后过期，2026 年 11 月约 18 万个域名）。用来代替 URLhaus（其公开下载已于 2026 年 11 月停止，返回 HTTP 410） |
 | 已确认的诈骗网站 | 本仓库维护的 [`extension/builtin_blocklist.txt`](extension/builtin_blocklist.txt) |
 | 域名注册时间 | [RDAP](https://www.icann.org/rdap)（RFC 9082/9083），通过 [IANA bootstrap](https://data.iana.org/rdap/dns.json) 找到对应的查询服务器。注册不到 30 天判为“非常可疑”，不到 180 天判为“请小心” |
 | 诈骗话术 | [`docs/scam_rules.json`](docs/scam_rules.json) 里的规则（覆盖中文、日文、英文的说法），按特征打分，并对危险的组合额外加分，例如“感情 + 要钱”“兼职 + 先垫付” |

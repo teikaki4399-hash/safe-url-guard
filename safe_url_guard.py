@@ -12,6 +12,7 @@ Usage:
 
 Blocklist sources (public, free):
     - OpenPhish Community : phishing sites              https://openphish.com/
+    - HaGeZi TIF (mini)   : malware / phishing / scam   https://github.com/hagezi/dns-blocklists (GPL-3.0)
     - built-in list       : confirmed scam sites        extension/builtin_blocklist.txt
 """
 
@@ -35,6 +36,9 @@ FEEDS = {
     # (hostfile, text_online, text_recent, csv_online, rpz) now return HTTP 410 Gone.
     # one URL per line
     "openphish": ("https://openphish.com/feed.txt", "urls"),
+    # HaGeZi Threat Intelligence Feeds, mini version (malware, phishing, scam domains;
+    # GPL-3.0; the header says it expires after 8 hours). One domain per line; subdomains are covered.
+    "hagezi_tif": ("https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.mini-onlydomains.txt", "domains"),
 }
 
 CACHE_DIR = Path(os.environ.get("SAFE_URL_GUARD_CACHE",
