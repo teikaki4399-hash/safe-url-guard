@@ -57,6 +57,7 @@ sudo python3 hosts_guard.py install
 - Opening a listed site (or any of its subdomains) shows a warning page instead. **There is no "continue anyway" button.**
 - You can add your own sites to block; if a safe site is blocked by mistake, allow it in the settings
 - **"Stop and think before you transfer":** when a page looks like an online-banking or payment transfer page (transfer words such as 振込 / 送金 / 转账 / "transfer" in the address or headings, plus an amount field), a short checklist appears once per site and browser session: "Is the person you are paying someone you met online and never met?", "Did they say you must pay first before you can get a refund or withdraw?", "Did they tell you not to tell anyone?" and more. Any "Yes" shows a strong warning and makes "continue" wait 15 seconds. It never blocks the transfer and can be turned off in the settings
+- **New-domain warning:** when the site you open was registered **less than 30 days ago**, a red warning bar appears at the top of the page (the site is not blocked). The registration date comes from [RDAP](https://www.icann.org/rdap); see the privacy note below. Some domain endings have no public RDAP server; for those nothing is shown
 
 ### Install (Chrome / Edge)
 
@@ -66,7 +67,7 @@ sudo python3 hosts_guard.py install
 4. Click **Load unpacked** and choose the `extension` folder
 5. Click the 🛡 icon in the toolbar: if it says "Blocking … dangerous sites", it works
 
-> The browser will say the extension can access all sites. This is required to **redirect dangerous sites to the warning page** ([Chrome documentation](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)). To spot transfer pages, the extension looks at the page title, headings and form-field labels **inside your browser only**; it does not read what you type and does not send your browsing history anywhere. All of its code is in this repository.
+> The browser will say the extension can access all sites. This is required to **redirect dangerous sites to the warning page** ([Chrome documentation](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest)). To spot transfer pages, the extension looks at the page title, headings and form-field labels **inside your browser only**; it does not read what you type. For the new-domain warning, the **domain name only** (e.g. `shop.example.com`, not the full address) of the sites you open is sent to the public RDAP server for that domain ending (found through the [IANA bootstrap file](https://data.iana.org/rdap/dns.json)); results are cached for about a month. If you do not want that, turn off "Warning bar for new domains" in the settings. Nothing else is sent anywhere. All of its code is in this repository.
 
 Firefox is not supported yet (the extension uses a Chrome-style background service worker). On Firefox, use the [whole-computer blocking](#-whole-computer-blocking-every-browser-and-app) instead.
 

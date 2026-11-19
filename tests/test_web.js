@@ -36,4 +36,24 @@ assert.deepStrictEqual(Core.candidates("a.example.com"), ["example.com", "a.exam
 assert.strictEqual(Core.verdictForDays(5), "DANGER");
 assert.strictEqual(Core.verdictForDays(100), "WARN");
 assert.strictEqual(Core.verdictForDays(1000), "OK");
+// extension/rdap.js (new-domain warning bar) must agree with the web version
+const Rdap = require(path.join(root, "extension", "rdap.js"));
+assert.strictEqual(Rdap.rdapBase("a.b.com", bs), Core.rdapBase("a.b.com", bs));
+assert.strictEqual(Rdap.rdapBase("x.example.co.uk", bs), "https://uk.example/");
+assert.deepStrictEqual(Rdap.candidates("a.example.com"), Core.candidates("a.example.com"));
+assert(!Rdap.lookupable("192.168.0.1") && !Rdap.lookupable("localhost") && Rdap.lookupable("shop.example.com"));
+(async () => {
+  const fake = url => {
+    if (url === "https://rdap.example/domain/example.com") {
+      return Promise.resolve({ events: [{ eventAction: "registration", eventDate: "2026-11-10T00:00:00Z" }] });
+    }
+    const e = new Error("HTTP 404"); e.status = 404; return Promise.reject(e);
+  };
+  const r = await Rdap.lookup("shop.example.com", bs, fake);
+  assert.strictEqual(r.domain, "example.com");
+  assert.strictEqual(Rdap.ageDays(r.registered, Date.parse("2026-11-17T00:00:00Z")), 7);
+  assert.strictEqual((await Rdap.lookup("x.jp", bs, fake)).reason, "no_rdap");
+  assert.strictEqual((await Rdap.lookup("nope.com", bs, fake)).reason, "not_found");
+})().catch(e => { console.error(e); process.exit(1); });
+
 console.log(`OK (${samples.length} samples${pyScores ? ", identical to the Python version" : ""})`);

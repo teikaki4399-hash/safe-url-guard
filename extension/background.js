@@ -7,6 +7,7 @@
 "use strict";
 
 const api = typeof browser !== "undefined" ? browser : chrome;
+importScripts("rdap.js");
 
 const FEEDS = {
   // URLhaus (abuse.ch) was removed in Nov 2026: its public downloads now return HTTP 410 Gone.
@@ -134,6 +135,58 @@ async function ensureFresh() {
   }
 }
 
+/* ---------- domain age (for the "new domain" warning bar) ---------- */
+const AGE_KNOWN_TTL = 30 * 86400000;      // a registration date does not change; re-check monthly
+const AGE_UNKNOWN_TTL = 86400000;         // failed or unsupported lookups: retry after a day
+const AGE_CACHE_MAX = 3000;
+const BOOTSTRAP_TTL = 7 * 86400000;
+const ageInFlight = new Map();
+
+async function getJSON(url) {
+  const resp = await fetch(url, { headers: { Accept: "application/rdap+json, application/json" }, credentials: "omit" });
+  if (!resp.ok) { const e = new Error("HTTP " + resp.status); e.status = resp.status; throw e; }
+  return resp.json();
+}
+async function rdapBootstrap() {
+  const { rdapBootstrap: bs } = await api.storage.local.get("rdapBootstrap");
+  if (bs && Date.now() - bs.at < BOOTSTRAP_TTL) return bs.data;
+  const data = await getJSON(Rdap.BOOTSTRAP_URL);
+  await api.storage.local.set({ rdapBootstrap: { at: Date.now(), data } });
+  return data;
+}
+/* -> {domain, registered (ms) | null, days | null} ; results are cached per host */
+async function domainAge(host) {
+  host = normalizeHost(host);
+  if (!Rdap.lookupable(host)) return null;
+  const { ageCache = {} } = await api.storage.local.get("ageCache");
+  const hit = ageCache[host];
+  if (hit && Date.now() - hit.at < (hit.registered ? AGE_KNOWN_TTL : AGE_UNKNOWN_TTL)) {
+    return { ...hit, days: hit.registered ? Rdap.ageDays(new Date(hit.registered)) : null };
+  }
+  if (ageInFlight.has(host)) return ageInFlight.get(host);
+  const job = (async () => {
+    let res;
+    try {
+      const r = await Rdap.lookup(host, await rdapBootstrap(), getJSON);
+      res = { domain: r.domain, registered: r.registered ? r.registered.getTime() : null, at: Date.now() };
+    } catch (e) {
+      res = { domain: host, registered: null, at: Date.now() };
+    }
+    const st = await api.storage.local.get("ageCache");
+    const cache = st.ageCache || {};
+    cache[host] = res;
+    const keys = Object.keys(cache);
+    if (keys.length > AGE_CACHE_MAX) {      // drop the oldest entries
+      keys.sort((a, b) => cache[a].at - cache[b].at)
+        .slice(0, keys.length - AGE_CACHE_MAX).forEach(k => delete cache[k]);
+    }
+    await api.storage.local.set({ ageCache: cache });
+    return { ...res, days: res.registered ? Rdap.ageDays(new Date(res.registered)) : null };
+  })().finally(() => ageInFlight.delete(host));
+  ageInFlight.set(host, job);
+  return job;
+}
+
 api.runtime.onInstalled.addListener(() => { ensureFresh(); });
 api.runtime.onStartup.addListener(() => { ensureFresh(); });
 api.alarms.onAlarm.addListener(a => { if (a.name === "update") updateFeeds(); });
@@ -142,6 +195,10 @@ api.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   (async () => {
     if (msg.type === "updateNow") return updateFeeds();
     if (msg.type === "applyRules") return { count: await applyRules() };
+    if (msg.type === "domainAge") {
+      const { newDomainCheck } = await api.storage.local.get("newDomainCheck");
+      return newDomainCheck === false ? null : domainAge(String(msg.host || ""));
+    }
     if (msg.type === "status") {
       const st = await api.storage.local.get(["feeds", "blockedCount", "lastAttempt", "errors"]);
       const feeds = {};

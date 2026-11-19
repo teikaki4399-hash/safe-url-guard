@@ -196,8 +196,35 @@
     if (looksLikeTransferPage()) showChecklist();
   }
 
+  /* =====================================================================
+   * 2. Warning bar for domains registered less than 30 days ago (does not block)
+   * ===================================================================== */
+  const NEW_DAYS = 30;
+  function showNewDomainBar(info) {
+    const bar = el("div", "bar");
+    bar.setAttribute("role", "alert");
+    bar.innerHTML = T("nd_bar", { d: escapeHtml(info.domain), days: info.days,
+      date: new Date(info.registered).toISOString().slice(0, 10) });
+    const x = el("button", "x", "✕");
+    x.type = "button";
+    x.setAttribute("aria-label", T("nd_close"));
+    x.addEventListener("click", () => bar.remove());
+    bar.appendChild(x);
+    root().appendChild(bar);
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+  function checkNewDomain() {
+    api.runtime.sendMessage({ type: "domainAge", host: location.hostname }, info => {
+      if (api.runtime.lastError || !info || info.days == null) return;
+      if (info.days >= 0 && info.days < NEW_DAYS) showNewDomainBar(info);
+    });
+  }
+
   /* ---------- start ---------- */
   Promise.all([I18N.load(), api.storage.local.get(["transferCheck"])]).then(([, st]) => {
+    checkNewDomain();             // the background answers null when this is turned off
     if (st.transferCheck !== false) {             // can be turned off on the options page
       checkTransfer();
       // banking sites are often single-page apps: re-check (at most once a second) when the page changes
